@@ -12,7 +12,6 @@
 		6D4FFE871745C60900E4E511 /* TKZSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FFE851745C60900E4E511 /* TKZSheetController.m */; };
 		6D4FFE881745C60900E4E511 /* TKZSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FFE861745C60900E4E511 /* TKZSheetController.xib */; };
 		6D77C32A173981840069047A /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 6D77C329173981840069047A /* aiccu */; };
-		6D8B39011735783E009C3AC7 /* aiccu_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B39001735783E009C3AC7 /* aiccu_main.c */; };
 		6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */; };
 		6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94902B173514E2002283B0 /* Cocoa.framework */; };
 		6D949036173514E2002283B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D949034173514E2002283B0 /* InfoPlist.strings */; };
@@ -24,22 +23,17 @@
 		6D94904B173514E2002283B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94902B173514E2002283B0 /* Cocoa.framework */; };
 		6D949053173514E2002283B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D949051173514E2002283B0 /* InfoPlist.strings */; };
 		6D949056173514E2002283B0 /* maiccuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D949055173514E2002283B0 /* maiccuTests.m */; };
-		6D9490B017352725002283B0 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
 		6D9490B217352725002283B0 /* aiccu_darwin.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909817352725002283B0 /* aiccu_darwin.c */; };
-		6D9490B917352725002283B0 /* aiccu_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909F17352725002283B0 /* aiccu_test.c */; };
-		6D9490BA17352725002283B0 /* ayiya.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A017352725002283B0 /* ayiya.c */; };
-		6D9490BB17352725002283B0 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
-		6D9490BC17352725002283B0 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
-		6D9490BD17352725002283B0 /* hash_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A617352725002283B0 /* hash_sha1.c */; };
-		6D9490BE17352725002283B0 /* heartbeat.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A817352725002283B0 /* heartbeat.c */; };
-		6D9490BF17352725002283B0 /* resolver.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AA17352725002283B0 /* resolver.c */; };
-		6D9490C017352725002283B0 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
-		6D9490C117352725002283B0 /* tun.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AE17352725002283B0 /* tun.c */; };
-		6D9490C5173538A7002283B0 /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9490C4173538A7002283B0 /* libresolv.9.dylib */; };
 		6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; };
 		6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */; };
 		6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A46471749E024008389B4 /* TKZMaiccu.m */; };
+		7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
+		7E3B868D1897EA24008D0AB1 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
+		7E3B868E1897EAB2008D0AB1 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
+		7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
+		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; };
+		7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +115,10 @@
 		6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		6D9A46461749E024008389B4 /* TKZMaiccu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKZMaiccu.h; sourceTree = "<group>"; };
 		6D9A46471749E024008389B4 /* TKZMaiccu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKZMaiccu.m; sourceTree = "<group>"; };
+		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
+		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gogocAdapter.m; sourceTree = "<group>"; };
+		7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genericAdapter.h; sourceTree = "<group>"; };
+		7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = genericAdapter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D9490C5173538A7002283B0 /* libresolv.9.dylib in Frameworks */,
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
 			);
@@ -192,20 +189,24 @@
 		6D949031173514E2002283B0 /* maiccu */ = {
 			isa = PBXGroup;
 			children = (
+				6D949032173514E2002283B0 /* Supporting Files */,
 				6D94903D173514E2002283B0 /* TKZAppDelegate.h */,
 				6D94903E173514E2002283B0 /* TKZAppDelegate.m */,
 				6D9A46461749E024008389B4 /* TKZMaiccu.h */,
 				6D9A46471749E024008389B4 /* TKZMaiccu.m */,
 				6D949040173514E2002283B0 /* MainMenu.xib */,
-				6D949032173514E2002283B0 /* Supporting Files */,
 				6D4FFE7F17459CF700E4E511 /* TKZDetailsController.h */,
 				6D4FFE8017459CF700E4E511 /* TKZDetailsController.m */,
+				6D4FFE8117459CF700E4E511 /* TKZDetailsController.xib */,
 				6D4FFE841745C60900E4E511 /* TKZSheetController.h */,
 				6D4FFE851745C60900E4E511 /* TKZSheetController.m */,
 				6D4FFE861745C60900E4E511 /* TKZSheetController.xib */,
-				6D4FFE8117459CF700E4E511 /* TKZDetailsController.xib */,
 				6D8B390317357B1C009C3AC7 /* TKZAiccuAdapter.h */,
 				6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */,
+				7EDEC10A189A38510087E8CF /* gogocAdapter.h */,
+				7EDEC10B189A38510087E8CF /* gogocAdapter.m */,
+				7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */,
+				7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */,
 			);
 			path = maiccu;
 			sourceTree = "<group>";
@@ -387,22 +388,17 @@
 			files = (
 				6D949038173514E2002283B0 /* main.m in Sources */,
 				6D94903F173514E2002283B0 /* TKZAppDelegate.m in Sources */,
-				6D9490B017352725002283B0 /* aiccu.c in Sources */,
 				6D9490B217352725002283B0 /* aiccu_darwin.c in Sources */,
-				6D9490B917352725002283B0 /* aiccu_test.c in Sources */,
-				6D9490BA17352725002283B0 /* ayiya.c in Sources */,
-				6D9490BB17352725002283B0 /* common.c in Sources */,
-				6D9490BC17352725002283B0 /* hash_md5.c in Sources */,
-				6D9490BD17352725002283B0 /* hash_sha1.c in Sources */,
-				6D9490BE17352725002283B0 /* heartbeat.c in Sources */,
-				6D9490BF17352725002283B0 /* resolver.c in Sources */,
-				6D9490C017352725002283B0 /* tic.c in Sources */,
-				6D9490C117352725002283B0 /* tun.c in Sources */,
-				6D8B39011735783E009C3AC7 /* aiccu_main.c in Sources */,
 				6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */,
 				6D4FFE8217459CF700E4E511 /* TKZDetailsController.m in Sources */,
 				6D4FFE871745C60900E4E511 /* TKZSheetController.m in Sources */,
 				6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */,
+				7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */,
+				7E3B868D1897EA24008D0AB1 /* tic.c in Sources */,
+				7E3B868E1897EAB2008D0AB1 /* common.c in Sources */,
+				7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */,
+				7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */,
+				7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,7 +529,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Downloads/Growl-2.0.1-SDK/Framework\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -552,7 +547,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Downloads/Growl-2.0.1-SDK/Framework\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
