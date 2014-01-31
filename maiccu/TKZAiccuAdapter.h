@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#include "genericAdapter.h"
 
 extern NSString * const TKZAiccuDidTerminate;
 extern NSString * const TKZAiccuStatus;
 
-@interface TKZAiccuAdapter : NSObject {
+@interface TKZAiccuAdapter : genericAdapter {
 @private
     struct TIC_conf	*tic;
     NSTask *_task;
@@ -22,22 +23,5 @@ extern NSString * const TKZAiccuStatus;
 }
 
 @property (strong) NSDictionary *tunnelInfo;
-
-- (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password;
-- (void) logoutFromTicServerWithMessage:(NSString *)message;
-- (NSArray *)requestTunnelList;
-- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel;
-
-- (BOOL)saveAiccuConfig:(NSDictionary *)config toFile:(NSString *)path;
-- (NSDictionary *)loadAiccuConfigFile:(NSString *)path;
-
-- (void)startStopAiccuFrom:(NSString *)path withConfigFile:(NSString *)configPath;
-
-
-//testmethods
-- (NSInteger) __loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password;
-- (void) __logoutFromTicServerWithMessage:(NSString *)message;
-- (NSArray *)__requestTunnelList;
-- (NSDictionary *)__requestTunnelInfoForTunnel:(NSString *)tunnel;
 
 @end
