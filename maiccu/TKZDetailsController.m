@@ -309,34 +309,28 @@
     [self syncConfig];
 }
 
-- (IBAction)toolbarWasClicked:(id)sender {
+- (IBAction)logButtonWasClicked:(id)sender {
     NSWindow *window = [self window];
     NSView *newView = nil;
 
-    if ([sender isEqual:_accountItem]) {
-        newView = _accountView;
-    }
-    else if ([sender isEqual:_setupItem]) {
-        newView = _setupView;
-    }
-    else if ([sender isEqual:_logItem]) {
+    if ([sender state]) {
         newView = _logView;
     }
     else {
-        NSLog(@"Unexpected toolbar click.");
-        return;
+        newView = _accountView;
     }
 
     NSSize currentSize = [[window contentView] frame].size;
     NSSize newSize = [newView frame].size;
 	
     float deltaHeight = newSize.height - currentSize.height;
+    float deltaWidth = newSize.width - currentSize.width;
     
     NSRect windowFrame = [window frame];
     
     [window setContentView:newView];
     NSRect viewScreenFrame;
-    viewScreenFrame.origin.x = windowFrame.origin.x;
+    viewScreenFrame.origin.x = windowFrame.origin.x - deltaWidth/2;
     viewScreenFrame.origin.y = windowFrame.origin.y - deltaHeight;
     viewScreenFrame.size.height = newSize.height;
     viewScreenFrame.size.width = newSize.width;
@@ -416,13 +410,10 @@
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {
     NSMenuItem *item = [_brokerPopUp selectedItem];
-    NSLog(@"brokerPopUpHasChanged %@",item);
     if ([item isEqual:_aiccuView] ) {
-        NSLog(@"brokerPopUpHasChanged aiccu");
         [self setAdapter:_aiccu];
     }
     else if ([item isEqual:_gogocView]) {
-        NSLog(@"brokerPopUpHasChanged gogoc");
         [self setAdapter:_gogoc];
     }
     [self awakeFromNib];
@@ -452,4 +443,5 @@
 - (IBAction)startupHasChanged:(id)sender {
     [_maiccu setToLaunchAgent:[_startupCheckbox state]];
 }
+
 @end

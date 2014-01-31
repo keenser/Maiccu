@@ -22,17 +22,13 @@
 
 //views
 @property (strong) IBOutlet NSView *accountView;
-@property (strong) IBOutlet NSView *setupView;
 @property (strong) IBOutlet NSView *logView;
 
 
 //toolbar
-@property (weak) IBOutlet NSToolbar *toolbar;
-@property (weak) IBOutlet NSToolbarItem *accountItem;
-@property (weak) IBOutlet NSToolbarItem *setupItem;
-@property (weak) IBOutlet NSToolbarItem *logItem;
+@property (weak) IBOutlet NSButton *logButton;
 
-- (IBAction)toolbarWasClicked:(id)sender;
+- (IBAction)logButtonWasClicked:(id)sender;
 
 
 //account view
