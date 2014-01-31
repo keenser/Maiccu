@@ -91,15 +91,15 @@
 
 - (void)awakeFromNib {
     
-    [_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
-    [self toolbarWasClicked:_accountItem];
+    //[_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
+    //[self toolbarWasClicked:_accountItem];
     
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
     
-    NSDictionary *config = [_aiccu loadAiccuConfigFile:[_maiccu aiccuConfigPath]];
+    NSDictionary *config = [_adapter loadConfigFile:[_maiccu aiccuConfigPath]];
     //config = nil;
     if (config) {
         [_usernameField setStringValue:config[@"username"]];
@@ -142,7 +142,7 @@
     [[sheet progressIndicator] setDoubleValue:25.0f];
     [NSThread sleepForTimeInterval:0.5f];
     
-    errorCode = [_aiccu loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
+    errorCode = [_adapter loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
     
     [_tunnelPopUp removeAllItems];
     [_tunnelInfoList removeAllObjects];
@@ -154,7 +154,7 @@
         [[sheet progressIndicator] setDoubleValue:50.0f];
         [NSThread sleepForTimeInterval:0.5f];
         
-        NSArray *tunnelList = [_aiccu requestTunnelList];
+        NSArray *tunnelList = [_adapter requestTunnelList];
         
         double progressInc = 40.0f / [tunnelList count];
         
@@ -168,7 +168,7 @@
             [[sheet progressIndicator] incrementBy:progressInc];
             [NSThread sleepForTimeInterval:0.2f];
             
-            [_tunnelInfoList addObject:[_aiccu requestTunnelInfoForTunnel:tunnel[@"id"]]];
+            [_tunnelInfoList addObject:[_adapter requestTunnelInfoForTunnel:tunnel[@"id"]]];
             
             [_tunnelPopUp addItemWithTitle:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel[@"id"], [_tunnelInfoList lastObject][@"type"]]];
             
@@ -237,17 +237,17 @@
     }
     
     
-    [_aiccu logoutFromTicServerWithMessage:@"Bye Bye"];
+    [_adapter logoutFromTicServerWithMessage:@"Bye Bye"];
     
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
     
     
-    if (!errorCode) {
-        [NSThread sleepForTimeInterval:0.1f];
-        [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
-        [self toolbarWasClicked:_setupItem];
-    }
+    //if (!errorCode) {
+    //    [NSThread sleepForTimeInterval:0.1f];
+    //    [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
+    //    [self toolbarWasClicked:_setupItem];
+    //}
 }
 
 
@@ -326,24 +326,22 @@
         NSLog(@"Unexpected toolbar click.");
         return;
     }
-    
+
     NSSize currentSize = [[window contentView] frame].size;
     NSSize newSize = [newView frame].size;
 	
-	float deltaWidth = newSize.width - currentSize.width;
     float deltaHeight = newSize.height - currentSize.height;
     
-    NSRect windowFrame = [window frame];  
+    NSRect windowFrame = [window frame];
     
-    windowFrame.size.height += deltaHeight;
-    windowFrame.origin.y -= deltaHeight;
-    windowFrame.size.width += deltaWidth;
-    // Clear the box for resizing
-    [window setContentView:[[NSView alloc] initWithFrame:NSMakeRect(0, 0, 500, 500)]];
-    [window  setFrame:windowFrame
-               display:YES
-               animate:YES];
     [window setContentView:newView];
+    NSRect viewScreenFrame;
+    viewScreenFrame.origin.x = windowFrame.origin.x;
+    viewScreenFrame.origin.y = windowFrame.origin.y - deltaHeight;
+    viewScreenFrame.size.height = newSize.height;
+    viewScreenFrame.size.width = newSize.width;
+    windowFrame = [window frameRectForContentRect:viewScreenFrame];
+    [window setFrame:windowFrame display:YES animate:YES];
 }
 
 - (IBAction)clearWasClicked:(id)sender {
@@ -375,7 +373,7 @@
 - (void)syncConfig {
     if ([_config count]) {
         //NSLog(@"saving aiccu config");
-        [_aiccu saveAiccuConfig:_config toFile:[_maiccu aiccuConfigPath]];
+        [_adapter saveConfig:_config toFile:[_maiccu aiccuConfigPath]];
     }
     else {
         //NSLog(@"deleting aiccu config");
@@ -416,6 +414,19 @@
     [self syncConfig];
 }
 
+- (IBAction)brokerPopUpHasChanged:(id)sender {
+    NSMenuItem *item = [_brokerPopUp selectedItem];
+    NSLog(@"brokerPopUpHasChanged %@",item);
+    if ([item isEqual:_aiccuView] ) {
+        NSLog(@"brokerPopUpHasChanged aiccu");
+        [self setAdapter:_aiccu];
+    }
+    else if ([item isEqual:_gogocView]) {
+        NSLog(@"brokerPopUpHasChanged gogoc");
+        [self setAdapter:_gogoc];
+    }
+    [self awakeFromNib];
+}
 
 - (IBAction)autoDetectWasClicked:(id)sender {
     //[NSThread detachNewThreadSelector:@selector(doNATDetection) toTarget:self withObject:nil];
@@ -435,7 +446,7 @@
     [savePanel setExtensionHidden:NO];
     [savePanel beginSheetModalForWindow:[self window] completionHandler:nil];
     if ([savePanel runModal] == NSOKButton) {
-        [_aiccu saveAiccuConfig:_config toFile:[[savePanel URL] path]];
+        [_adapter saveConfig:_config toFile:[[savePanel URL] path]];
     }
 }
 - (IBAction)startupHasChanged:(id)sender {

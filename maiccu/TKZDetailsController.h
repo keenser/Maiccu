@@ -7,13 +7,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-@class TKZAiccuAdapter;
+#import "genericAdapter.h"
+#import "TKZAiccuAdapter.h"
+#import "gogocAdapter.h"
 
 @interface TKZDetailsController : NSWindowController <NSTextFieldDelegate, NSPopoverDelegate, NSWindowDelegate>
 
 @property (strong) TKZAiccuAdapter *aiccu;
+@property (strong) gogocAdapter *gogoc;
+@property (strong) genericAdapter *adapter;
 
+@property (weak) IBOutlet NSMenuItem *aiccuView;
+@property (weak) IBOutlet NSMenuItem *gogocView;
 
 //views
 @property (strong) IBOutlet NSView *accountView;
@@ -36,6 +41,8 @@
 @property (weak) IBOutlet NSTextField *signupLabel;
 @property (weak) IBOutlet NSImageView *usernameMarker;
 @property (weak) IBOutlet NSImageView *passwordMarker;
+@property (weak) IBOutlet NSPopUpButton *brokerPopUp;
+- (IBAction)brokerPopUpHasChanged:(id)sender;
 
 
 //setup view

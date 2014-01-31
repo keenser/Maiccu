@@ -8,6 +8,8 @@
 
 #import "TKZAppDelegate.h"
 #import "TKZAiccuAdapter.h"
+#import "genericAdapter.h"
+#import "gogocAdapter.h"
 #import "TKZDetailsController.h"
 #import "TKZMaiccu.h"
 #import <Growl/Growl.h>
@@ -15,6 +17,8 @@
 @interface TKZAppDelegate () {
     NSStatusItem *_statusItem;
     TKZAiccuAdapter *_aiccu;
+    gogocAdapter *_gogoc;
+    genericAdapter *_adapter;
     TKZMaiccu *_maiccu;
     TKZDetailsController *_detailsController;
     BOOL _isAiccuRunning;
@@ -89,9 +93,13 @@
     if (self) {
         //NSLog(@"Init");
         _aiccu = [[TKZAiccuAdapter alloc] init];
+        _gogoc = [[gogocAdapter alloc] init];
+        _adapter = _aiccu;
         _detailsController = [[TKZDetailsController alloc] init];
         
         [_detailsController setAiccu:_aiccu];
+        [_detailsController setGogoc:_gogoc];
+        [_detailsController setAdapter:_adapter];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
@@ -149,6 +157,6 @@
         return;
     _isAiccuRunning = YES;
     [_startstopItem setTitle:@"Stop"];
-    [_aiccu startStopAiccuFrom:[_maiccu aiccuPath] withConfigFile:[_maiccu aiccuConfigPath]];
+    [_adapter startStopFrom:[_maiccu aiccuPath] withConfigFile:[_maiccu aiccuConfigPath]];
 }
 @end
