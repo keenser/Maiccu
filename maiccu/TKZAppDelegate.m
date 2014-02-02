@@ -94,7 +94,14 @@
         //NSLog(@"Init");
         _aiccu = [[TKZAiccuAdapter alloc] init];
         _gogoc = [[gogocAdapter alloc] init];
-        _adapter = _aiccu;
+        NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
+
+        if ([adapter isEqualToString:@"aiccu"] || adapter == nil) {
+            _adapter = _aiccu;
+        }
+        else if ([adapter isEqualToString:@"gogoc"]) {
+            _adapter = _gogoc;
+        }
         _detailsController = [[TKZDetailsController alloc] init];
         
         [_detailsController setAiccu:_aiccu];

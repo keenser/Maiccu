@@ -412,9 +412,11 @@
     NSMenuItem *item = [_brokerPopUp selectedItem];
     if ([item isEqual:_aiccuView] ) {
         [self setAdapter:_aiccu];
+        [[NSUserDefaults standardUserDefaults] setObject:@"aiccu" forKey:@"adapter"];
     }
     else if ([item isEqual:_gogocView]) {
         [self setAdapter:_gogoc];
+        [[NSUserDefaults standardUserDefaults] setObject:@"gogoc" forKey:@"adapter"];
     }
     [self awakeFromNib];
 }
