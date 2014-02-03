@@ -182,7 +182,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     memset(tic, 0, sizeof(struct TIC_conf));
 }
 
-- (void)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     // Is the task running?
     if (_task) {
@@ -224,7 +224,9 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 		[_task launch];
 				
 		[fh readInBackgroundAndNotify];
+        return TRUE;
 	}
+    return FALSE;
 }
 
 

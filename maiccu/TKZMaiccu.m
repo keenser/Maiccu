@@ -7,11 +7,18 @@
 //
 
 #import "TKZMaiccu.h"
+#import "TKZAiccuAdapter.h"
+#import "genericAdapter.h"
+#import "gogocAdapter.h"
 
 static TKZMaiccu *defaultMaiccu = nil;
 
 @interface TKZMaiccu () {
     NSFileManager *_fileManager;
+    TKZAiccuAdapter *_aiccu;
+    gogocAdapter *_gogoc;
+    genericAdapter *_adapter;
+    BOOL _isAiccuRunning;
 }
 
 @end
@@ -24,6 +31,19 @@ static TKZMaiccu *defaultMaiccu = nil;
     self = [super init];
     if (self) {
         _fileManager = [NSFileManager defaultManager];
+
+        _aiccu = [[TKZAiccuAdapter alloc] init];
+        _gogoc = [[gogocAdapter alloc] init];
+        NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
+        
+        if ([adapter isEqualToString:@"aiccu"] || adapter == nil) {
+            _adapter = _aiccu;
+        }
+        else if ([adapter isEqualToString:@"gogoc"]) {
+            _adapter = _gogoc;
+        }
+
+        _isAiccuRunning = NO;
     }
     return self;
 }
@@ -87,6 +107,16 @@ static TKZMaiccu *defaultMaiccu = nil;
     [fileHandle closeFile];
 }
 
+- (void)startStopAdapter {
+    _isAiccuRunning = [_adapter startStopFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
+}
+
+- (void)stopAdapter {
+    [self writeLogMessage:@"Adapter will terminate"];
+    if (_isAiccuRunning) {
+        _isAiccuRunning = [_adapter startStopFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
+    }
+}
 
 - (NSString *)launchAgentPlistPath {
     NSURL *libUrl = [[_fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];

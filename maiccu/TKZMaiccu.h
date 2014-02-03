@@ -23,5 +23,8 @@
 
 - (void)writeLogMessage:(NSString *)logMessage;
 
+- (void)startStopAdapter;
+- (void)stopAdapter;
+
 + (id)defaultMaiccu;
 @end

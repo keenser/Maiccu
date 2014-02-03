@@ -7,21 +7,14 @@
 //
 
 #import "TKZAppDelegate.h"
-#import "TKZAiccuAdapter.h"
-#import "genericAdapter.h"
-#import "gogocAdapter.h"
 #import "TKZDetailsController.h"
 #import "TKZMaiccu.h"
 #import <Growl/Growl.h>
 
 @interface TKZAppDelegate () {
     NSStatusItem *_statusItem;
-    TKZAiccuAdapter *_aiccu;
-    gogocAdapter *_gogoc;
-    genericAdapter *_adapter;
     TKZMaiccu *_maiccu;
     TKZDetailsController *_detailsController;
-    BOOL _isAiccuRunning;
 }
 
 @end
@@ -82,36 +75,17 @@
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    [_maiccu writeLogMessage:@"Maiccu will terminate"];
-    if (_isAiccuRunning)
-        [self startstopWasClicked:nil];
+    [_maiccu startStopAdapter];
 }
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        //NSLog(@"Init");
-        _aiccu = [[TKZAiccuAdapter alloc] init];
-        _gogoc = [[gogocAdapter alloc] init];
-        NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
-
-        if ([adapter isEqualToString:@"aiccu"] || adapter == nil) {
-            _adapter = _aiccu;
-        }
-        else if ([adapter isEqualToString:@"gogoc"]) {
-            _adapter = _gogoc;
-        }
         _detailsController = [[TKZDetailsController alloc] init];
-        
-        [_detailsController setAiccu:_aiccu];
-        [_detailsController setGogoc:_gogoc];
-        [_detailsController setAdapter:_adapter];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
-        
-        _isAiccuRunning = NO;
         
         _maiccu = [TKZMaiccu defaultMaiccu];
         

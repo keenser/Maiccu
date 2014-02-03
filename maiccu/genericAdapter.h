@@ -18,6 +18,6 @@
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path;
 - (NSDictionary *)loadConfigFile:(NSString *)path;
 
-- (void)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath;
+- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath;
 
 @end

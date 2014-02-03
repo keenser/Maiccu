@@ -26,8 +26,9 @@
     return config;
 }
 
-- (void)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
+    return FALSE;
 }
 
 - (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password

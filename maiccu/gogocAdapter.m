@@ -36,12 +36,11 @@
     return config;
 }
 
-- (void)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     // Is the task running?
     if (_task) {
         [_task interrupt];
-        
     } else {
         
         _statusNotificationCount = 0;
@@ -78,7 +77,9 @@
 		[_task launch];
         
 		[fh readInBackgroundAndNotify];
+        return TRUE;
 	}
+    return FALSE;
 }
 
 - (NSArray *)requestTunnelList
