@@ -14,6 +14,10 @@
 {
     if (self=[super init]) {
         _task = nil;
+        _postTimer = nil;
+        
+        [self setName:@"gogoc"];
+        [self setConfig:@"gogoc.conf"];
     }
     return self;
 }
@@ -36,11 +40,11 @@
     return config;
 }
 
-- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     // Is the task running?
     if (_task) {
-        [_task interrupt];
+//        [_task interrupt];
     } else {
         
         _statusNotificationCount = 0;
@@ -77,9 +81,15 @@
 		[_task launch];
         
 		[fh readInBackgroundAndNotify];
-        return TRUE;
 	}
-    return FALSE;
+    return TRUE;
+}
+
+- (void)stopFrom {
+    // Is the task running?
+    if (_task) {
+        [_task interrupt];
+    }
 }
 
 - (NSArray *)requestTunnelList

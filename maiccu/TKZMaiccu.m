@@ -36,10 +36,10 @@ static TKZMaiccu *defaultMaiccu = nil;
         _gogoc = [[gogocAdapter alloc] init];
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
-        if ([adapter isEqualToString:@"aiccu"] || adapter == nil) {
+        if ([adapter isEqualToString:[_aiccu name]] || adapter == nil) {
             _adapter = _aiccu;
         }
-        else if ([adapter isEqualToString:@"gogoc"]) {
+        else if ([adapter isEqualToString:[_gogoc name]]) {
             _adapter = _gogoc;
         }
 
@@ -55,6 +55,13 @@ static TKZMaiccu *defaultMaiccu = nil;
     return defaultMaiccu;
 }
 
+- (void) setAiccuView:(NSMenuItem *)View {
+    [_aiccu setView:View];
+}
+
+- (void) setGogocView:(NSMenuItem *)View {
+    [_gogoc setView:View];
+}
 
 - (NSURL *) appSupportURL {
     NSURL *appSupportURL = [[_fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
@@ -62,7 +69,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (NSString *)aiccuPath {
-    return [[NSBundle mainBundle] pathForResource:@"aiccu" ofType:@""];
+    return [[NSBundle mainBundle] pathForResource:[_adapter name] ofType:@""];
 }
 
 
@@ -81,7 +88,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (NSString *) aiccuConfigPath {
-    return [[[self appSupportURL] URLByAppendingPathComponent:@"aiccu.conf"] path];
+    return [[[self appSupportURL] URLByAppendingPathComponent:[_adapter config]] path];
 }
 
 - (void)writeLogMessage:(NSString *)logMessage {    
@@ -107,15 +114,25 @@ static TKZMaiccu *defaultMaiccu = nil;
     [fileHandle closeFile];
 }
 
-- (void)startStopAdapter {
-    _isAiccuRunning = [_adapter startStopFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
+- (BOOL)startStopAdapter {
+    if (_isAiccuRunning) {
+        [self stopAdapter];
+    }
+    else {
+        [self startAdapter];
+    }
+    return _isAiccuRunning;
+}
+
+- (void)startAdapter {
+    if ([self aiccuConfigExists]) {
+        _isAiccuRunning = [_adapter startFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
+    }
 }
 
 - (void)stopAdapter {
     [self writeLogMessage:@"Adapter will terminate"];
-    if (_isAiccuRunning) {
-        _isAiccuRunning = [_adapter startStopFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
-    }
+    [_adapter stopFrom];
 }
 
 - (NSString *)launchAgentPlistPath {
@@ -141,5 +158,39 @@ static TKZMaiccu *defaultMaiccu = nil;
     if (!plist)
         return NO;
     return [plist[@"RunAtLoad"] boolValue];
+}
+
+- (void)setAdapterView:(NSMenuItem *)adapterView {
+    NSLog(@"setAdapterView %@",adapterView);
+    if ([adapterView isEqual:[_aiccu view]] ) {
+        _adapter = _aiccu;
+    }
+    else if ([adapterView isEqual:[_gogoc view]] ) {
+        _adapter = _gogoc;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[_adapter name] forKey:@"adapter"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSMenuItem *)adapterView {
+    NSLog(@"adapterView");
+    return [_adapter view];
+}
+
+- (NSString *)getAdapterConfig:(NSString*)key {
+    NSLog(@"getAdapterConfig %@", key);
+    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[_adapter name]][key];
+    if (value)
+        return value;
+    return @"";
+}
+
+- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key {
+    NSLog(@"setAdapterConfig %@ %@", value, key);
+    NSString *adaptername = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:adaptername]];
+    config[key] = value;
+    [[NSUserDefaults standardUserDefaults] setObject:config forKey:adaptername];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 @end

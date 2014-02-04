@@ -16,6 +16,7 @@
     NSMutableDictionary *_config;
     NSMutableArray *_tunnelInfoList;
     TKZMaiccu *_maiccu;
+    NSLock *configLock;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
 
@@ -30,6 +31,7 @@
         _config = [[NSMutableDictionary alloc] init];
         _tunnelInfoList = [[NSMutableArray alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
+        configLock = [[NSLock alloc] init];
     }
     return self;
 }
@@ -47,13 +49,14 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];    
-    
+    /*
     if ([_config count]) {
         TKZSheetController *sheet = [[TKZSheetController alloc] init];
         
         [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
         [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
     }
+    */
     
 }
 
@@ -90,27 +93,23 @@
 }
 
 - (void)awakeFromNib {
-    
+    NSLog(@"awakeFromNib");
     //[_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
     //[self toolbarWasClicked:_accountItem];
     
+    [_maiccu setAiccuView:_aiccuView];
+    [_maiccu setGogocView:_gogocView];
+
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
+    [_brokerPopUp selectItem:[_maiccu adapterView]];
     
-    NSDictionary *config = [_adapter loadConfigFile:[_maiccu aiccuConfigPath]];
-    //config = nil;
-    if (config) {
-        [_usernameField setStringValue:config[@"username"]];
-        [_passwordField setStringValue:config[@"password"]];
-
-        [_config setDictionary:config];
-    }
-    else {
-        [[self window] makeFirstResponder:_usernameField];
-    }
-    
+    [configLock lock];
+    [_usernameField setStringValue:[_maiccu getAdapterConfig:@"username"]];
+    [_passwordField setStringValue:[_maiccu getAdapterConfig:@"password"]];
+    [configLock unlock];
     
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [[_logTextView textContainer] setWidthTracksTextView:NO];
@@ -127,6 +126,7 @@
 }
 
 - (void)doLogin:(TKZSheetController *)sheet {
+    
     //TKZSheetController *sheet  = [[TKZSheetController alloc] init];
     NSInteger errorCode = 0;
     
@@ -142,11 +142,10 @@
     [[sheet progressIndicator] setDoubleValue:25.0f];
     [NSThread sleepForTimeInterval:0.5f];
     
-    errorCode = [_adapter loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
+    //errorCode = [_adapter loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
     
     [_tunnelPopUp removeAllItems];
     [_tunnelInfoList removeAllObjects];
-    
     
     if (!errorCode) {
         
@@ -154,12 +153,14 @@
         [[sheet progressIndicator] setDoubleValue:50.0f];
         [NSThread sleepForTimeInterval:0.5f];
         
-        NSArray *tunnelList = [_adapter requestTunnelList];
+        //NSArray *tunnelList = [_adapter requestTunnelList];
         
-        double progressInc = 40.0f / [tunnelList count];
+        //double progressInc = 40.0f / [tunnelList count];
+        double progressInc = 40.0f / 2;
         
         
         NSUInteger tunnelSelectIndex = 0;
+        /*
         for (NSDictionary *tunnel in tunnelList)
         {
             //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
@@ -177,12 +178,19 @@
                 //tunnelid = [tunnel objectForKey:@"id"];
             }
         }
+        */
         
+        //[_config removeAllObjects];
+        NSLog(@"%@ %@",[_usernameField stringValue], [_passwordField stringValue]);
+        [configLock lock];
+        NSString *user = [_usernameField stringValue];
+        NSString *pass = [_passwordField stringValue];
+        [_maiccu setAdapterConfig:user toKey:@"username"];
+        [_maiccu setAdapterConfig:pass toKey:@"password"];
+        [configLock unlock];
+
         
-        [_config removeAllObjects];
-        _config[@"username"] = [_usernameField stringValue];
-        _config[@"password"] = [_passwordField stringValue];
-        
+        /*
         if ([tunnelList count]) {
             [_tunnelPopUp setEnabled:YES];
             [_infoButton setEnabled:YES];
@@ -196,7 +204,7 @@
             [self tunnelPopUpHasChanged:nil];
             
         }
-        else {
+        else*/ {
             [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
             [_tunnelPopUp setEnabled:NO];
             [_infoButton setEnabled:NO];
@@ -237,8 +245,8 @@
     }
     
     
-    [_adapter logoutFromTicServerWithMessage:@"Bye Bye"];
-    
+    //[_adapter logoutFromTicServerWithMessage:@"Bye Bye"];
+
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
     
@@ -367,7 +375,7 @@
 - (void)syncConfig {
     if ([_config count]) {
         //NSLog(@"saving aiccu config");
-        [_adapter saveConfig:_config toFile:[_maiccu aiccuConfigPath]];
+        //[_adapter saveConfig:_config toFile:[_maiccu aiccuConfigPath]];
     }
     else {
         //NSLog(@"deleting aiccu config");
@@ -409,15 +417,7 @@
 }
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {
-    NSMenuItem *item = [_brokerPopUp selectedItem];
-    if ([item isEqual:_aiccuView] ) {
-        [self setAdapter:_aiccu];
-        [[NSUserDefaults standardUserDefaults] setObject:@"aiccu" forKey:@"adapter"];
-    }
-    else if ([item isEqual:_gogocView]) {
-        [self setAdapter:_gogoc];
-        [[NSUserDefaults standardUserDefaults] setObject:@"gogoc" forKey:@"adapter"];
-    }
+    [_maiccu setAdapterView:[_brokerPopUp selectedItem]];
     [self awakeFromNib];
 }
 
@@ -438,9 +438,9 @@
     [savePanel setAllowedFileTypes:@[@"conf"]];
     [savePanel setExtensionHidden:NO];
     [savePanel beginSheetModalForWindow:[self window] completionHandler:nil];
-    if ([savePanel runModal] == NSOKButton) {
-        [_adapter saveConfig:_config toFile:[[savePanel URL] path]];
-    }
+    //if ([savePanel runModal] == NSOKButton) {
+        //[_adapter saveConfig:_config toFile:[[savePanel URL] path]];
+    //}
 }
 - (IBAction)startupHasChanged:(id)sender {
     [_maiccu setToLaunchAgent:[_startupCheckbox state]];

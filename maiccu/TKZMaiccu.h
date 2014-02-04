@@ -23,8 +23,17 @@
 
 - (void)writeLogMessage:(NSString *)logMessage;
 
-- (void)startStopAdapter;
+- (BOOL)startStopAdapter;
 - (void)stopAdapter;
+- (void)startAdapter;
+
+- (void) setAiccuView:(NSMenuItem *)View;
+- (void) setGogocView:(NSMenuItem *)View;
+- (void) setAdapterView:(NSMenuItem *)View;
+- (NSMenuItem *) adapterView;
+
+- (NSString *)getAdapterConfig:(NSString*)key;
+- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
 
 + (id)defaultMaiccu;
 @end

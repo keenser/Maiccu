@@ -28,6 +28,7 @@
 		6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; };
 		6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */; };
 		6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A46471749E024008389B4 /* TKZMaiccu.m */; };
+		7E0FA2E718A0D00C00C9C189 /* gogoc in Resources */ = {isa = PBXBuildFile; fileRef = 7E0FA2E618A0D00C00C9C189 /* gogoc */; };
 		7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
 		7E3B868D1897EA24008D0AB1 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
 		7E3B868E1897EAB2008D0AB1 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
@@ -115,6 +116,7 @@
 		6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		6D9A46461749E024008389B4 /* TKZMaiccu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKZMaiccu.h; sourceTree = "<group>"; };
 		6D9A46471749E024008389B4 /* TKZMaiccu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKZMaiccu.m; sourceTree = "<group>"; };
+		7E0FA2E618A0D00C00C9C189 /* gogoc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = gogoc; path = gogoc/gogoc; sourceTree = "<group>"; };
 		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
 		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gogocAdapter.m; sourceTree = "<group>"; };
 		7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genericAdapter.h; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
+				7E0FA2E518A0CF0700C9C189 /* gogoc */,
 				6D94909417352725002283B0 /* aiccu */,
 				6D949031173514E2002283B0 /* maiccu */,
 				6D94904E173514E2002283B0 /* maiccuTests */,
@@ -272,6 +275,14 @@
 			path = aiccu;
 			sourceTree = "<group>";
 		};
+		7E0FA2E518A0CF0700C9C189 /* gogoc */ = {
+			isa = PBXGroup;
+			children = (
+				7E0FA2E618A0D00C00C9C189 /* gogoc */,
+			);
+			name = gogoc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,6 +363,7 @@
 				6D4FFE8317459CF700E4E511 /* TKZDetailsController.xib in Resources */,
 				6D4FFE881745C60900E4E511 /* TKZSheetController.xib in Resources */,
 				6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */,
+				7E0FA2E718A0D00C00C9C189 /* gogoc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,9 +26,16 @@
     return config;
 }
 
-- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     return FALSE;
+}
+
+- (void)stopFrom {
+    // Is the task running?
+//    if (_task) {
+//        [_task interrupt];
+//    }
 }
 
 - (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password

@@ -30,9 +30,10 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         tic = (struct TIC_conf *)malloc(sizeof(struct TIC_conf));
         memset(tic, 0, sizeof(struct TIC_conf));
         _task = nil;
-                
         _postTimer = nil;
-
+        
+        [self setName:@"aiccu"];
+        [self setConfig:@"aiccu.conf"];
     }
     return self;
 }
@@ -182,12 +183,11 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     memset(tic, 0, sizeof(struct TIC_conf));
 }
 
-- (BOOL)startStopFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     // Is the task running?
     if (_task) {
-        [_task interrupt];
-
+//        [_task interrupt];
     } else {
         
         _statusNotificationCount = 0;
@@ -224,11 +224,16 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 		[_task launch];
 				
 		[fh readInBackgroundAndNotify];
-        return TRUE;
 	}
-    return FALSE;
+    return TRUE;
 }
 
+- (void)stopFrom {
+    // Is the task running?
+    if (_task) {
+        [_task interrupt];
+    }
+}
 
 - (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
     [array removeLastObject];
