@@ -187,7 +187,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 
 - (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key {
     NSLog(@"setAdapterConfig %@ %@", value, key);
-    NSString *adaptername = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
+    NSString *adaptername = [_adapter name];//[[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
     NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:adaptername]];
     config[key] = value;
     [[NSUserDefaults standardUserDefaults] setObject:config forKey:adaptername];
