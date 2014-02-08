@@ -16,7 +16,6 @@
     NSMutableDictionary *_config;
     NSMutableArray *_tunnelInfoList;
     TKZMaiccu *_maiccu;
-//    NSLock *configLock;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
 
@@ -31,7 +30,6 @@
         _config = [[NSMutableDictionary alloc] init];
         _tunnelInfoList = [[NSMutableArray alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
-        //configLock = [[NSLock alloc] init];
     }
     return self;
 }
@@ -48,6 +46,7 @@
 
 - (void)windowDidLoad
 {
+    NSLog(@"windowDidLoad");
     [super windowDidLoad];    
     /*
     if ([_config count]) {
@@ -62,6 +61,7 @@
 
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
+    NSLog(@"controlTextDidEndEditing");
     [_maiccu setAdapterConfig:[_usernameField stringValue] toKey:@"username"];
     [_maiccu setAdapterConfig:[_passwordField stringValue] toKey:@"password"];
 
@@ -109,10 +109,8 @@
     
     [_brokerPopUp selectItem:[_maiccu adapterView]];
     
-    //[configLock lock];
     [_usernameField setStringValue:[_maiccu getAdapterConfig:@"username"]];
     [_passwordField setStringValue:[_maiccu getAdapterConfig:@"password"]];
-    //[configLock unlock];
     
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [[_logTextView textContainer] setWidthTracksTextView:NO];

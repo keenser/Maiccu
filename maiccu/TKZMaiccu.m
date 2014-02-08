@@ -178,19 +178,19 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (NSString *)getAdapterConfig:(NSString*)key {
-    NSLog(@"getAdapterConfig %@", key);
     NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[_adapter name]][key];
-    if (value)
+    if (value) {
+        NSLog(@"getAdapterConfig %@ %@", key,value);
         return value;
+    }
     return @"";
 }
 
 - (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key {
     NSLog(@"setAdapterConfig %@ %@", value, key);
-    NSString *adaptername = [_adapter name];//[[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:adaptername]];
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[_adapter name]]];
     config[key] = value;
-    [[NSUserDefaults standardUserDefaults] setObject:config forKey:adaptername];
+    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[_adapter name]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 @end
