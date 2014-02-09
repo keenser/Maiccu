@@ -38,6 +38,7 @@
 {
     self = [super initWithWindow:window];
     if (self) {
+        NSLog(@"initWithWindow");
         // Initialization code here.
     }
     
@@ -124,6 +125,10 @@
     }
     
     [_startupCheckbox setState:[_maiccu isLaunchAgent]];
+    
+    [_serverField removeAllItems];
+    [_serverField addItemsWithObjectValues:[_maiccu serverList]];
+    [_serverField setStringValue:[_maiccu getAdapterConfig:@"server"]];
 }
 
 - (void)doLogin:(TKZSheetController *)sheet {
@@ -437,4 +442,7 @@
     [_maiccu setToLaunchAgent:[_startupCheckbox state]];
 }
 
+- (IBAction)serverHasChanged:(id)sender {
+    [_maiccu setAdapterConfig:[_serverField stringValue] toKey:@"server"];
+}
 @end

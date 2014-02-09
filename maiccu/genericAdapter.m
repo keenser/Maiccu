@@ -117,4 +117,12 @@
     return nil;
 }
 
+- (NSArray *)requestServerList
+{
+    NSLog(@"Request server list");
+    
+    return nil;
+}
+
+
 @end

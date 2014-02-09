@@ -38,6 +38,10 @@
 @property (weak) IBOutlet NSImageView *usernameMarker;
 @property (weak) IBOutlet NSImageView *passwordMarker;
 @property (weak) IBOutlet NSPopUpButton *brokerPopUp;
+@property (weak) IBOutlet NSComboBox *serverField;
+
+- (IBAction)serverHasChanged:(id)sender;
+
 - (IBAction)brokerPopUpHasChanged:(id)sender;
 
 

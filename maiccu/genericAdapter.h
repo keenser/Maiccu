@@ -18,6 +18,7 @@
 - (void) logoutFromTicServerWithMessage:(NSString *)message;
 - (NSArray *)requestTunnelList;
 - (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel;
+- (NSArray *)requestServerList;
 
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path;
 - (NSDictionary *)loadConfigFile:(NSString *)path;

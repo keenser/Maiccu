@@ -34,6 +34,7 @@
 
 - (NSString *)getAdapterConfig:(NSString*)key;
 - (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
+- (NSArray*)serverList;
 
 + (id)defaultMaiccu;
 @end

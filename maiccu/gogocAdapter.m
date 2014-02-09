@@ -109,4 +109,9 @@
     //return [NSArray array];
 	
 }
+
+- (NSArray *)requestServerList
+{
+    return @[@"server 1", @"server 2"];
+}
 @end

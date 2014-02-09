@@ -183,6 +183,11 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     memset(tic, 0, sizeof(struct TIC_conf));
 }
 
+- (NSArray *)requestServerList
+{
+    return @[@"tic.sixxs.net"];
+}
+
 - (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
     // Is the task running?

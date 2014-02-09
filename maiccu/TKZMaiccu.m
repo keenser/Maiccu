@@ -193,4 +193,8 @@ static TKZMaiccu *defaultMaiccu = nil;
     [[NSUserDefaults standardUserDefaults] setObject:config forKey:[_adapter name]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+- (NSArray*)serverList {
+    return [_adapter requestServerList];
+}
 @end
