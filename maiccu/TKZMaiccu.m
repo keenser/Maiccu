@@ -173,7 +173,6 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (NSMenuItem *)adapterView {
-    NSLog(@"adapterView");
     return [_adapter view];
 }
 

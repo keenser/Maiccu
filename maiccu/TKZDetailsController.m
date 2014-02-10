@@ -39,7 +39,6 @@
     self = [super initWithWindow:window];
     if (self) {
         NSLog(@"initWithWindow");
-        // Initialization code here.
     }
     
     return self;
@@ -48,15 +47,18 @@
 - (void)windowDidLoad
 {
     NSLog(@"windowDidLoad");
-    [super windowDidLoad];    
-    /*
-    if ([_config count]) {
+    [super windowDidLoad];
+    [_maiccu setAiccuView:_aiccuView];
+    [_maiccu setGogocView:_gogocView];
+    
+    [self awakeFromNib];
+
+    if ([_maiccu getAdapterConfig:@"username"]) {
         TKZSheetController *sheet = [[TKZSheetController alloc] init];
         
         [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
         [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
     }
-    */
     
 }
 
@@ -101,9 +103,6 @@
     //[_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
     //[self toolbarWasClicked:_accountItem];
     
-    [_maiccu setAiccuView:_aiccuView];
-    [_maiccu setGogocView:_gogocView];
-
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
@@ -384,11 +383,13 @@
 }
 
 - (IBAction)tunnelPopUpHasChanged:(id)sender {
+    NSLog(@"%@",[[_tunnelPopUp selectedItem] title]);
+/*
     //
     NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];
     
     //set current tunnel id
-    _config[@"tunnel_id"] = tunnelInfo[@"id"];
+    //_config[@"tunnel_id"] = tunnelInfo[@"id"];
     
     //set text in popup view
     [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];
@@ -410,6 +411,7 @@
                                [tunnelInfo[@"mtu"] stringValue]
                                ]];
     [self syncConfig];
+ */
 }
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {
