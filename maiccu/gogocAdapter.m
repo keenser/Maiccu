@@ -7,6 +7,16 @@
 //
 
 #import "gogocAdapter.h"
+#include "platform.h"
+#include "gogoc_status.h"
+#include "config.h"
+#include "net.h"
+#include "tsp_redirect.h"
+
+gogoc_status         tspSetupTunnel        ( tConf *, net_tools_t *,
+                                            sint32_t version_index,
+                                            tBrokerList **broker_list );
+
 
 @implementation gogocAdapter
 
