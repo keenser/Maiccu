@@ -47,7 +47,7 @@ void byteSwap(UWORD32 *buf, unsigned words)
  * initialization constants.
  */
 void
-MD5Init(struct MD5Context *ctx)
+MD5InitA(struct MD5Context *ctx)
 {
 	ctx->buf[0] = 0x67452301;
 	ctx->buf[1] = 0xefcdab89;
@@ -63,7 +63,7 @@ MD5Init(struct MD5Context *ctx)
  * of bytes.
  */
 void
-MD5Update(struct MD5Context *ctx, md5byte const *buf, unsigned len)
+MD5UpdateA(struct MD5Context *ctx, md5byte const *buf, unsigned len)
 {
 	UWORD32 t;
 
@@ -103,7 +103,7 @@ MD5Update(struct MD5Context *ctx, md5byte const *buf, unsigned len)
  * 1 0* (64-bit count of bits processed, MSB-first)
  */
 void
-MD5Final(md5byte digest[16], struct MD5Context *ctx)
+MD5FinalA(md5byte digest[16], struct MD5Context *ctx)
 {
 	int count = ctx->bytes[0] & 0x3f;	/* Number of bytes in ctx->in */
 	md5byte *p = (md5byte *)ctx->in + count;

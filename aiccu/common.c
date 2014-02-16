@@ -660,10 +660,10 @@ void MD5String(const char *sString, char *sSignature, unsigned int siglen)
 	if (siglen < 32) return;
 
 	/* Initialize MD5 structure */
-	MD5Init(&md5c);
+	MD5InitA(&md5c);
 	/* Calculate MD5 of the string */
-	MD5Update(&md5c, (unsigned char *)sString, (unsigned int)strlen(sString));
-	MD5Final(signature, &md5c);
+	MD5UpdateA(&md5c, (unsigned char *)sString, (unsigned int)strlen(sString));
+	MD5FinalA(signature, &md5c);
 	
 	memset(sSignature, 0, siglen);
 
