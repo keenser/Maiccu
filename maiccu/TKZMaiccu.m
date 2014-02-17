@@ -17,7 +17,6 @@ static TKZMaiccu *defaultMaiccu = nil;
     NSFileManager *_fileManager;
     TKZAiccuAdapter *_aiccu;
     gogocAdapter *_gogoc;
-    genericAdapter *_adapter;
     BOOL _isAiccuRunning;
 }
 
@@ -37,10 +36,10 @@ static TKZMaiccu *defaultMaiccu = nil;
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
         if ([adapter isEqualToString:[_aiccu name]] || adapter == nil) {
-            _adapter = _aiccu;
+            [self setAdapter:_aiccu];
         }
         else if ([adapter isEqualToString:[_gogoc name]]) {
-            _adapter = _gogoc;
+            [self setAdapter:_gogoc];
         }
 
         _isAiccuRunning = NO;
@@ -88,7 +87,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (NSString *) aiccuConfigPath {
-    return [[[self appSupportURL] URLByAppendingPathComponent:[_adapter config]] path];
+    return [[[self appSupportURL] URLByAppendingPathComponent:[_adapter configfile]] path];
 }
 
 - (void)writeLogMessage:(NSString *)logMessage {    
@@ -115,6 +114,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (BOOL)startStopAdapter {
+    NSLog(@"startStopAdapter %@",_isAiccuRunning);
     if (_isAiccuRunning) {
         [self stopAdapter];
     }
@@ -125,9 +125,9 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (void)startAdapter {
-    if ([self aiccuConfigExists]) {
+//    if ([self aiccuConfigExists]) {
         _isAiccuRunning = [_adapter startFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
-    }
+//    }
 }
 
 - (void)stopAdapter {
@@ -172,28 +172,4 @@ static TKZMaiccu *defaultMaiccu = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSMenuItem *)adapterView {
-    return [_adapter view];
-}
-
-- (NSString *)getAdapterConfig:(NSString*)key {
-    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[_adapter name]][key];
-    if (value) {
-        NSLog(@"getAdapterConfig %@ %@", key,value);
-        return value;
-    }
-    return @"";
-}
-
-- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key {
-    NSLog(@"setAdapterConfig %@ %@", value, key);
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[_adapter name]]];
-    config[key] = value;
-    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[_adapter name]];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (NSArray*)serverList {
-    return [_adapter requestServerList];
-}
 @end

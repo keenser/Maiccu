@@ -6,8 +6,15 @@
 //  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
 //
 
+#define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
+
 #import "gogocAdapter.h"
 
+#include <gogocconfig/gogoc_c_wrapper.h>
+//#include <gogocmessaging/clientmsgnotifier.h>
+//#include <gogocmessaging/gogoc_c_wrapper.h>
+
+/*
 #include "platform.h"
 #include "gogoc_status.h"
 
@@ -66,6 +73,7 @@ void tspGetOSInfo( const size_t len, char* buf )
 #endif
     }
 }
+*/
 
 @implementation gogocAdapter
 
@@ -74,18 +82,19 @@ void tspGetOSInfo( const size_t len, char* buf )
     if (self=[super init]) {
         _task = nil;
         _postTimer = nil;
-        
         [self setName:@"gogoc"];
-        [self setConfig:@"gogoc.conf"];
+        [self setConfigfile:@"gogoc.conf"];
     }
     return self;
 }
 
-- (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path {
+- (BOOL)saveConfig:(NSString *)path {
+    NSDictionary *config = [self config];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     [fileManager createDirectoryAtPath:[path stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
-    
+
+    initialize(nstocs(path));
     return YES;
 }
 
@@ -101,11 +110,12 @@ void tspGetOSInfo( const size_t len, char* buf )
 
 - (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
 {
+    NSLog(@"startFrom %@ %@", path,configPath);
     // Is the task running?
     if (_task) {
 //        [_task interrupt];
     } else {
-        
+        [self saveConfig:configPath];
         _statusNotificationCount = 0;
         _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
         [_postTimer invalidate];
@@ -171,8 +181,16 @@ void tspGetOSInfo( const size_t len, char* buf )
 
 - (NSArray *)requestServerList
 {
-    sint32_t argc = 3;
-    char *argv[] = {"","-f","/usr/local/gogoc/bin/gogoc.conf"};
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:[self name]][@"username"] length] == 0 ) {
+        return @[@"anonymous.freenet6.net"];
+    }
+    else {
+        return @[@"authenticated.freenet6.net", @"broker.freenet6.net"];
+    }
+
+#if 0
+    sint32_t argc = 4;
+    char *argv[] = {"","-f","/usr/local/gogoc/bin/gogoc.conf","-y"};
     tConf c;
     sint32_t log_display_ok = 0;        // Don't use 'Display()'.
     tBrokerList *broker_list = NULL;
@@ -1037,7 +1055,7 @@ endtspc:
     
     
 //    return( status_number(status) );
-
-    return @[@"server 1", @"server 2"];
+#endif
 }
+
 @end

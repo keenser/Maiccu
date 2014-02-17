@@ -45,7 +45,9 @@
 		7E3B868D1897EA24008D0AB1 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
 		7E3B868E1897EAB2008D0AB1 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
 		7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
-		7E4DD02A18B006140029F38B /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
+		7E4CBD6218B259E100536814 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
+		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
+		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -106,11 +108,6 @@
 		7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0118AE65B600536814 /* tsp_redirect.c */; };
 		7E4DD09018B00EF00029F38B /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0218AE65B600536814 /* tsp_setup.c */; };
 		7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0318AE65B600536814 /* tsp_tun_mgt.c */; };
-		7E769BB718B0BB2F0040D76A /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
-		7E769BB818B0BB330040D76A /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
-		7E769BB918B0BB370040D76A /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
-		7E769BBB18B0BB9A0040D76A /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
-		7ED9047B18B15C0C00521C28 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; };
 		7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */; };
 /* End PBXBuildFile section */
@@ -391,14 +388,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ED9047B18B15C0C00521C28 /* libstdc++.dylib in Frameworks */,
-				7E769BBB18B0BB9A0040D76A /* libcrypto.dylib in Frameworks */,
+				7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */,
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
-				7E4DD02A18B006140029F38B /* libgogoc-tsp.a in Frameworks */,
-				7E769BB718B0BB2F0040D76A /* libgogoc-pal.a in Frameworks */,
-				7E769BB818B0BB330040D76A /* libgogoc-config.a in Frameworks */,
-				7E769BB918B0BB370040D76A /* libgogoc-messaging.a in Frameworks */,
+				7E4CBD6218B259E100536814 /* libgogoc-pal.a in Frameworks */,
+				7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1427,7 +1421,6 @@
 		6D94905A173514E2002283B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1435,16 +1428,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "maiccu/maiccu-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"gogoc/gogoc-pal/platform/common/inc",
-					"gogoc/gogoc-pal/platform/unix-common/inc",
-					"gogoc/gogoc-pal/defs",
-					"gogoc/gogoc-messaging",
-					"gogoc/gogoc-config",
-				);
+				HEADER_SEARCH_PATHS = "gogoc/gogoc-config";
 				INFOPLIST_FILE = "maiccu/maiccu-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "gogoc/gogoc-tsp/include gogoc/gogoc-tsp/platform/darwin";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1452,7 +1438,6 @@
 		6D94905B173514E2002283B0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1460,16 +1445,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "maiccu/maiccu-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"gogoc/gogoc-pal/platform/common/inc",
-					"gogoc/gogoc-pal/platform/unix-common/inc",
-					"gogoc/gogoc-pal/defs",
-					"gogoc/gogoc-messaging",
-					"gogoc/gogoc-config",
-				);
+				HEADER_SEARCH_PATHS = "gogoc/gogoc-config";
 				INFOPLIST_FILE = "maiccu/maiccu-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "gogoc/gogoc-tsp/include gogoc/gogoc-tsp/platform/darwin";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

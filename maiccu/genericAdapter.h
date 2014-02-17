@@ -7,23 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TKZSheetController.h"
 
 @interface genericAdapter : NSObject
 
 @property (strong) NSString *name;
-@property (strong) NSString *config;
+@property (strong) NSString *configfile;
 @property (strong) NSMenuItem *view;
 
-- (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password;
-- (void) logoutFromTicServerWithMessage:(NSString *)message;
 - (NSArray *)requestTunnelList;
 - (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel;
 - (NSArray *)requestServerList;
+- (void)showSheet:(NSWindow*)window;
 
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path;
 - (NSDictionary *)loadConfigFile:(NSString *)path;
 
 - (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath;
 - (void)stopFrom;
+
+- (void)setConfig:(NSString*)value toKey:(NSString*)key;
+- (NSString *)config:(NSString*)key;
+- (NSDictionary *)config;
 
 @end

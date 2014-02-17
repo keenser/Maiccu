@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "genericAdapter.h"
 
 @interface TKZMaiccu : NSObject 
+
+@property (strong) genericAdapter *adapter;
+
 - (NSString *) aiccuConfigPath;
 - (BOOL) aiccuConfigExists;
 
@@ -32,9 +36,10 @@
 - (void) setAdapterView:(NSMenuItem *)View;
 - (NSMenuItem *) adapterView;
 
-- (NSString *)getAdapterConfig:(NSString*)key;
-- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
-- (NSArray*)serverList;
+//- (NSString *)adapterConfig:(NSString*)key;
+//- (NSDictionary *)adapterConfig;
+//- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
+//- (NSArray*)serverList;
 
 + (id)defaultMaiccu;
 @end

@@ -38,20 +38,6 @@
 //    }
 }
 
-- (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password
-{
-    NSLog(@"Login to tic server");
-    if ([username isEqualToString:@"foo"] && [password isEqualToString:@"bar"]) {
-        return 0;
-    }
-    return 1;
-}
-
-- (void) logoutFromTicServerWithMessage:(NSString *)message
-{
-    NSLog(@"Logout from tic server");
-}
-
 - (NSArray *)requestTunnelList
 {
     NSLog(@"Request tunnel list");
@@ -117,6 +103,9 @@
     return nil;
 }
 
+- (void)showSheet:(NSWindow*)window {
+}
+
 - (NSArray *)requestServerList
 {
     NSLog(@"Request server list");
@@ -124,5 +113,27 @@
     return nil;
 }
 
+- (void)setConfig:(NSString*)value toKey:(NSString*)key {
+    NSLog(@"setConfig %@ %@", value, key);
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[self name]]];
+    config[key] = value;
+    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[self name]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
+- (NSString *)config:(NSString*)key {
+    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]][key];
+    if (value) {
+        return value;
+    }
+    return @"";
+}
+
+- (NSDictionary *)config {
+    NSDictionary *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]];
+    if (value) {
+        return value;
+    }
+    return nil;
+}
 @end

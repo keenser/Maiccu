@@ -53,11 +53,8 @@
     
     [self awakeFromNib];
 
-    if ([_maiccu getAdapterConfig:@"username"]) {
-        TKZSheetController *sheet = [[TKZSheetController alloc] init];
-        
-        [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-        [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+    if ([[_maiccu adapter]config:@"username"]) {
+        [[_maiccu adapter] showSheet:[self window]];
     }
     
 }
@@ -65,16 +62,15 @@
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
     NSLog(@"controlTextDidEndEditing");
-    [_maiccu setAdapterConfig:[_usernameField stringValue] toKey:@"username"];
-    [_maiccu setAdapterConfig:[_passwordField stringValue] toKey:@"password"];
+    [[_maiccu adapter]setConfig:[_usernameField stringValue] toKey:@"username"];
+    [[_maiccu adapter]setConfig:[_passwordField stringValue] toKey:@"password"];
 
+    [self awakeFromNib];
+    
     // See if it was due to a return
     if ( [[notification userInfo][@"NSTextMovement"] intValue] == NSReturnTextMovement )
     {
-        TKZSheetController *sheet = [[TKZSheetController alloc] init];
-        
-        [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-        [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+        [[_maiccu adapter] showSheet:[self window]];
     }
 }
 
@@ -107,10 +103,10 @@
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
-    [_brokerPopUp selectItem:[_maiccu adapterView]];
+    [_brokerPopUp selectItem:[[_maiccu adapter]view]];
     
-    [_usernameField setStringValue:[_maiccu getAdapterConfig:@"username"]];
-    [_passwordField setStringValue:[_maiccu getAdapterConfig:@"password"]];
+    [_usernameField setStringValue:[[_maiccu adapter]config:@"username"]];
+    [_passwordField setStringValue:[[_maiccu adapter]config:@"password"]];
     
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [[_logTextView textContainer] setWidthTracksTextView:NO];
@@ -126,133 +122,9 @@
     [_startupCheckbox setState:[_maiccu isLaunchAgent]];
     
     [_serverField removeAllItems];
-    [_serverField addItemsWithObjectValues:[_maiccu serverList]];
-    [_serverField setStringValue:[_maiccu getAdapterConfig:@"server"]];
+    [_serverField addItemsWithObjectValues:[[_maiccu adapter] requestServerList]];
+    [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
 }
-
-- (void)doLogin:(TKZSheetController *)sheet {
-    
-    //TKZSheetController *sheet  = [[TKZSheetController alloc] init];
-    NSInteger errorCode = 0;
-    
-    //[NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-    
-    [[sheet window] makeKeyAndOrderFront:nil];
-    [[sheet window] display];
-    
-    [[sheet statusLabel] setTextColor:[NSColor blackColor]];
-    [[sheet progressIndicator] setIndeterminate:NO];
-    
-    [[sheet statusLabel] setStringValue:@"Connecting to tic server..."];
-    [[sheet progressIndicator] setDoubleValue:25.0f];
-    [NSThread sleepForTimeInterval:0.5f];
-    
-    //errorCode = [_adapter loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
-    
-    [_tunnelPopUp removeAllItems];
-    [_tunnelInfoList removeAllObjects];
-    
-    if (!errorCode) {
-        
-        [[sheet statusLabel] setStringValue:@"Retrieving tunnel list..."];
-        [[sheet progressIndicator] setDoubleValue:50.0f];
-        [NSThread sleepForTimeInterval:0.5f];
-        
-        //NSArray *tunnelList = [_adapter requestTunnelList];
-        
-        //double progressInc = 40.0f / [tunnelList count];
-        double progressInc = 40.0f / 2;
-        
-        
-        NSUInteger tunnelSelectIndex = 0;
-        /*
-        for (NSDictionary *tunnel in tunnelList)
-        {
-            //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
-            
-            [[sheet statusLabel] setStringValue:@"Fetching tunnel info..."];
-            [[sheet progressIndicator] incrementBy:progressInc];
-            [NSThread sleepForTimeInterval:0.2f];
-            
-            [_tunnelInfoList addObject:[_adapter requestTunnelInfoForTunnel:tunnel[@"id"]]];
-            
-            [_tunnelPopUp addItemWithTitle:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel[@"id"], [_tunnelInfoList lastObject][@"type"]]];
-            
-            if ([_config[@"tunnel_id"] isEqualToString:tunnel[@"id"]]) {
-                tunnelSelectIndex = [_tunnelInfoList count] - 1;
-                //tunnelid = [tunnel objectForKey:@"id"];
-            }
-        }
-        */
-                
-        /*
-        if ([tunnelList count]) {
-            [_tunnelPopUp setEnabled:YES];
-            [_infoButton setEnabled:YES];
-            [_natDetectButton setEnabled:YES];
-            [_exportButton setEnabled:YES];
-            
-            _config[@"tunnel_id"] = _tunnelInfoList[tunnelSelectIndex][@"id"];
-            [_tunnelPopUp selectItemAtIndex:tunnelSelectIndex];
-            
-            //refesh popover menu
-            [self tunnelPopUpHasChanged:nil];
-            
-        }
-        else*/ {
-            [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
-            [_tunnelPopUp setEnabled:NO];
-            [_infoButton setEnabled:NO];
-            [_natDetectButton setEnabled:NO];
-            [_exportButton setEnabled:NO];
-        }
-        
-        
-        [[sheet statusLabel] setStringValue:@"Successfully completed."];
-        [[sheet progressIndicator] incrementBy:100.0f];
-        [NSThread sleepForTimeInterval:0.5f];
-        
-        [_usernameMarker setHidden:YES];
-        [_passwordMarker setHidden:YES];
-        
-        
-    }
-    //if something went wrong
-    else {
-        [_config removeAllObjects];
-        
-        [[sheet statusLabel] setStringValue:@"Invalid login credentials"];
-        [[sheet statusLabel] setTextColor:[NSColor redColor]];
-        [[sheet progressIndicator] setIndeterminate:YES];
-        [NSThread sleepForTimeInterval:2.0f];
-        
-               
-        [_passwordField becomeFirstResponder]; 
-        
-        [_tunnelPopUp setEnabled:NO];
-        [_infoButton setEnabled:NO];
-        [_natDetectButton setEnabled:NO];
-        [_exportButton setEnabled:NO];
-        
-        [_usernameMarker setHidden:NO];
-        [_passwordMarker setHidden:NO];
-        
-    }
-    
-    
-    //[_adapter logoutFromTicServerWithMessage:@"Bye Bye"];
-
-    [NSApp endSheet:[sheet window]];
-    [[sheet window] orderOut:nil];
-    
-    
-    //if (!errorCode) {
-    //    [NSThread sleepForTimeInterval:0.1f];
-    //    [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
-    //    [self toolbarWasClicked:_setupItem];
-    //}
-}
-
 
 - (void)doNATDetection:(TKZSheetController *)sheet {
     
@@ -445,6 +317,6 @@
 }
 
 - (IBAction)serverHasChanged:(id)sender {
-    [_maiccu setAdapterConfig:[_serverField stringValue] toKey:@"server"];
+    [[_maiccu adapter]setConfig:[_serverField stringValue] toKey:@"server"];
 }
 @end

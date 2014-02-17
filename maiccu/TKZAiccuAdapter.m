@@ -33,7 +33,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         _postTimer = nil;
         
         [self setName:@"aiccu"];
-        [self setConfig:@"aiccu.conf"];
+        [self setConfigfile:@"aiccu.conf"];
     }
     return self;
 }
@@ -99,8 +99,8 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return config;
 }
 
-
-- (NSDictionary *)__requestTunnelInfoForTunnel:(NSString *)tunnel {
+#if 0
+- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
     struct TIC_Tunnel *hTunnel;
     
     hTunnel = tic_GetTunnel(tic, nstocs(tunnel));
@@ -125,11 +125,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
                             @"uses_tundev": @(hTunnel->uses_tundev)};
 }
 
-
-
-
-
-- (NSArray *)__requestTunnelList
+- (NSArray *)requestTunnelList
 {
     struct TIC_sTunnel *hsTunnel, *t;
     NSMutableArray *tunnels = [[NSMutableArray alloc] init];
@@ -163,11 +159,14 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return tunnels;
 }
 
-- (NSInteger) __loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password
+- (NSInteger) loginToTicServer
 {
-    //struct TIC_conf	*tic;
     NSInteger errCode;
-
+    NSString *server = [self config][@"server"];
+    NSString *username = [self config][@"username"];
+    NSString *password = [self config][@"password"];
+    
+//    withUsername:(NSString *)username andPassword:(NSString *)password
     errCode = tic_Login(tic, nstocs(username), nstocs(password), nstocs(server));
     
     if (errCode != true){ 
@@ -177,11 +176,33 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return 0;
 }
 
-- (void) __logoutFromTicServerWithMessage:(NSString *)message
+- (void) logoutFromTicServerWithMessage:(NSString *)message
 {
     tic_Logout(tic, nstocs(message));
     memset(tic, 0, sizeof(struct TIC_conf));
 }
+
+#else
+
+- (NSInteger) loginToTicServer
+{
+    NSString *server = [self config][@"server"];
+    NSString *username = [self config][@"username"];
+    NSString *password = [self config][@"password"];
+
+    NSLog(@"Login to tic server");
+    if ([username isEqualToString:@"foo"] && [password isEqualToString:@"bar"]) {
+        return 0;
+    }
+    return 1;
+}
+
+- (void) logoutFromTicServerWithMessage:(NSString *)message
+{
+    NSLog(@"Logout from tic server");
+}
+
+#endif
 
 - (NSArray *)requestServerList
 {
@@ -309,6 +330,131 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
 	_task = nil;
     //[startButton setState:0];
+}
+
+- (void)showSheet:(NSWindow*)window {
+    TKZSheetController *sheet = [[TKZSheetController alloc] init];
+
+    [NSApp beginSheet:[sheet window] modalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+    [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+}
+
+- (void)doLogin:(TKZSheetController *)sheet {
+    
+    NSInteger errorCode = 0;
+    
+    [[sheet window] makeKeyAndOrderFront:nil];
+    [[sheet window] display];
+    
+    [[sheet statusLabel] setTextColor:[NSColor blackColor]];
+    [[sheet progressIndicator] setIndeterminate:NO];
+    
+    [[sheet statusLabel] setStringValue:@"Connecting to tic server..."];
+    [[sheet progressIndicator] setDoubleValue:25.0f];
+    [NSThread sleepForTimeInterval:0.5f];
+    
+    errorCode = [self loginToTicServer];
+    
+    //[_tunnelPopUp removeAllItems];
+    //[_tunnelInfoList removeAllObjects];
+    
+    if (!errorCode) {
+        
+        [[sheet statusLabel] setStringValue:@"Retrieving tunnel list..."];
+        [[sheet progressIndicator] setDoubleValue:50.0f];
+        [NSThread sleepForTimeInterval:0.5f];
+        
+        NSArray *tunnelList = [self requestTunnelList];
+        
+        double progressInc = 40.0f / [tunnelList count];        
+        
+        NSUInteger tunnelSelectIndex = 0;
+        
+         for (NSDictionary *tunnel in tunnelList)
+         {
+             //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
+         
+             [[sheet statusLabel] setStringValue:@"Fetching tunnel info..."];
+             [[sheet progressIndicator] incrementBy:progressInc];
+             [NSThread sleepForTimeInterval:0.2f];
+         
+             //[_tunnelInfoList addObject:[_adapter requestTunnelInfoForTunnel:tunnel[@"id"]]];
+         
+             //[_tunnelPopUp addItemWithTitle:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel[@"id"], [_tunnelInfoList lastObject][@"type"]]];
+         
+             //if ([_config[@"tunnel_id"] isEqualToString:tunnel[@"id"]]) {
+             //    tunnelSelectIndex = [_tunnelInfoList count] - 1;
+             //}
+         }
+        
+        /*
+         if ([tunnelList count]) {
+         [_tunnelPopUp setEnabled:YES];
+         [_infoButton setEnabled:YES];
+         [_natDetectButton setEnabled:YES];
+         [_exportButton setEnabled:YES];
+         
+         _config[@"tunnel_id"] = _tunnelInfoList[tunnelSelectIndex][@"id"];
+         [_tunnelPopUp selectItemAtIndex:tunnelSelectIndex];
+         
+         //refesh popover menu
+         [self tunnelPopUpHasChanged:nil];
+         
+         }
+         else {
+             [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
+             [_tunnelPopUp setEnabled:NO];
+             [_infoButton setEnabled:NO];
+             [_natDetectButton setEnabled:NO];
+             [_exportButton setEnabled:NO];
+         }
+        */
+        [[sheet statusLabel] setStringValue:@"Successfully completed."];
+        [[sheet progressIndicator] incrementBy:100.0f];
+        [NSThread sleepForTimeInterval:0.5f];
+        /*
+        [_usernameMarker setHidden:YES];
+        [_passwordMarker setHidden:YES];
+        */
+        
+    }
+    //if something went wrong
+    else {
+        /*
+        [_config removeAllObjects];
+        
+        [[sheet statusLabel] setStringValue:@"Invalid login credentials"];
+        [[sheet statusLabel] setTextColor:[NSColor redColor]];
+        [[sheet progressIndicator] setIndeterminate:YES];
+        [NSThread sleepForTimeInterval:2.0f];
+        
+        
+        [_passwordField becomeFirstResponder];
+        
+        [_tunnelPopUp setEnabled:NO];
+        [_infoButton setEnabled:NO];
+        [_natDetectButton setEnabled:NO];
+        [_exportButton setEnabled:NO];
+        
+        [_usernameMarker setHidden:NO];
+        [_passwordMarker setHidden:NO];
+        */
+    }
+    
+    
+    [self logoutFromTicServerWithMessage:@"Bye Bye"];
+    
+    
+    [NSApp endSheet:[sheet window]];
+    [[sheet window] orderOut:nil];
+    
+    /*
+    if (!errorCode) {
+        [NSThread sleepForTimeInterval:0.1f];
+        [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
+        [self toolbarWasClicked:_setupItem];
+    }
+    */
 }
 
 @end

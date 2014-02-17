@@ -16,6 +16,7 @@
     NSTimer *_postTimer;
     NSMutableArray *_statusQueue;
     NSUInteger _statusNotificationCount;
+    BOOL anonymous;
 }
 
 @end
