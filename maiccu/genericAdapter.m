@@ -40,20 +40,7 @@
 
 - (NSArray *)requestTunnelList
 {
-    NSLog(@"Request tunnel list");
-    
-    NSDictionary *tunnelInfo1 =  @{@"id": @"T12345",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"heartbeat",
-                                   @"popid": @"pop01"};
-    NSDictionary *tunnelInfo2 =  @{@"id": @"T67890",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"ayiya",
-                                   @"popid": @"pop02"};
-    
-    return @[tunnelInfo1, tunnelInfo2];
-    //return [NSArray array];
-	
+    return nil;
 }
 
 //this is a static test method for requestTunnelInfoForTunnel

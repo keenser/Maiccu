@@ -184,9 +184,25 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 
 #else
 
+- (NSArray *)requestTunnelList
+{
+    NSLog(@"Request tunnel list");
+    
+    NSDictionary *tunnelInfo1 =  @{@"id": @"T12345",
+                                   @"ipv6": @"2a01::2",
+                                   @"ipv4": @"heartbeat",
+                                   @"popid": @"pop01"};
+    NSDictionary *tunnelInfo2 =  @{@"id": @"T67890",
+                                   @"ipv6": @"2a01::2",
+                                   @"ipv4": @"ayiya",
+                                   @"popid": @"pop02"};
+    
+    return @[tunnelInfo1, tunnelInfo2];
+}
+
 - (NSInteger) loginToTicServer
 {
-    NSString *server = [self config][@"server"];
+//    NSString *server = [self config][@"server"];
     NSString *username = [self config][@"username"];
     NSString *password = [self config][@"password"];
 
@@ -337,6 +353,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 
     [NSApp beginSheet:[sheet window] modalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
     [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+//    [self doLogin:sheet];
 }
 
 - (void)doLogin:(TKZSheetController *)sheet {
@@ -355,6 +372,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     
     errorCode = [self loginToTicServer];
     
+    [[sheet window] sheetParent];
     //[_tunnelPopUp removeAllItems];
     //[_tunnelInfoList removeAllObjects];
     
