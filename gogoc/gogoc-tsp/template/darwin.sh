@@ -142,6 +142,7 @@ if [ X"${TSP_OPERATION}" = X"TSP_TUNNEL_TEARDOWN" ]; then
   done
 
   # Delete tunnel.
+  ExecNoCheck $route delete -inet6 $TSP_CLIENT_ADDRESS_IPV6
   ExecNoCheck $ifconfig $TSP_TUNNEL_INTERFACE deletetunnel
   
 
@@ -171,6 +172,12 @@ if [ X"${TSP_HOST_TYPE}" = X"host" ] || [ X"${TSP_HOST_TYPE}" = X"router" ]; the
    for ipv6address in $list
    do 
       Exec $ifconfig $TSP_TUNNEL_INTERFACE inet6 $ipv6address delete
+   done
+
+   list=`netstat -rn -f inet6 | grep 'lo0$' | grep -v '^fe80' | grep -v '::1' | awk '{print $1}'`
+   for ipv6address in $list
+   do
+      Exec route delete -inet6 $ipv6address
    done
 
    Exec $ifconfig $TSP_TUNNEL_INTERFACE inet6 $TSP_CLIENT_ADDRESS_IPV6 $TSP_SERVER_ADDRESS_IPV6 prefixlen $TSP_TUNNEL_PREFIXLEN alias

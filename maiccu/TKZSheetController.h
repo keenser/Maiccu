@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString * const sheetControllerStatus;
+
 @interface TKZSheetController : NSWindowController
 
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;

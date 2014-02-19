@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "genericAdapter.h"
+#import "TKZAiccuAdapter.h"
+#import "gogocAdapter.h"
 
-@interface TKZMaiccu : NSObject 
+@interface TKZMaiccu : NSObject  {
+    NSFileManager *_fileManager;
+    TKZAiccuAdapter *_aiccu;
+    gogocAdapter *_gogoc;
+    BOOL _isAiccuRunning;
+}
 
 @property (strong) genericAdapter *adapter;
 

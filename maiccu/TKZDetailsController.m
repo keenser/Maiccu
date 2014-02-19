@@ -14,7 +14,7 @@
 
 @interface TKZDetailsController () {
     NSMutableDictionary *_config;
-    NSMutableArray *_tunnelInfoList;
+//    NSMutableArray *_tunnelInfoList;
     TKZMaiccu *_maiccu;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
@@ -28,8 +28,9 @@
     self = [super initWithWindowNibName:@"TKZDetailsController"];
     if (self) {
         _config = [[NSMutableDictionary alloc] init];
-        _tunnelInfoList = [[NSMutableArray alloc] init];
+//        _tunnelInfoList = [[NSMutableArray alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sheetNotification:) name:sheetControllerStatus object:nil];
     }
     return self;
 }
@@ -124,6 +125,14 @@
     [_serverField removeAllItems];
     [_serverField addItemsWithObjectValues:[[_maiccu adapter] requestServerList]];
     [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
+    
+    [_tunnelPopUp removeAllItems];
+    [_tunnelPopUp addItemsWithTitles:[[_maiccu adapter] requestTunnelList]];
+    [_tunnelPopUp setEnabled:YES];
+}
+
+- (void)sheetNotification:(NSNotification *)aNotification {
+    NSLog(@"sheetNotification %@", aNotification);
 }
 
 - (void)doNATDetection:(TKZSheetController *)sheet {
@@ -156,11 +165,8 @@
                 break;
             }
         }
-        NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];
-        NSString *tunnelType = tunnelInfo[@"type"];
         
-        
-        if (!behindNAT || [tunnelType isEqualToString:@"ayiya"]) {
+        if (!behindNAT || [[_maiccu adapter] forNat]) {
             [[sheet statusLabel] setStringValue:@"Everthing seems to be fine."];
             //[NSThread sleepForTimeInterval:2.0f];
         }
@@ -246,7 +252,7 @@
     }
     else {
         //NSLog(@"deleting aiccu config");
-        [[NSFileManager defaultManager] removeItemAtPath:[_maiccu aiccuConfigPath] error:nil];
+        //[[NSFileManager defaultManager] removeItemAtPath:[_maiccu aiccuConfigPath] error:nil];
     }
 }
 
@@ -255,7 +261,7 @@
 }
 
 - (IBAction)tunnelPopUpHasChanged:(id)sender {
-    NSLog(@"%@",[[_tunnelPopUp selectedItem] title]);
+    [[_maiccu adapter]setConfig:[_tunnelPopUp titleOfSelectedItem] toKey:@"tunnel_id"];
 /*
     //
     NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];

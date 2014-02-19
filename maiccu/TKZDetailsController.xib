@@ -58,7 +58,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="969155764">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="903697357">
@@ -267,6 +267,7 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{550, 400}</string>
+				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="203145342"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
@@ -289,7 +290,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 20}, {312, 195}}</string>
 						<reference key="NSSuperview" ref="975470516"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="181712487">
@@ -322,7 +322,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 216}, {136, 18}}</string>
 						<reference key="NSSuperview" ref="975470516"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="120101935"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
@@ -344,7 +343,6 @@
 				</array>
 				<string key="NSFrameSize">{346, 254}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="521398939"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
@@ -465,7 +463,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 228}, {167, 26}}</string>
 							<reference key="NSSuperview" ref="984444865"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="989377314"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -528,7 +525,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{187, 233}, {164, 18}}</string>
 							<reference key="NSSuperview" ref="984444865"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="150046250"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -559,7 +555,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 20}, {238, 17}}</string>
 							<reference key="NSSuperview" ref="984444865"/>
-							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="986975601">
@@ -586,7 +581,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{18, 138}, {333, 22}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="648340478"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSTag">1</int>
@@ -620,7 +614,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{18, 108}, {333, 22}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="333160278"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSTag">2</int>
@@ -655,7 +648,6 @@
 											</set>
 											<string key="NSFrame">{{329, 138}, {22, 22}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="227229563"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -687,7 +679,6 @@
 											</set>
 											<string key="NSFrame">{{329, 108}, {22, 22}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="202849535"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -708,7 +699,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{15, 48}, {339, 26}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="918295712"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSTag">3</int>
@@ -726,26 +716,26 @@
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
-												<object class="NSMenuItem" key="NSMenuItem" id="1030891814">
-													<reference key="NSMenu" ref="198341614"/>
-													<string key="NSTitle"/>
-													<string key="NSKeyEquiv"/>
-													<int key="NSKeyEquivModMask">1048576</int>
-													<int key="NSMnemonicLoc">2147483647</int>
-													<int key="NSState">1</int>
-													<reference key="NSOnImage" ref="19303967"/>
-													<reference key="NSMixedImage" ref="58202363"/>
-													<string key="NSAction">_popUpItemAction:</string>
-													<reference key="NSTarget" ref="692949915"/>
-												</object>
+												<nil key="NSMenuItem"/>
 												<bool key="NSMenuItemRespectAlignment">YES</bool>
 												<object class="NSMenu" key="NSMenu" id="198341614">
 													<string key="NSTitle">OtherViews</string>
 													<array class="NSMutableArray" key="NSMenuItems">
-														<reference ref="1030891814"/>
+														<object class="NSMenuItem" id="1030891814">
+															<reference key="NSMenu" ref="198341614"/>
+															<string key="NSTitle"/>
+															<string key="NSKeyEquiv"/>
+															<int key="NSKeyEquivModMask">1048576</int>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="19303967"/>
+															<reference key="NSMixedImage" ref="58202363"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<reference key="NSTarget" ref="692949915"/>
+														</object>
 													</array>
 													<reference key="NSMenuFont" ref="181633607"/>
 												</object>
+												<int key="NSSelectedIndex">-1</int>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
 												<bool key="NSAltersState">YES</bool>
@@ -757,7 +747,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{18, 13}, {71, 19}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="39334586"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -781,7 +770,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{97, 13}, {75, 19}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="159273264"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -805,7 +793,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{180, 13}, {171, 19}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="309423052"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -829,7 +816,6 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{18, 76}, {336, 26}}</string>
 											<reference key="NSSuperview" ref="29962964"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="440781840"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
@@ -925,14 +911,12 @@
 									</array>
 									<string key="NSFrame">{{1, 1}, {369, 170}}</string>
 									<reference key="NSSuperview" ref="150046250"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="893124537"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
 							<string key="NSFrame">{{17, 41}, {371, 186}}</string>
 							<reference key="NSSuperview" ref="984444865"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="29962964"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSOffsets">{0, 0}</string>
@@ -960,10 +944,9 @@
 					</array>
 					<string key="NSFrameSize">{405, 272}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="293591665"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -3100,189 +3083,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">2006</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TKZDetailsController</string>
-					<string key="superclassName">NSWindowController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="autoDetectWasClicked:">id</string>
-						<string key="brokerPopUpHasChanged:">id</string>
-						<string key="clearWasClicked:">id</string>
-						<string key="exportWasClicked:">id</string>
-						<string key="infoWasClicked:">id</string>
-						<string key="logButtonWasClicked:">id</string>
-						<string key="reloadWasClicked:">id</string>
-						<string key="serverHasChanged:">id</string>
-						<string key="startupHasChanged:">id</string>
-						<string key="tunnelPopUpHasChanged:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="autoDetectWasClicked:">
-							<string key="name">autoDetectWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="brokerPopUpHasChanged:">
-							<string key="name">brokerPopUpHasChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clearWasClicked:">
-							<string key="name">clearWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exportWasClicked:">
-							<string key="name">exportWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="infoWasClicked:">
-							<string key="name">infoWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="logButtonWasClicked:">
-							<string key="name">logButtonWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="reloadWasClicked:">
-							<string key="name">reloadWasClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="serverHasChanged:">
-							<string key="name">serverHasChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="startupHasChanged:">
-							<string key="name">startupHasChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="tunnelPopUpHasChanged:">
-							<string key="name">tunnelPopUpHasChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="accountView">NSView</string>
-						<string key="aiccuView">NSMenuItem</string>
-						<string key="brokerPopUp">NSPopUpButton</string>
-						<string key="exportButton">NSButton</string>
-						<string key="gogocView">NSMenuItem</string>
-						<string key="infoButton">NSButton</string>
-						<string key="logButton">NSButton</string>
-						<string key="logTextView">NSTextView</string>
-						<string key="logView">NSView</string>
-						<string key="natDetectButton">NSButton</string>
-						<string key="passwordField">NSSecureTextField</string>
-						<string key="passwordMarker">NSImageView</string>
-						<string key="serverField">NSComboBox</string>
-						<string key="signupLabel">NSTextField</string>
-						<string key="startupCheckbox">NSButton</string>
-						<string key="tunnelHeadField">NSTextField</string>
-						<string key="tunnelInfoField">NSTextField</string>
-						<string key="tunnelPopOver">NSPopover</string>
-						<string key="tunnelPopUp">NSPopUpButton</string>
-						<string key="usernameField">NSTextField</string>
-						<string key="usernameMarker">NSImageView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="accountView">
-							<string key="name">accountView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="aiccuView">
-							<string key="name">aiccuView</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="brokerPopUp">
-							<string key="name">brokerPopUp</string>
-							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="exportButton">
-							<string key="name">exportButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="gogocView">
-							<string key="name">gogocView</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="infoButton">
-							<string key="name">infoButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="logButton">
-							<string key="name">logButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="logTextView">
-							<string key="name">logTextView</string>
-							<string key="candidateClassName">NSTextView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="logView">
-							<string key="name">logView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="natDetectButton">
-							<string key="name">natDetectButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="passwordField">
-							<string key="name">passwordField</string>
-							<string key="candidateClassName">NSSecureTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="passwordMarker">
-							<string key="name">passwordMarker</string>
-							<string key="candidateClassName">NSImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="serverField">
-							<string key="name">serverField</string>
-							<string key="candidateClassName">NSComboBox</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="signupLabel">
-							<string key="name">signupLabel</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="startupCheckbox">
-							<string key="name">startupCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tunnelHeadField">
-							<string key="name">tunnelHeadField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tunnelInfoField">
-							<string key="name">tunnelInfoField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tunnelPopOver">
-							<string key="name">tunnelPopOver</string>
-							<string key="candidateClassName">NSPopover</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tunnelPopUp">
-							<string key="name">tunnelPopUp</string>
-							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="usernameField">
-							<string key="name">usernameField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="usernameMarker">
-							<string key="name">usernameMarker</string>
-							<string key="candidateClassName">NSImageView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TKZDetailsController.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

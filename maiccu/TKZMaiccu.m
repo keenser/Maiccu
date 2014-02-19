@@ -7,23 +7,10 @@
 //
 
 #import "TKZMaiccu.h"
-#import "TKZAiccuAdapter.h"
-#import "genericAdapter.h"
-#import "gogocAdapter.h"
 
 static TKZMaiccu *defaultMaiccu = nil;
 
-@interface TKZMaiccu () {
-    NSFileManager *_fileManager;
-    TKZAiccuAdapter *_aiccu;
-    gogocAdapter *_gogoc;
-    BOOL _isAiccuRunning;
-}
-
-@end
-
 @implementation TKZMaiccu
-
 
 - (id)init
 {
@@ -114,7 +101,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (BOOL)startStopAdapter {
-    NSLog(@"startStopAdapter %@",_isAiccuRunning);
+    NSLog(@"startStopAdapter %d",_isAiccuRunning);
     if (_isAiccuRunning) {
         [self stopAdapter];
     }
@@ -126,13 +113,14 @@ static TKZMaiccu *defaultMaiccu = nil;
 
 - (void)startAdapter {
 //    if ([self aiccuConfigExists]) {
-        _isAiccuRunning = [_adapter startFrom:[self aiccuPath] withConfigFile:[self aiccuConfigPath]];
+        _isAiccuRunning = [_adapter startFrom:[self aiccuPath] withConfigDir:[[self appSupportURL] path]];
 //    }
 }
 
 - (void)stopAdapter {
     [self writeLogMessage:@"Adapter will terminate"];
     [_adapter stopFrom];
+    _isAiccuRunning = FALSE;
 }
 
 - (NSString *)launchAgentPlistPath {

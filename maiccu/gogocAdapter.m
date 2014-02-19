@@ -6,15 +6,16 @@
 //  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
 //
 
-#define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
-
 #import "gogocAdapter.h"
 
-#include <gogocconfig/gogoc_c_wrapper.h>
-//#include <gogocmessaging/clientmsgnotifier.h>
-//#include <gogocmessaging/gogoc_c_wrapper.h>
+#if 1
+//#include <gogocconfig/gogoc_c_wrapper.h>
+#include <gogocconfig/gogocconfig.h>
+#include <gogocconfig/gogocuistrings.h>
+#include <gogocconfig/gogocvalidation.h>
 
-/*
+#else
+
 #include "platform.h"
 #include "gogoc_status.h"
 
@@ -52,6 +53,16 @@
 #define CONSEC_RETRY_TO_DOUBLE_WAIT   3   // Consecutive failed connection retries before doubling wait time.
 #define TSP_VERSION_FALLBACK_DELAY    5
 
+// Local function prototypes:
+void                InitNetToolsArray     ( net_tools_t nt_array[] );
+sint32_t            InitLogSystem         ( const tConf* p_config );
+void                tspLogOSInfo          ( void );
+char *              tspAddPayloadString   ( tPayload *, char * );
+gogoc_status         tspUpdateSourceAddr   ( tConf *Conf, pal_socket_t fd );
+gogoc_status         tspTunnelNegotiation  ( pal_socket_t socket, tTunnel *t,
+                                            tConf *conf, net_tools_t* nt,
+                                            sint32_t version_index,
+                                            tBrokerList **broker_list );
 gogoc_status         tspSetupTunnel        ( tConf *, net_tools_t *,
                                             sint32_t version_index,
                                             tBrokerList **broker_list );
@@ -73,15 +84,13 @@ void tspGetOSInfo( const size_t len, char* buf )
 #endif
     }
 }
-*/
+#endif
 
 @implementation gogocAdapter
 
 - (id)init
 {
     if (self=[super init]) {
-        _task = nil;
-        _postTimer = nil;
         [self setName:@"gogoc"];
         [self setConfigfile:@"gogoc.conf"];
     }
@@ -89,106 +98,74 @@ void tspGetOSInfo( const size_t len, char* buf )
 }
 
 - (BOOL)saveConfig:(NSString *)path {
-    NSDictionary *config = [self config];
+//    NSDictionary *config = [self config];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     [fileManager createDirectoryAtPath:[path stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
 
-    initialize(nstocs(path));
-    return YES;
+    using namespace gogocconfig;
+    BOOL iRet = NO;
+    GOGOCConfig* gpConfig = NULL;
+    
+    try
+    {
+        // Create new instance, initialize...
+        gpConfig = new GOGOCConfig();
+        gpConfig->Initialize( nstocs(path), AM_CREATE );
+        
+        // ...and load configuration data.
+        //iRet = gpConfig->Load() ? 0 : -1;
+    }
+    catch( error_t nErr )
+    {
+        return nErr;
+    }
+    try
+    {
+        std::string str_buf;
+        str_buf = [[self config:@"username"] UTF8String];
+
+        if (str_buf.empty()) {
+            gpConfig->Set_AuthMethod(STR_ANONYMOUS);
+        }
+        else {
+            gpConfig->Set_UserID(str_buf);
+            gpConfig->Set_Passwd(str_buf = [[self config:@"password"] UTF8String]);
+            gpConfig->Set_AuthMethod(STR_ANY);
+        }
+        gpConfig->Set_Server(str_buf = [[self config:@"server"] UTF8String]);
+        gpConfig->Set_TunnelMode(str_buf = [[self config:@"tunnel_id"] UTF8String]);
+        gpConfig->Set_Template("darwin");
+        gpConfig->Set_IfTunV6V4( "gif0" );
+        gpConfig->Set_IfTunV6UDPV4( "tun0" );
+        gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
+        gpConfig->Set_Log("stderr","3");
+
+        // Saves the configuration
+        iRet = gpConfig->Save() ? 0 : -1;
+    }
+    catch (error_t nErr )
+    {
+        iRet = nErr;
+    }
+
+//    delete gpConfig;
+
+    return iRet;
 }
 
-- (NSDictionary *)loadConfigFile:(NSString *)path {
-    NSLog(@"Loading gogoc config file");
-    
-    NSDictionary *config = @{@"username": @"testuser",
-                             @"password": @"testpass",
-                             @"tunnel_id": @""};
-    
-    return config;
-}
-
-- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath
 {
     NSLog(@"startFrom %@ %@", path,configPath);
-    // Is the task running?
-    if (_task) {
-//        [_task interrupt];
-    } else {
-        [self saveConfig:configPath];
-        _statusNotificationCount = 0;
-        _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
-        [_postTimer invalidate];
-        
-        //_status = [[NSMutableString alloc] init];
-        _task = [[NSTask alloc] init];
-        [_task setLaunchPath:path];
-        NSArray *args = @[@"start", configPath];
-		[_task setArguments:args];
-		
-		// Create a new pipe
-		_pipe = [[NSPipe alloc] init];
-		[_task setStandardOutput:_pipe];
-		[_task setStandardError:_pipe];
-        
-		NSFileHandle *fh = [_pipe fileHandleForReading];
-		
-		NSNotificationCenter *nc;
-		nc = [NSNotificationCenter defaultCenter];
-		[nc removeObserver:self];
-		
-		[nc addObserver:self
-			   selector:@selector(dataReady:)
-				   name:NSFileHandleReadCompletionNotification
-				 object:fh];
-		
-		[nc addObserver:self
-			   selector:@selector(taskTerminated:)
-				   name:NSTaskDidTerminateNotification
-				 object:_task];
-		
-		[_task launch];
-        
-		[fh readInBackgroundAndNotify];
-	}
-    return TRUE;
-}
-
-- (void)stopFrom {
-    // Is the task running?
-    if (_task) {
-        [_task interrupt];
-    }
-}
-
-- (NSArray *)requestTunnelList
+#if 1
+    NSString *config = [NSString stringWithFormat:@"%@/%@",configPath, [self configfile]];
+    if ([self saveConfig:config]) {
+        NSLog(@"save config error");
+        return NO;
+    };
+    return [self startFrom:path withConfigDir:configPath withArgs:@[@"-y",@"-n"]];
+#else
 {
-    NSLog(@"Request tunnel list");
-    
-    NSDictionary *tunnelInfo1 =  @{@"id": @"amsterdam.freenet6.net",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"heartbeat",
-                                   @"popid": @"pop01"};
-    NSDictionary *tunnelInfo2 =  @{@"id": @"anon-amsterdam.freenet6.net",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"ayiya",
-                                   @"popid": @"pop02"};
-    
-    return @[tunnelInfo1, tunnelInfo2];
-    //return [NSArray array];
-	
-}
-
-- (NSArray *)requestServerList
-{
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:[self name]][@"username"] length] == 0 ) {
-        return @[@"anonymous.freenet6.net"];
-    }
-    else {
-        return @[@"authenticated.freenet6.net", @"broker.freenet6.net"];
-    }
-
-#if 0
     sint32_t argc = 4;
     char *argv[] = {"","-f","/usr/local/gogoc/bin/gogoc.conf","-y"};
     tConf c;
@@ -211,7 +188,7 @@ void tspGetOSInfo( const size_t len, char* buf )
     // it initialized. Then call the tspInitialize function.
     // ------------------------------------------------------------------------
     memset( &c, 0, sizeof(c) );
-
+    
     status = tspInitialize(argc, argv, &c);
     if( status_number(status) != SUCCESS )
     {
@@ -235,7 +212,7 @@ void tspGetOSInfo( const size_t len, char* buf )
     tspLogOSInfo();
     
     // Keep track of the broker list.
-//    gszBrokerListFile = c.broker_list_file; // For BROKER_LIST gogocmessaging message.
+    //    gszBrokerListFile = c.broker_list_file; // For BROKER_LIST gogocmessaging message.
     
     // Save the original server value.
     strcpy(original_server, c.server);
@@ -1054,8 +1031,30 @@ endtspc:
     LogClose();
     
     
-//    return( status_number(status) );
+    return( status_number(status) );
+}
 #endif
+
+}
+
+- (NSArray *)requestTunnelList
+{
+    NSLog(@"Request tunnel list");
+#ifdef STR_V6ANYV4
+    return @[@STR_V6ANYV4, @STR_V6V4,@STR_V6UDPV4,@STR_V4V6];
+#else
+    return @[@STR_CONFIG_TUNNELMODE_V6ANYV4, @STR_CONFIG_TUNNELMODE_V6V4,@STR_CONFIG_TUNNELMODE_V6UDPV4,@STR_CONFIG_TUNNELMODE_V4V6];
+#endif
+}
+
+- (NSArray *)requestServerList
+{
+    if ([[self config:@"username"] length] == 0 ) {
+        return @[@"anonymous.freenet6.net"];
+    }
+    else {
+        return @[@"authenticated.freenet6.net", @"broker.freenet6.net"];
+    }
 }
 
 @end

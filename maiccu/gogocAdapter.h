@@ -11,11 +11,6 @@
 
 @interface gogocAdapter : genericAdapter {
 @private
-    NSTask *_task;
-    NSPipe *_pipe;
-    NSTimer *_postTimer;
-    NSMutableArray *_statusQueue;
-    NSUInteger _statusNotificationCount;
     BOOL anonymous;
 }
 

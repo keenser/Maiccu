@@ -10,27 +10,16 @@
 #include "tic.h"
 #include "aiccu.h"
 
-#define __cstons(__cstring__)  [NSString stringWithCString:__cstring__ encoding:NSUTF8StringEncoding]
-
-#define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
-
-#define cstons(__cstring__)  [NSString stringWithCString:((__cstring__ != NULL) ?  __cstring__ : "") encoding:NSUTF8StringEncoding]
-
-
-NSString * const TKZAiccuDidTerminate = @"AiccuDidTerminate";
-NSString * const TKZAiccuStatus = @"AiccuStatus";
-
 @implementation TKZAiccuAdapter
 
 
 - (id)init
 {
     if (self=[super init]) {
-        self.tunnelInfo = [[NSDictionary alloc] init];
+//        self.tunnelInfo = [[NSDictionary alloc] init];
+        _tunnelInfoList = [[NSMutableDictionary alloc] init];
         tic = (struct TIC_conf *)malloc(sizeof(struct TIC_conf));
         memset(tic, 0, sizeof(struct TIC_conf));
-        _task = nil;
-        _postTimer = nil;
         
         [self setName:@"aiccu"];
         [self setConfigfile:@"aiccu.conf"];
@@ -75,28 +64,6 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     
     free(g_aiccu);
     return YES;
-}
-
-
-
-
-- (NSDictionary *)loadConfigFile:(NSString *)path {
-    NSLog(@"Loading aiccu config file");
-    g_aiccu = NULL;
-    aiccu_InitConfig();
-    if (!aiccu_LoadConfig(nstocs(path)) ){
-        NSLog(@"Unable to load aiccu config file");
-        aiccu_FreeConfig();
-        return nil;
-    }
-    
-    NSDictionary *config = @{@"username": cstons(g_aiccu->username),
-                            @"password": cstons(g_aiccu->password),
-                            @"tunnel_id": cstons(g_aiccu->tunnel_id)};
-    
-    aiccu_FreeConfig();
-    
-    return config;
 }
 
 #if 0
@@ -166,7 +133,6 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     NSString *username = [self config][@"username"];
     NSString *password = [self config][@"password"];
     
-//    withUsername:(NSString *)username andPassword:(NSString *)password
     errCode = tic_Login(tic, nstocs(username), nstocs(password), nstocs(server));
     
     if (errCode != true){ 
@@ -225,127 +191,12 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return @[@"tic.sixxs.net"];
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath
 {
-    // Is the task running?
-    if (_task) {
-//        [_task interrupt];
-    } else {
-        
-        _statusNotificationCount = 0;
-        _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
-        [_postTimer invalidate];
-        
-        //_status = [[NSMutableString alloc] init];
-        _task = [[NSTask alloc] init];
-        [_task setLaunchPath:path];
-        NSArray *args = @[@"start", configPath];
-		[_task setArguments:args];
-		
-		// Create a new pipe
-		_pipe = [[NSPipe alloc] init];
-		[_task setStandardOutput:_pipe];
-		[_task setStandardError:_pipe];
-        
-		NSFileHandle *fh = [_pipe fileHandleForReading];
-		
-		NSNotificationCenter *nc;
-		nc = [NSNotificationCenter defaultCenter];
-		[nc removeObserver:self];
-		
-		[nc addObserver:self
-			   selector:@selector(dataReady:)
-				   name:NSFileHandleReadCompletionNotification
-				 object:fh];
-		
-		[nc addObserver:self
-			   selector:@selector(taskTerminated:)
-				   name:NSTaskDidTerminateNotification
-				 object:_task];
-		
-		[_task launch];
-				
-		[fh readInBackgroundAndNotify];
-	}
-    return TRUE;
+    return [self startFrom:path withConfigDir:configPath withArgs:@[@"start", [self name]]];
 }
 
 - (void)stopFrom {
-    // Is the task running?
-    if (_task) {
-        [_task interrupt];
-    }
-}
-
-- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
-    [array removeLastObject];
-    [array insertObject:object atIndex:0];
-}
-
-- (void)dataReady:(NSNotification *)n
-{
-    NSData *d;
-    d = [[n userInfo] valueForKey:NSFileHandleNotificationDataItem];
-	    
-	if ([d length]) {
-        
-         NSString *s = [[NSString alloc] initWithData:d
-                                            encoding:NSUTF8StringEncoding];
-        [self shiftFIFOArray:_statusQueue withObject:s];
-        
-        [_postTimer invalidate];        
-        _statusNotificationCount++;
-        
-        if (_statusNotificationCount >= [_statusQueue count] - 1) {
-            if(!(_statusNotificationCount % 500)) {
-                [_postTimer invalidate];
-                [self postAiccuStatusNotification];
-            }
-            else {
-                _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
-            }
-        }
-        else {
-            
-            [self postAiccuStatusNotification];
-        }
-
-        
-    }
-    
-	// If the task is running, start reading again
-    if (_task)
-        [[_pipe fileHandleForReading] readInBackgroundAndNotify];
-}
-
-
-- (void)postAiccuStatusNotification {
-    
-    NSMutableString *wholeMessage = [[NSMutableString alloc] init];
-    for (NSString *message in _statusQueue) {
-        [wholeMessage appendString:message];
-    }
-    
-    if (![wholeMessage isEqualToString:@""]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
-    }
-    
-    _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
-
-}
-
-- (void)resetStatusNotificationCount {
-    _statusNotificationCount = 0;
-    [self postAiccuStatusNotification];
-}
-
-- (void)taskTerminated:(NSNotification *)note
-{
-    //NSLog(@"taskTerminated:");
-	
-    [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
-	_task = nil;
-    //[startButton setState:0];
 }
 
 - (void)showSheet:(NSWindow*)window {
@@ -372,7 +223,6 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     
     errorCode = [self loginToTicServer];
     
-    [[sheet window] sheetParent];
     //[_tunnelPopUp removeAllItems];
     //[_tunnelInfoList removeAllObjects];
     
@@ -386,7 +236,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         
         double progressInc = 40.0f / [tunnelList count];        
         
-        NSUInteger tunnelSelectIndex = 0;
+        //NSUInteger tunnelSelectIndex = 0;
         
          for (NSDictionary *tunnel in tunnelList)
          {
@@ -465,7 +315,8 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:sheetControllerStatus object:@"doLoginComplite"];
+
     /*
     if (!errorCode) {
         [NSThread sleepForTimeInterval:0.1f];
@@ -473,6 +324,11 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         [self toolbarWasClicked:_setupItem];
     }
     */
+}
+
+- (BOOL)forNat {
+    NSString *currentTunnel = [self config:@"tunnel"];
+    return [_tunnelInfoList[currentTunnel][@"type"] isEqualToString:@"ayiya"];
 }
 
 @end
