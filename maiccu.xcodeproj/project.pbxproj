@@ -94,6 +94,7 @@
 		7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0018AE65B600536814 /* tsp_net.c */; };
 		7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0118AE65B600536814 /* tsp_redirect.c */; };
 		7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0318AE65B600536814 /* tsp_tun_mgt.c */; };
+		7E58A98B18B651D2009D7FF9 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0218AE65B600536814 /* tsp_setup.c */; };
 		7EA188FA18B4965A00943303 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
 		7EA188FB18B4965E00943303 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
 		7EA188FC18B4968200943303 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
@@ -401,6 +402,7 @@
 		7EA1892C18B4FD6F00943303 /* unix-main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "unix-main.c"; sourceTree = "<group>"; };
 		7EA1892F18B4FE6400943303 /* os_uname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_uname.h; sourceTree = "<group>"; };
 		7EA1893618B5088E00943303 /* tsp_setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tsp_setup.c; sourceTree = "<group>"; };
+		7EA1893A18B52FF400943303 /* client-hook */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "client-hook"; path = "miredo/client-hook"; sourceTree = "<group>"; };
 		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
 		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gogocAdapter.m; sourceTree = "<group>"; };
 		7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genericAdapter.h; sourceTree = "<group>"; };
@@ -1029,6 +1031,7 @@
 		7EA1893918B5222A00943303 /* miredo */ = {
 			isa = PBXGroup;
 			children = (
+				7EA1893A18B52FF400943303 /* client-hook */,
 			);
 			name = miredo;
 			sourceTree = "<group>";
@@ -1334,6 +1337,7 @@
 				7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */,
 				7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */,
 				7EA1893718B5088E00943303 /* tsp_setup.c in Sources */,
+				7E58A98B18B651D2009D7FF9 /* tsp_setup.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1494,6 +1498,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"_DARWIN=1",
+					"NEED_IFHEAD=1",
+					"AICCU_TYPE=\"\\\"darwin\\\"\"",
+					"AICCU_PATCH=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -1846,6 +1856,7 @@
 				7EA1892818B4FC1800943303 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

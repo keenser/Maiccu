@@ -1,0 +1,38 @@
+#! /bin/sh
+#
+# Miredo client hook script for BSD
+
+IFCONFIG=/sbin/ifconfig
+ROUTE=/sbin/route
+
+if ! test -x "$IFCONFIG"; then
+        echo "$0: $IFCONFIG is required!" >&2
+        exit 1
+fi
+
+if ! test -x "$ROUTE"; then
+        echo "$0: $ROUTE is required!" >&2
+        exit 1
+fi
+
+case "$STATE" in
+	up)
+		if [ -n "${OLD_ADDRESS}" ] ; then
+			"$IFCONFIG" "$IFACE" inet6 "${OLD_ADDRESS}" -alias
+		fi
+		"$IFCONFIG" "$IFACE" up
+		"$IFCONFIG" "$IFACE" inet6 "${LLADDRESS}/64"
+		"$IFCONFIG" "$IFACE" inet6 "${ADDRESS}/128"
+		"$ROUTE" delete -inet6 default
+		"$ROUTE" add -inet6 default -iface "$IFACE"
+		;;
+	down)
+		"$IFCONFIG" "$IFACE" inet6 "${OLD_ADDRESS}" -alias
+		"$IFCONFIG" "$IFACE" down
+		;;
+	destroy)
+esac
+
+killall -HUP lookupd DirectoryService
+
+exit 0
