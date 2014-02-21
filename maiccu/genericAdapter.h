@@ -19,6 +19,7 @@ extern NSString * const TKZAiccuStatus;
 #define cstons(__cstring__)  [NSString stringWithCString:((__cstring__ != NULL) ?  __cstring__ : "") encoding:NSUTF8StringEncoding]
 
 @interface genericAdapter : NSObject {
+    BOOL validCredentials;
 @private
     NSTask *_task;
     NSPipe *_pipe;
@@ -31,9 +32,8 @@ extern NSString * const TKZAiccuStatus;
 @property (strong) NSString *configfile;
 @property (strong) NSMenuItem *view;
 
-- (NSArray *)requestTunnelList;
-- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel;
-- (NSArray *)requestServerList;
+- (NSArray *)tunnelList;
+- (NSArray *)serverList;
 - (void)showSheet:(NSWindow*)window;
 
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path;
@@ -46,5 +46,8 @@ extern NSString * const TKZAiccuStatus;
 - (NSString *)config:(NSString*)key;
 - (NSDictionary *)config;
 - (BOOL)forNat;
+- (BOOL)isRunning;
+- (BOOL)isValid;
+- (NSDictionary*)tunnelInfo;
 
 @end

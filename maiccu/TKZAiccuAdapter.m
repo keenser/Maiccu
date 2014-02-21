@@ -16,8 +16,8 @@
 - (id)init
 {
     if (self=[super init]) {
-//        self.tunnelInfo = [[NSDictionary alloc] init];
-        _tunnelInfoList = [[NSMutableDictionary alloc] init];
+        validCredentials = NO;
+        _tunnelList = [[NSMutableDictionary alloc] init];
         tic = (struct TIC_conf *)malloc(sizeof(struct TIC_conf));
         memset(tic, 0, sizeof(struct TIC_conf));
         
@@ -92,10 +92,10 @@
                             @"uses_tundev": @(hTunnel->uses_tundev)};
 }
 
-- (NSArray *)requestTunnelList
+- (NSDictionary *)requestTunnelList
 {
     struct TIC_sTunnel *hsTunnel, *t;
-    NSMutableArray *tunnels = [[NSMutableArray alloc] init];
+    NSMutableDictionary *tunnels = [[NSMutableDictionary alloc] init];
     
 	//if (!tic_Login(g_aiccu->tic, g_aiccu->username, g_aiccu->password, g_aiccu->server)) return 0;
     
@@ -112,13 +112,14 @@
 	for (t = hsTunnel; t; t = t->next)
 	{
 		//printf("%s %s %s %s\n", t->sId, t->sIPv6, t->sIPv4, t->sPOPId);
-        NSDictionary *tunnelInfo =  @{@"id": cstons(t->sId),
+        NSMutableDictionary *tunnelInfo =  [NSMutableDictionary dictionaryWithDictionary:@{
+                                    @"id": cstons(t->sId),
                                     @"ipv6": cstons(t->sIPv6),
                                     @"ipv4": cstons(t->sIPv4),
-                                    @"popid": cstons(t->sPOPId)};
+                                    @"popid": cstons(t->sPOPId)}];
         
         //build an array of NSDictionary
-        [tunnels addObject:tunnelInfo];
+        tunnels[tunnelInfo[@"id"]] = tunnelInfo;
 	}
     
 	tic_Free_sTunnel(hsTunnel);
@@ -150,20 +151,67 @@
 
 #else
 
-- (NSArray *)requestTunnelList
+//this is a static test method for requestTunnelInfoForTunnel
+- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
+    
+    NSLog(@"Request tunnel info");
+    
+    if ([tunnel isEqualToString:@"T12345"]) {
+        
+        return @{@"id": @"T12345",
+                 @"ipv4_local": @"heartbeat",
+                 @"ipv6_local": @"2a01:1234:5678:2c0::2",
+                 @"ipv4_pop": @"1.2.3.4",
+                 @"ipv6_pop": @"123:1233:232:1",
+                 @"ipv6_linklocal": @"",
+                 @"password": @"bablablabalbal",
+                 @"pop_id": @"popid01",
+                 @"type": @"6in4-heartbeat",
+                 @"userstate": @"enabled",
+                 @"adminstate": @"enabled",
+                 @"heartbeat_intervall": @60U,
+                 @"ipv6_prefixlength": @64U,
+                 @"mtu": @1280U,
+                 @"uses_tundev": @0U};
+        
+    }
+    else if ([tunnel isEqualToString:@"T67890"]) {
+        return @{@"id": @"T67890",
+                 @"ipv4_local": @"ayiya",
+                 @"ipv6_local": @"2a01:2001:2000::1",
+                 @"ipv4_pop": @"1.2.3.4",
+                 @"ipv6_pop": @"2a01::1",
+                 @"ipv6_linklocal": @"",
+                 @"password": @"blablabla",
+                 @"pop_id": @"popo02",
+                 @"type": @"ayiya",
+                 @"userstate": @"enabled",
+                 @"adminstate": @"enabled",
+                 @"heartbeat_intervall": @60U,
+                 @"ipv6_prefixlength": @64U,
+                 @"mtu": @1280U,
+                 @"uses_tundev": @1U};
+        
+        
+    }
+    
+    return nil;
+}
+
+- (NSDictionary *)requestTunnelList
 {
     NSLog(@"Request tunnel list");
     
-    NSDictionary *tunnelInfo1 =  @{@"id": @"T12345",
+    NSMutableDictionary *tunnelInfo1 = [NSMutableDictionary dictionaryWithDictionary:@{@"id": @"T12345",
                                    @"ipv6": @"2a01::2",
                                    @"ipv4": @"heartbeat",
-                                   @"popid": @"pop01"};
-    NSDictionary *tunnelInfo2 =  @{@"id": @"T67890",
+                                   @"popid": @"pop01"}];
+    NSMutableDictionary *tunnelInfo2 =  [NSMutableDictionary dictionaryWithDictionary:@{@"id": @"T67890",
                                    @"ipv6": @"2a01::2",
                                    @"ipv4": @"ayiya",
-                                   @"popid": @"pop02"};
+                                   @"popid": @"pop02"}];
     
-    return @[tunnelInfo1, tunnelInfo2];
+    return @{tunnelInfo1[@"id"]:tunnelInfo1, tunnelInfo2[@"id"]:tunnelInfo2};
 }
 
 - (NSInteger) loginToTicServer
@@ -186,7 +234,12 @@
 
 #endif
 
-- (NSArray *)requestServerList
+- (NSArray *)tunnelList
+{
+    return [_tunnelList allKeys];
+}
+
+- (NSArray *)serverList
 {
     return @[@"tic.sixxs.net"];
 }
@@ -196,20 +249,17 @@
     return [self startFrom:path withConfigDir:configPath withArgs:@[@"start", [self name]]];
 }
 
-- (void)stopFrom {
-}
-
 - (void)showSheet:(NSWindow*)window {
     TKZSheetController *sheet = [[TKZSheetController alloc] init];
 
     [NSApp beginSheet:[sheet window] modalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
     [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
-//    [self doLogin:sheet];
 }
 
 - (void)doLogin:(TKZSheetController *)sheet {
     
     NSInteger errorCode = 0;
+    NSString *notificationMessage;
     
     [[sheet window] makeKeyAndOrderFront:nil];
     [[sheet window] display];
@@ -223,112 +273,68 @@
     
     errorCode = [self loginToTicServer];
     
-    //[_tunnelPopUp removeAllItems];
-    //[_tunnelInfoList removeAllObjects];
-    
+    [_tunnelList removeAllObjects];
+
     if (!errorCode) {
         
         [[sheet statusLabel] setStringValue:@"Retrieving tunnel list..."];
         [[sheet progressIndicator] setDoubleValue:50.0f];
         [NSThread sleepForTimeInterval:0.5f];
         
-        NSArray *tunnelList = [self requestTunnelList];
-        
-        double progressInc = 40.0f / [tunnelList count];        
+        [_tunnelList addEntriesFromDictionary:[self requestTunnelList]];
+
+        double progressInc = 40.0f / [_tunnelList count];
         
         //NSUInteger tunnelSelectIndex = 0;
-        
-         for (NSDictionary *tunnel in tunnelList)
+        NSArray *tunnels = [_tunnelList allKeys];
+         for (id tunnel in tunnels)
          {
              //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
          
              [[sheet statusLabel] setStringValue:@"Fetching tunnel info..."];
              [[sheet progressIndicator] incrementBy:progressInc];
              [NSThread sleepForTimeInterval:0.2f];
-         
-             //[_tunnelInfoList addObject:[_adapter requestTunnelInfoForTunnel:tunnel[@"id"]]];
-         
-             //[_tunnelPopUp addItemWithTitle:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel[@"id"], [_tunnelInfoList lastObject][@"type"]]];
-         
-             //if ([_config[@"tunnel_id"] isEqualToString:tunnel[@"id"]]) {
-             //    tunnelSelectIndex = [_tunnelInfoList count] - 1;
-             //}
+             
+             [_tunnelList[tunnel] addEntriesFromDictionary:[self requestTunnelInfoForTunnel:tunnel]];
+             [_tunnelList setObject:[_tunnelList objectForKey:tunnel]
+                             forKey:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel, _tunnelList[tunnel][@"type"]]];
+             [_tunnelList removeObjectForKey: tunnel];
          }
         
-        /*
-         if ([tunnelList count]) {
-         [_tunnelPopUp setEnabled:YES];
-         [_infoButton setEnabled:YES];
-         [_natDetectButton setEnabled:YES];
-         [_exportButton setEnabled:YES];
-         
-         _config[@"tunnel_id"] = _tunnelInfoList[tunnelSelectIndex][@"id"];
-         [_tunnelPopUp selectItemAtIndex:tunnelSelectIndex];
-         
-         //refesh popover menu
-         [self tunnelPopUpHasChanged:nil];
-         
-         }
-         else {
-             [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
-             [_tunnelPopUp setEnabled:NO];
-             [_infoButton setEnabled:NO];
-             [_natDetectButton setEnabled:NO];
-             [_exportButton setEnabled:NO];
-         }
-        */
         [[sheet statusLabel] setStringValue:@"Successfully completed."];
         [[sheet progressIndicator] incrementBy:100.0f];
         [NSThread sleepForTimeInterval:0.5f];
-        /*
-        [_usernameMarker setHidden:YES];
-        [_passwordMarker setHidden:YES];
-        */
         
+        validCredentials = YES;
+        notificationMessage = @"doLoginComplite";
     }
     //if something went wrong
     else {
-        /*
-        [_config removeAllObjects];
-        
         [[sheet statusLabel] setStringValue:@"Invalid login credentials"];
         [[sheet statusLabel] setTextColor:[NSColor redColor]];
         [[sheet progressIndicator] setIndeterminate:YES];
         [NSThread sleepForTimeInterval:2.0f];
         
-        
-        [_passwordField becomeFirstResponder];
-        
-        [_tunnelPopUp setEnabled:NO];
-        [_infoButton setEnabled:NO];
-        [_natDetectButton setEnabled:NO];
-        [_exportButton setEnabled:NO];
-        
-        [_usernameMarker setHidden:NO];
-        [_passwordMarker setHidden:NO];
-        */
+        validCredentials = NO;
+        notificationMessage = @"doLoginError";
     }
-    
     
     [self logoutFromTicServerWithMessage:@"Bye Bye"];
     
-    
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:sheetControllerStatus object:@"doLoginComplite"];
-
-    /*
-    if (!errorCode) {
-        [NSThread sleepForTimeInterval:0.1f];
-        [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
-        [self toolbarWasClicked:_setupItem];
-    }
-    */
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:sheetControllerStatus object:notificationMessage];
 }
 
 - (BOOL)forNat {
-    NSString *currentTunnel = [self config:@"tunnel"];
-    return [_tunnelInfoList[currentTunnel][@"type"] isEqualToString:@"ayiya"];
+    NSString *currentTunnel = [self config:@"tunnel_id"];
+    return [_tunnelList[currentTunnel][@"type"] isEqualToString:@"ayiya"];
+}
+
+- (NSDictionary*)tunnelInfo {
+    NSString *currentTunnel = [self config:@"tunnel_id"];
+    return _tunnelList[currentTunnel];
 }
 
 @end
