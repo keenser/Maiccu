@@ -286,7 +286,7 @@
         double progressInc = 40.0f / [_tunnelList count];
         
         //NSUInteger tunnelSelectIndex = 0;
-        NSArray *tunnels = [_tunnelList allKeys];
+        NSArray *tunnels = [self tunnelList];
          for (id tunnel in tunnels)
          {
              //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
