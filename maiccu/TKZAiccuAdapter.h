@@ -12,7 +12,7 @@
 @interface TKZAiccuAdapter : genericAdapter {
 @private
     struct TIC_conf	*tic;
-    NSMutableDictionary *_tunnelInfoList;
+    NSMutableDictionary *_tunnelList;
 }
 
 //@property (strong) NSDictionary *tunnelInfo;

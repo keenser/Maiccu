@@ -15,10 +15,10 @@
     NSFileManager *_fileManager;
     TKZAiccuAdapter *_aiccu;
     gogocAdapter *_gogoc;
-    BOOL _isAiccuRunning;
 }
 
 @property (strong) genericAdapter *adapter;
+@property (strong) genericAdapter *runningAdapter;
 
 - (NSString *) aiccuConfigPath;
 - (BOOL) aiccuConfigExists;
@@ -42,11 +42,6 @@
 - (void) setGogocView:(NSMenuItem *)View;
 - (void) setAdapterView:(NSMenuItem *)View;
 - (NSMenuItem *) adapterView;
-
-//- (NSString *)adapterConfig:(NSString*)key;
-//- (NSDictionary *)adapterConfig;
-//- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
-//- (NSArray*)serverList;
 
 + (id)defaultMaiccu;
 @end

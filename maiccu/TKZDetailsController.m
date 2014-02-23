@@ -97,9 +97,6 @@
 
 - (void)awakeFromNib {
     NSLog(@"awakeFromNib");
-    //[_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
-    //[self toolbarWasClicked:_accountItem];
-    
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
@@ -123,16 +120,49 @@
     [_startupCheckbox setState:[_maiccu isLaunchAgent]];
     
     [_serverField removeAllItems];
-    [_serverField addItemsWithObjectValues:[[_maiccu adapter] requestServerList]];
+    [_serverField addItemsWithObjectValues:[[_maiccu adapter] serverList]];
     [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
     
-    [_tunnelPopUp removeAllItems];
-    [_tunnelPopUp addItemsWithTitles:[[_maiccu adapter] requestTunnelList]];
-    [_tunnelPopUp setEnabled:YES];
+    [self sheetNotification:nil];
 }
 
 - (void)sheetNotification:(NSNotification *)aNotification {
     NSLog(@"sheetNotification %@", aNotification);
+    
+    if ([[_maiccu adapter] isValid]) {
+        [_usernameMarker setHidden:YES];
+        [_passwordMarker setHidden:YES];
+
+        [_tunnelPopUp removeAllItems];
+        if ([[[_maiccu adapter] tunnelList] count]) {
+            [_tunnelPopUp addItemsWithTitles:[[_maiccu adapter] tunnelList]];
+            [_tunnelPopUp selectItemWithTitle:[[_maiccu adapter]config:@"tunnel_id"]];
+            [_tunnelPopUp setEnabled:YES];
+
+            [_infoButton setEnabled:YES];
+            [_natDetectButton setEnabled:YES];
+            [_exportButton setEnabled:YES];
+        }
+        else {
+            [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
+            [_tunnelPopUp setEnabled:NO];
+
+            [_infoButton setEnabled:NO];
+            [_natDetectButton setEnabled:NO];
+            [_exportButton setEnabled:NO];
+        }
+    }
+    else {
+        [_passwordField becomeFirstResponder];
+        
+        [_tunnelPopUp setEnabled:NO];
+        [_infoButton setEnabled:NO];
+        [_natDetectButton setEnabled:NO];
+        [_exportButton setEnabled:NO];
+        
+        [_usernameMarker setHidden:NO];
+        [_passwordMarker setHidden:NO];
+    }
 }
 
 - (void)doNATDetection:(TKZSheetController *)sheet {
@@ -186,8 +216,6 @@
 
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
-    
-    [self syncConfig];
 }
 
 - (IBAction)logButtonWasClicked:(id)sender {
@@ -232,27 +260,34 @@
 }
 
 - (IBAction)infoWasClicked:(id)sender {
+    NSLog(@"infoWasClicked");
     if ([sender state]) {
+        NSDictionary *tunnelInfo = [[_maiccu adapter] tunnelInfo];
+        
+        //set text in popup view
+        [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];
+        [_tunnelInfoField setStringValue:[NSString stringWithFormat:
+                                          @"Popid     : %@\n"
+                                          @"Type      : %@\n\n"
+                                          @"IPv4 local: %@\n"
+                                          @"IPv4 pop  : %@\n\n"
+                                          @"IPv6 local: %@/%@\n"
+                                          @"IPv6 pop  : %@/%@\n\n"
+                                          @"MTU       : %@"
+                                          ,
+                                          tunnelInfo[@"pop_id"],
+                                          tunnelInfo[@"type"],
+                                          tunnelInfo[@"ipv4_local"],
+                                          tunnelInfo[@"ipv4_pop"],
+                                          tunnelInfo[@"ipv6_local"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
+                                          tunnelInfo[@"ipv6_pop"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
+                                          [tunnelInfo[@"mtu"] stringValue]
+                                          ]];
+
         [_tunnelPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
     }
     else {
         [_tunnelPopOver close];
-    }
-}
-
-- (void)windowWillClose:(NSNotification *)notification {
-    [self syncConfig];
-}
-
-
-- (void)syncConfig {
-    if ([_config count]) {
-        //NSLog(@"saving aiccu config");
-        //[_adapter saveConfig:_config toFile:[_maiccu aiccuConfigPath]];
-    }
-    else {
-        //NSLog(@"deleting aiccu config");
-        //[[NSFileManager defaultManager] removeItemAtPath:[_maiccu aiccuConfigPath] error:nil];
     }
 }
 
@@ -262,34 +297,6 @@
 
 - (IBAction)tunnelPopUpHasChanged:(id)sender {
     [[_maiccu adapter]setConfig:[_tunnelPopUp titleOfSelectedItem] toKey:@"tunnel_id"];
-/*
-    //
-    NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];
-    
-    //set current tunnel id
-    //_config[@"tunnel_id"] = tunnelInfo[@"id"];
-    
-    //set text in popup view
-    [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];
-    [_tunnelInfoField setStringValue:[NSString stringWithFormat:
-                               @"Popid     : %@\n"
-                               @"Type      : %@\n\n"
-                               @"IPv4 local: %@\n"
-                               @"IPv4 pop  : %@\n\n"
-                               @"IPv6 local: %@/%@\n"
-                               @"IPv6 pop  : %@/%@\n\n"
-                               @"MTU       : %@"
-                               ,
-                               tunnelInfo[@"pop_id"],
-                               tunnelInfo[@"type"],
-                               tunnelInfo[@"ipv4_local"],
-                               tunnelInfo[@"ipv4_pop"],
-                               tunnelInfo[@"ipv6_local"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
-                               tunnelInfo[@"ipv6_pop"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
-                               [tunnelInfo[@"mtu"] stringValue]
-                               ]];
-    [self syncConfig];
- */
 }
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {

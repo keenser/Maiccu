@@ -95,11 +95,6 @@
 		7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0018AE65B600536814 /* tsp_net.c */; };
 		7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0118AE65B600536814 /* tsp_redirect.c */; };
 		7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0318AE65B600536814 /* tsp_tun_mgt.c */; };
-		7E58A98B18B651D2009D7FF9 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0218AE65B600536814 /* tsp_setup.c */; };
-		7EA188FA18B4965A00943303 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
-		7EA188FB18B4965E00943303 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
-		7EA188FC18B4968200943303 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
-		7EA1891B18B4CD6500943303 /* darwin.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7EA1890018B4CCAF00943303 /* darwin.sh */; };
 		7EA1892918B4FC4F00943303 /* gogoc in Resources */ = {isa = PBXBuildFile; fileRef = 7EA1892018B4FC1600943303 /* gogoc */; };
 		7EA1892E18B4FD6F00943303 /* unix-main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EA1892C18B4FD6F00943303 /* unix-main.c */; };
 		7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
@@ -137,16 +132,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7EA1891A18B4CD5000943303 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = template;
-			dstSubfolderSpec = 7;
-			files = (
-				7EA1891B18B4CD6500943303 /* darwin.sh in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,13 +406,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EA188FC18B4968200943303 /* libcrypto.dylib in Frameworks */,
 				7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */,
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
-				7E4CBD6218B259E100536814 /* libgogoc-pal.a in Frameworks */,
-				7EA188FA18B4965A00943303 /* libgogoc-tsp.a in Frameworks */,
-				7EA188FB18B4965E00943303 /* libgogoc-messaging.a in Frameworks */,
 				7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1029,7 +1010,6 @@
 		7EA1892A18B4FD6F00943303 /* unix-common */ = {
 			isa = PBXGroup;
 			children = (
-				7EA1892F18B4FE6400943303 /* os_uname.h */,
 				7EA1892C18B4FD6F00943303 /* unix-main.c */,
 			);
 			path = "unix-common";
@@ -1085,7 +1065,6 @@
 				6D949025173514E2002283B0 /* Frameworks */,
 				6D949026173514E2002283B0 /* Resources */,
 				6D9A463F17493AE2008389B4 /* CopyFiles */,
-				7EA1891A18B4CD5000943303 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1188,6 +1167,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7EA1892618B4FC1800943303 /* Build configuration list for PBXNativeTarget "gogoc" */;
 			buildPhases = (
+				7E4CBD6818B743AD00536814 /* ShellScript */,
 				7EA1891C18B4FC1600943303 /* Sources */,
 				7EA1891D18B4FC1600943303 /* Frameworks */,
 				7EA1891E18B4FC1600943303 /* CopyFiles */,
@@ -1273,6 +1253,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		7E4CBD6818B743AD00536814 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/os_uname.sh",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"#define OS_UNAME_INFO \\\"`uname -a`\\\"\" > $DERIVED_FILE_DIR/os_uname.h";
 		};
 /* End PBXShellScriptBuildPhase section */
 

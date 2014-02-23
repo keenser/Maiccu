@@ -34,7 +34,6 @@ Copyright (c) 2001-2007 gogo6 Inc. All rights reserved.
 
 
 /* Execute cmd and send output to log subsystem */
-/*
 sint32_t execScript( const char *cmd )
 {
   char buf[1024];
@@ -70,7 +69,7 @@ sint32_t execScript( const char *cmd )
 
   return retVal;
 }
-*/
+
 
 // --------------------------------------------------------------------------
 // This function validates the information found in the tunnel information
