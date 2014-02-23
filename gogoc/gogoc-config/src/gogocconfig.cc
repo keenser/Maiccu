@@ -202,7 +202,7 @@ namespace gogocconfig
 GOGOCConfig::GOGOCConfig( void ) :
   m_pConfig(NULL),
   m_sDfltCfgFile(""),
-  m_bValid(false)
+  m_bValid(true)
 {
   m_lsValidationErrors.clear();
 }

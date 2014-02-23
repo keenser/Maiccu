@@ -8,9 +8,11 @@
 
 #import "TKZSheetController.h"
 
-@interface TKZSheetController ()
+//@interface TKZSheetController ()
 
-@end
+//@end
+
+NSString * const sheetControllerStatus = @"sheetControllerStatus";
 
 @implementation TKZSheetController
 

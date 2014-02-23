@@ -10,30 +10,19 @@
 #include "tic.h"
 #include "aiccu.h"
 
-#define __cstons(__cstring__)  [NSString stringWithCString:__cstring__ encoding:NSUTF8StringEncoding]
-
-#define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
-
-#define cstons(__cstring__)  [NSString stringWithCString:((__cstring__ != NULL) ?  __cstring__ : "") encoding:NSUTF8StringEncoding]
-
-
-NSString * const TKZAiccuDidTerminate = @"AiccuDidTerminate";
-NSString * const TKZAiccuStatus = @"AiccuStatus";
-
 @implementation TKZAiccuAdapter
 
 
 - (id)init
 {
     if (self=[super init]) {
-        self.tunnelInfo = [[NSDictionary alloc] init];
+        validCredentials = NO;
+        _tunnelList = [[NSMutableDictionary alloc] init];
         tic = (struct TIC_conf *)malloc(sizeof(struct TIC_conf));
         memset(tic, 0, sizeof(struct TIC_conf));
-        _task = nil;
-        _postTimer = nil;
         
         [self setName:@"aiccu"];
-        [self setConfig:@"aiccu.conf"];
+        [self setConfigfile:@"aiccu.conf"];
     }
     return self;
 }
@@ -77,30 +66,8 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return YES;
 }
 
-
-
-
-- (NSDictionary *)loadConfigFile:(NSString *)path {
-    NSLog(@"Loading aiccu config file");
-    g_aiccu = NULL;
-    aiccu_InitConfig();
-    if (!aiccu_LoadConfig(nstocs(path)) ){
-        NSLog(@"Unable to load aiccu config file");
-        aiccu_FreeConfig();
-        return nil;
-    }
-    
-    NSDictionary *config = @{@"username": cstons(g_aiccu->username),
-                            @"password": cstons(g_aiccu->password),
-                            @"tunnel_id": cstons(g_aiccu->tunnel_id)};
-    
-    aiccu_FreeConfig();
-    
-    return config;
-}
-
-
-- (NSDictionary *)__requestTunnelInfoForTunnel:(NSString *)tunnel {
+#if 0
+- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
     struct TIC_Tunnel *hTunnel;
     
     hTunnel = tic_GetTunnel(tic, nstocs(tunnel));
@@ -125,14 +92,10 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
                             @"uses_tundev": @(hTunnel->uses_tundev)};
 }
 
-
-
-
-
-- (NSArray *)__requestTunnelList
+- (NSDictionary *)requestTunnelList
 {
     struct TIC_sTunnel *hsTunnel, *t;
-    NSMutableArray *tunnels = [[NSMutableArray alloc] init];
+    NSMutableDictionary *tunnels = [[NSMutableDictionary alloc] init];
     
 	//if (!tic_Login(g_aiccu->tic, g_aiccu->username, g_aiccu->password, g_aiccu->server)) return 0;
     
@@ -149,13 +112,14 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 	for (t = hsTunnel; t; t = t->next)
 	{
 		//printf("%s %s %s %s\n", t->sId, t->sIPv6, t->sIPv4, t->sPOPId);
-        NSDictionary *tunnelInfo =  @{@"id": cstons(t->sId),
+        NSMutableDictionary *tunnelInfo =  [NSMutableDictionary dictionaryWithDictionary:@{
+                                    @"id": cstons(t->sId),
                                     @"ipv6": cstons(t->sIPv6),
                                     @"ipv4": cstons(t->sIPv4),
-                                    @"popid": cstons(t->sPOPId)};
+                                    @"popid": cstons(t->sPOPId)}];
         
         //build an array of NSDictionary
-        [tunnels addObject:tunnelInfo];
+        tunnels[tunnelInfo[@"id"]] = tunnelInfo;
 	}
     
 	tic_Free_sTunnel(hsTunnel);
@@ -163,11 +127,13 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return tunnels;
 }
 
-- (NSInteger) __loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password
+- (NSInteger) loginToTicServer
 {
-    //struct TIC_conf	*tic;
     NSInteger errCode;
-
+    NSString *server = [self config][@"server"];
+    NSString *username = [self config][@"username"];
+    NSString *password = [self config][@"password"];
+    
     errCode = tic_Login(tic, nstocs(username), nstocs(password), nstocs(server));
     
     if (errCode != true){ 
@@ -177,138 +143,198 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return 0;
 }
 
-- (void) __logoutFromTicServerWithMessage:(NSString *)message
+- (void) logoutFromTicServerWithMessage:(NSString *)message
 {
     tic_Logout(tic, nstocs(message));
     memset(tic, 0, sizeof(struct TIC_conf));
 }
 
-- (NSArray *)requestServerList
+#else
+
+//this is a static test method for requestTunnelInfoForTunnel
+- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
+    
+    NSLog(@"Request tunnel info");
+    
+    if ([tunnel isEqualToString:@"T12345"]) {
+        
+        return @{@"id": @"T12345",
+                 @"ipv4_local": @"heartbeat",
+                 @"ipv6_local": @"2a01:1234:5678:2c0::2",
+                 @"ipv4_pop": @"1.2.3.4",
+                 @"ipv6_pop": @"123:1233:232:1",
+                 @"ipv6_linklocal": @"",
+                 @"password": @"bablablabalbal",
+                 @"pop_id": @"popid01",
+                 @"type": @"6in4-heartbeat",
+                 @"userstate": @"enabled",
+                 @"adminstate": @"enabled",
+                 @"heartbeat_intervall": @60U,
+                 @"ipv6_prefixlength": @64U,
+                 @"mtu": @1280U,
+                 @"uses_tundev": @0U};
+        
+    }
+    else if ([tunnel isEqualToString:@"T67890"]) {
+        return @{@"id": @"T67890",
+                 @"ipv4_local": @"ayiya",
+                 @"ipv6_local": @"2a01:2001:2000::1",
+                 @"ipv4_pop": @"1.2.3.4",
+                 @"ipv6_pop": @"2a01::1",
+                 @"ipv6_linklocal": @"",
+                 @"password": @"blablabla",
+                 @"pop_id": @"popo02",
+                 @"type": @"ayiya",
+                 @"userstate": @"enabled",
+                 @"adminstate": @"enabled",
+                 @"heartbeat_intervall": @60U,
+                 @"ipv6_prefixlength": @64U,
+                 @"mtu": @1280U,
+                 @"uses_tundev": @1U};
+        
+        
+    }
+    
+    return nil;
+}
+
+- (NSDictionary *)requestTunnelList
+{
+    NSLog(@"Request tunnel list");
+    
+    NSMutableDictionary *tunnelInfo1 = [NSMutableDictionary dictionaryWithDictionary:@{@"id": @"T12345",
+                                   @"ipv6": @"2a01::2",
+                                   @"ipv4": @"heartbeat",
+                                   @"popid": @"pop01"}];
+    NSMutableDictionary *tunnelInfo2 =  [NSMutableDictionary dictionaryWithDictionary:@{@"id": @"T67890",
+                                   @"ipv6": @"2a01::2",
+                                   @"ipv4": @"ayiya",
+                                   @"popid": @"pop02"}];
+    
+    return @{tunnelInfo1[@"id"]:tunnelInfo1, tunnelInfo2[@"id"]:tunnelInfo2};
+}
+
+- (NSInteger) loginToTicServer
+{
+//    NSString *server = [self config][@"server"];
+    NSString *username = [self config][@"username"];
+    NSString *password = [self config][@"password"];
+
+    NSLog(@"Login to tic server");
+    if ([username isEqualToString:@"foo"] && [password isEqualToString:@"bar"]) {
+        return 0;
+    }
+    return 1;
+}
+
+- (void) logoutFromTicServerWithMessage:(NSString *)message
+{
+    NSLog(@"Logout from tic server");
+}
+
+#endif
+
+- (NSArray *)tunnelList
+{
+    return [_tunnelList allKeys];
+}
+
+- (NSArray *)serverList
 {
     return @[@"tic.sixxs.net"];
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath
 {
-    // Is the task running?
-    if (_task) {
-//        [_task interrupt];
-    } else {
-        
-        _statusNotificationCount = 0;
-        _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
-        [_postTimer invalidate];
-        
-        //_status = [[NSMutableString alloc] init];
-        _task = [[NSTask alloc] init];
-        [_task setLaunchPath:path];
-        NSArray *args = @[@"start", configPath];
-		[_task setArguments:args];
-		
-		// Create a new pipe
-		_pipe = [[NSPipe alloc] init];
-		[_task setStandardOutput:_pipe];
-		[_task setStandardError:_pipe];
-        
-		NSFileHandle *fh = [_pipe fileHandleForReading];
-		
-		NSNotificationCenter *nc;
-		nc = [NSNotificationCenter defaultCenter];
-		[nc removeObserver:self];
-		
-		[nc addObserver:self
-			   selector:@selector(dataReady:)
-				   name:NSFileHandleReadCompletionNotification
-				 object:fh];
-		
-		[nc addObserver:self
-			   selector:@selector(taskTerminated:)
-				   name:NSTaskDidTerminateNotification
-				 object:_task];
-		
-		[_task launch];
-				
-		[fh readInBackgroundAndNotify];
-	}
-    return TRUE;
+    return [self startFrom:path withConfigDir:configPath withArgs:@[@"start", [self name]]];
 }
 
-- (void)stopFrom {
-    // Is the task running?
-    if (_task) {
-        [_task interrupt];
+- (void)showSheet:(NSWindow*)window {
+    TKZSheetController *sheet = [[TKZSheetController alloc] init];
+
+    [NSApp beginSheet:[sheet window] modalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+    [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+}
+
+- (void)doLogin:(TKZSheetController *)sheet {
+    
+    NSInteger errorCode = 0;
+    NSString *notificationMessage;
+    
+    [[sheet window] makeKeyAndOrderFront:nil];
+    [[sheet window] display];
+    
+    [[sheet statusLabel] setTextColor:[NSColor blackColor]];
+    [[sheet progressIndicator] setIndeterminate:NO];
+    
+    [[sheet statusLabel] setStringValue:@"Connecting to tic server..."];
+    [[sheet progressIndicator] setDoubleValue:25.0f];
+    [NSThread sleepForTimeInterval:0.5f];
+    
+    errorCode = [self loginToTicServer];
+    
+    [_tunnelList removeAllObjects];
+
+    if (!errorCode) {
+        
+        [[sheet statusLabel] setStringValue:@"Retrieving tunnel list..."];
+        [[sheet progressIndicator] setDoubleValue:50.0f];
+        [NSThread sleepForTimeInterval:0.5f];
+        
+        [_tunnelList addEntriesFromDictionary:[self requestTunnelList]];
+
+        double progressInc = 40.0f / [_tunnelList count];
+        
+        //NSUInteger tunnelSelectIndex = 0;
+        NSArray *tunnels = [self tunnelList];
+         for (id tunnel in tunnels)
+         {
+             //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
+         
+             [[sheet statusLabel] setStringValue:@"Fetching tunnel info..."];
+             [[sheet progressIndicator] incrementBy:progressInc];
+             [NSThread sleepForTimeInterval:0.2f];
+             
+             [_tunnelList[tunnel] addEntriesFromDictionary:[self requestTunnelInfoForTunnel:tunnel]];
+             [_tunnelList setObject:[_tunnelList objectForKey:tunnel]
+                             forKey:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel, _tunnelList[tunnel][@"type"]]];
+             [_tunnelList removeObjectForKey: tunnel];
+         }
+        
+        [[sheet statusLabel] setStringValue:@"Successfully completed."];
+        [[sheet progressIndicator] incrementBy:100.0f];
+        [NSThread sleepForTimeInterval:0.5f];
+        
+        validCredentials = YES;
+        notificationMessage = @"doLoginComplite";
     }
-}
-
-- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
-    [array removeLastObject];
-    [array insertObject:object atIndex:0];
-}
-
-- (void)dataReady:(NSNotification *)n
-{
-    NSData *d;
-    d = [[n userInfo] valueForKey:NSFileHandleNotificationDataItem];
-	    
-	if ([d length]) {
+    //if something went wrong
+    else {
+        [[sheet statusLabel] setStringValue:@"Invalid login credentials"];
+        [[sheet statusLabel] setTextColor:[NSColor redColor]];
+        [[sheet progressIndicator] setIndeterminate:YES];
+        [NSThread sleepForTimeInterval:2.0f];
         
-         NSString *s = [[NSString alloc] initWithData:d
-                                            encoding:NSUTF8StringEncoding];
-        [self shiftFIFOArray:_statusQueue withObject:s];
-        
-        [_postTimer invalidate];        
-        _statusNotificationCount++;
-        
-        if (_statusNotificationCount >= [_statusQueue count] - 1) {
-            if(!(_statusNotificationCount % 500)) {
-                [_postTimer invalidate];
-                [self postAiccuStatusNotification];
-            }
-            else {
-                _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
-            }
-        }
-        else {
-            
-            [self postAiccuStatusNotification];
-        }
-
-        
+        validCredentials = NO;
+        notificationMessage = @"doLoginError";
     }
     
-	// If the task is running, start reading again
-    if (_task)
-        [[_pipe fileHandleForReading] readInBackgroundAndNotify];
+    [self logoutFromTicServerWithMessage:@"Bye Bye"];
+    
+    [NSApp endSheet:[sheet window]];
+    [[sheet window] orderOut:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:sheetControllerStatus object:notificationMessage];
 }
 
-
-- (void)postAiccuStatusNotification {
-    
-    NSMutableString *wholeMessage = [[NSMutableString alloc] init];
-    for (NSString *message in _statusQueue) {
-        [wholeMessage appendString:message];
-    }
-    
-    if (![wholeMessage isEqualToString:@""]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
-    }
-    
-    _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
-
+- (BOOL)forNat {
+    NSString *currentTunnel = [self config:@"tunnel_id"];
+    return [_tunnelList[currentTunnel][@"type"] isEqualToString:@"ayiya"];
 }
 
-- (void)resetStatusNotificationCount {
-    _statusNotificationCount = 0;
-    [self postAiccuStatusNotification];
-}
-
-- (void)taskTerminated:(NSNotification *)note
-{
-    //NSLog(@"taskTerminated:");
-	
-    [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
-	_task = nil;
-    //[startButton setState:0];
+- (NSDictionary*)tunnelInfo {
+    NSString *currentTunnel = [self config:@"tunnel_id"];
+    return _tunnelList[currentTunnel];
 }
 
 @end

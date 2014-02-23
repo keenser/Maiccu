@@ -75,7 +75,7 @@
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    [_maiccu startStopAdapter];
+    [_maiccu stopAdapter];
 }
 
 - (id)init

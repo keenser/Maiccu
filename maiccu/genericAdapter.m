@@ -8,11 +8,17 @@
 
 #import "genericAdapter.h"
 
+NSString * const TKZAiccuDidTerminate = @"AiccuDidTerminate";
+NSString * const TKZAiccuStatus = @"AiccuStatus";
+
 @implementation genericAdapter
 
 - (id)init
 {
     if (self=[super init]) {
+        _task = nil;
+        _postTimer = nil;
+        validCredentials = YES;
     }
     return self;
 }
@@ -21,108 +27,180 @@
     return YES;
 }
 
-- (NSDictionary *)loadConfigFile:(NSString *)path {
-    NSDictionary *config = @{};
-    return config;
+- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath {
+    return TRUE;
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigFile:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath withArgs:(NSArray *)args
 {
-    return FALSE;
+    // Is the task running?
+    if (!_task){
+        _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
+        _statusNotificationCount = 0;
+        [_postTimer invalidate];
+        
+        //_status = [[NSMutableString alloc] init];
+        _task = [[NSTask alloc] init];
+        [_task setLaunchPath:path];
+		[_task setArguments:args];
+		[_task setCurrentDirectoryPath:configPath];
+		// Create a new pipe
+		_pipe = [[NSPipe alloc] init];
+		[_task setStandardOutput:_pipe];
+		[_task setStandardError:_pipe];
+        
+		NSFileHandle *fh = [_pipe fileHandleForReading];
+		
+		NSNotificationCenter *nc;
+		nc = [NSNotificationCenter defaultCenter];
+		[nc removeObserver:self];
+		
+		[nc addObserver:self
+			   selector:@selector(dataReady:)
+				   name:NSFileHandleReadCompletionNotification
+				 object:fh];
+		
+		[nc addObserver:self
+			   selector:@selector(taskTerminated:)
+				   name:NSTaskDidTerminateNotification
+				 object:_task];
+		
+		[_task launch];
+        
+		[fh readInBackgroundAndNotify];
+	}
+    return TRUE;
 }
+
 
 - (void)stopFrom {
     // Is the task running?
-//    if (_task) {
-//        [_task interrupt];
-//    }
-}
-
-- (NSInteger) loginToTicServer:(NSString *)server withUsername:(NSString *)username andPassword:(NSString *)password
-{
-    NSLog(@"Login to tic server");
-    if ([username isEqualToString:@"foo"] && [password isEqualToString:@"bar"]) {
-        return 0;
+    if (_task) {
+        [_task interrupt];
     }
-    return 1;
 }
 
-- (void) logoutFromTicServerWithMessage:(NSString *)message
-{
-    NSLog(@"Logout from tic server");
+- (BOOL)isRunning {
+    return _task?YES:NO;
 }
 
-- (NSArray *)requestTunnelList
+- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
+    [array removeLastObject];
+    [array insertObject:object atIndex:0];
+}
+
+- (void)dataReady:(NSNotification *)n
 {
-    NSLog(@"Request tunnel list");
+    NSData *d;
+    d = [[n userInfo] valueForKey:NSFileHandleNotificationDataItem];
     
-    NSDictionary *tunnelInfo1 =  @{@"id": @"T12345",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"heartbeat",
-                                   @"popid": @"pop01"};
-    NSDictionary *tunnelInfo2 =  @{@"id": @"T67890",
-                                   @"ipv6": @"2a01::2",
-                                   @"ipv4": @"ayiya",
-                                   @"popid": @"pop02"};
+	if ([d length]) {
+        
+        NSString *s = [[NSString alloc] initWithData:d
+                                            encoding:NSUTF8StringEncoding];
+        [self shiftFIFOArray:_statusQueue withObject:s];
+        
+        [_postTimer invalidate];
+        _statusNotificationCount++;
+        
+        if (_statusNotificationCount >= [_statusQueue count] - 1) {
+            if(!(_statusNotificationCount % 500)) {
+                [_postTimer invalidate];
+                [self postAiccuStatusNotification];
+            }
+            else {
+                _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
+            }
+        }
+        else {
+            
+            [self postAiccuStatusNotification];
+        }
+        
+        
+    }
     
-    return @[tunnelInfo1, tunnelInfo2];
-    //return [NSArray array];
+	// If the task is running, start reading again
+    if (_task)
+        [[_pipe fileHandleForReading] readInBackgroundAndNotify];
+}
+
+
+- (void)postAiccuStatusNotification {
+    
+    NSMutableString *wholeMessage = [[NSMutableString alloc] init];
+    for (NSString *message in _statusQueue) {
+        [wholeMessage appendString:message];
+    }
+    
+    if (![wholeMessage isEqualToString:@""]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
+    }
+    
+    _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
+    
+}
+
+- (void)resetStatusNotificationCount {
+    _statusNotificationCount = 0;
+    [self postAiccuStatusNotification];
+}
+
+- (void)taskTerminated:(NSNotification *)note
+{
+    //NSLog(@"taskTerminated:");
 	
+    [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
+	_task = nil;
+    //[startButton setState:0];
 }
 
-//this is a static test method for requestTunnelInfoForTunnel
-- (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
-    
-    NSLog(@"Request tunnel info");
-    
-    if ([tunnel isEqualToString:@"T12345"]) {
-        
-        return @{@"id": @"T12345",
-                 @"ipv4_local": @"heartbeat",
-                 @"ipv6_local": @"2a01:1234:5678:2c0::2",
-                 @"ipv4_pop": @"1.2.3.4",
-                 @"ipv6_pop": @"123:1233:232:1",
-                 @"ipv6_linklocal": @"",
-                 @"password": @"bablablabalbal",
-                 @"pop_id": @"popid01",
-                 @"type": @"6in4-heartbeat",
-                 @"userstate": @"enabled",
-                 @"adminstate": @"enabled",
-                 @"heartbeat_intervall": @60U,
-                 @"ipv6_prefixlength": @64U,
-                 @"mtu": @1280U,
-                 @"uses_tundev": @0U};
-        
-    }
-    else if ([tunnel isEqualToString:@"T67890"]) {
-        return @{@"id": @"T67890",
-                 @"ipv4_local": @"ayiya",
-                 @"ipv6_local": @"2a01:2001:2000::1",
-                 @"ipv4_pop": @"1.2.3.4",
-                 @"ipv6_pop": @"2a01::1",
-                 @"ipv6_linklocal": @"",
-                 @"password": @"blablabla",
-                 @"pop_id": @"popo02",
-                 @"type": @"ayiya",
-                 @"userstate": @"enabled",
-                 @"adminstate": @"enabled",
-                 @"heartbeat_intervall": @60U,
-                 @"ipv6_prefixlength": @64U,
-                 @"mtu": @1280U,
-                 @"uses_tundev": @1U};
-        
-        
-    }
-    
-    return nil;
-}
-
-- (NSArray *)requestServerList
+- (NSArray *)tunnelList
 {
-    NSLog(@"Request server list");
-    
     return nil;
 }
 
+- (void)showSheet:(NSWindow*)window {
+}
+
+- (NSArray *)serverList
+{
+    return nil;
+}
+
+- (void)setConfig:(NSString*)value toKey:(NSString*)key {
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[self name]]];
+    config[key] = value;
+    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[self name]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)config:(NSString*)key {
+    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]][key];
+    if (value) {
+        return value;
+    }
+    return @"";
+}
+
+- (NSDictionary *)config {
+    NSDictionary *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]];
+    if (value) {
+        return value;
+    }
+    return nil;
+}
+
+- (BOOL)forNat {
+    return YES;
+}
+
+- (BOOL) isValid {
+    return validCredentials;
+}
+
+- (NSDictionary*)tunnelInfo {
+    return nil;
+}
 
 @end

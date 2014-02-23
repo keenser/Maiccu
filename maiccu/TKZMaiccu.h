@@ -7,8 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "genericAdapter.h"
+#import "TKZAiccuAdapter.h"
+#import "gogocAdapter.h"
 
-@interface TKZMaiccu : NSObject 
+@interface TKZMaiccu : NSObject  {
+    NSFileManager *_fileManager;
+    TKZAiccuAdapter *_aiccu;
+    gogocAdapter *_gogoc;
+}
+
+@property (strong) genericAdapter *adapter;
+@property (strong) genericAdapter *runningAdapter;
+
 - (NSString *) aiccuConfigPath;
 - (BOOL) aiccuConfigExists;
 
@@ -31,10 +42,6 @@
 - (void) setGogocView:(NSMenuItem *)View;
 - (void) setAdapterView:(NSMenuItem *)View;
 - (NSMenuItem *) adapterView;
-
-- (NSString *)getAdapterConfig:(NSString*)key;
-- (void)setAdapterConfig:(NSString*)value toKey:(NSString*)key;
-- (NSArray*)serverList;
 
 + (id)defaultMaiccu;
 @end

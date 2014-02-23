@@ -14,7 +14,7 @@
 
 @interface TKZDetailsController () {
     NSMutableDictionary *_config;
-    NSMutableArray *_tunnelInfoList;
+//    NSMutableArray *_tunnelInfoList;
     TKZMaiccu *_maiccu;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
@@ -28,8 +28,9 @@
     self = [super initWithWindowNibName:@"TKZDetailsController"];
     if (self) {
         _config = [[NSMutableDictionary alloc] init];
-        _tunnelInfoList = [[NSMutableArray alloc] init];
+//        _tunnelInfoList = [[NSMutableArray alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sheetNotification:) name:sheetControllerStatus object:nil];
     }
     return self;
 }
@@ -53,11 +54,8 @@
     
     [self awakeFromNib];
 
-    if ([_maiccu getAdapterConfig:@"username"]) {
-        TKZSheetController *sheet = [[TKZSheetController alloc] init];
-        
-        [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-        [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+    if ([[_maiccu adapter]config:@"username"]) {
+        [[_maiccu adapter] showSheet:[self window]];
     }
     
 }
@@ -65,16 +63,15 @@
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
     NSLog(@"controlTextDidEndEditing");
-    [_maiccu setAdapterConfig:[_usernameField stringValue] toKey:@"username"];
-    [_maiccu setAdapterConfig:[_passwordField stringValue] toKey:@"password"];
+    [[_maiccu adapter]setConfig:[_usernameField stringValue] toKey:@"username"];
+    [[_maiccu adapter]setConfig:[_passwordField stringValue] toKey:@"password"];
 
+    [self awakeFromNib];
+    
     // See if it was due to a return
     if ( [[notification userInfo][@"NSTextMovement"] intValue] == NSReturnTextMovement )
     {
-        TKZSheetController *sheet = [[TKZSheetController alloc] init];
-        
-        [NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-        [NSThread detachNewThreadSelector:@selector(doLogin:) toTarget:self withObject:sheet];
+        [[_maiccu adapter] showSheet:[self window]];
     }
 }
 
@@ -100,17 +97,14 @@
 
 - (void)awakeFromNib {
     NSLog(@"awakeFromNib");
-    //[_toolbar setSelectedItemIdentifier:[_accountItem itemIdentifier]];
-    //[self toolbarWasClicked:_accountItem];
-    
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
-    [_brokerPopUp selectItem:[_maiccu adapterView]];
+    [_brokerPopUp selectItem:[[_maiccu adapter]view]];
     
-    [_usernameField setStringValue:[_maiccu getAdapterConfig:@"username"]];
-    [_passwordField setStringValue:[_maiccu getAdapterConfig:@"password"]];
+    [_usernameField setStringValue:[[_maiccu adapter]config:@"username"]];
+    [_passwordField setStringValue:[[_maiccu adapter]config:@"password"]];
     
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [[_logTextView textContainer] setWidthTracksTextView:NO];
@@ -126,108 +120,40 @@
     [_startupCheckbox setState:[_maiccu isLaunchAgent]];
     
     [_serverField removeAllItems];
-    [_serverField addItemsWithObjectValues:[_maiccu serverList]];
-    [_serverField setStringValue:[_maiccu getAdapterConfig:@"server"]];
+    [_serverField addItemsWithObjectValues:[[_maiccu adapter] serverList]];
+    [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
+    
+    [self sheetNotification:nil];
 }
 
-- (void)doLogin:(TKZSheetController *)sheet {
+- (void)sheetNotification:(NSNotification *)aNotification {
+    NSLog(@"sheetNotification %@", aNotification);
     
-    //TKZSheetController *sheet  = [[TKZSheetController alloc] init];
-    NSInteger errorCode = 0;
-    
-    //[NSApp beginSheet:[sheet window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-    
-    [[sheet window] makeKeyAndOrderFront:nil];
-    [[sheet window] display];
-    
-    [[sheet statusLabel] setTextColor:[NSColor blackColor]];
-    [[sheet progressIndicator] setIndeterminate:NO];
-    
-    [[sheet statusLabel] setStringValue:@"Connecting to tic server..."];
-    [[sheet progressIndicator] setDoubleValue:25.0f];
-    [NSThread sleepForTimeInterval:0.5f];
-    
-    //errorCode = [_adapter loginToTicServer:@"tic.sixxs.net" withUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue]];
-    
-    [_tunnelPopUp removeAllItems];
-    [_tunnelInfoList removeAllObjects];
-    
-    if (!errorCode) {
-        
-        [[sheet statusLabel] setStringValue:@"Retrieving tunnel list..."];
-        [[sheet progressIndicator] setDoubleValue:50.0f];
-        [NSThread sleepForTimeInterval:0.5f];
-        
-        //NSArray *tunnelList = [_adapter requestTunnelList];
-        
-        //double progressInc = 40.0f / [tunnelList count];
-        double progressInc = 40.0f / 2;
-        
-        
-        NSUInteger tunnelSelectIndex = 0;
-        /*
-        for (NSDictionary *tunnel in tunnelList)
-        {
-            //the behavior of "userstate: disabled" and "adminstate: requested" is not implemented yet
-            
-            [[sheet statusLabel] setStringValue:@"Fetching tunnel info..."];
-            [[sheet progressIndicator] incrementBy:progressInc];
-            [NSThread sleepForTimeInterval:0.2f];
-            
-            [_tunnelInfoList addObject:[_adapter requestTunnelInfoForTunnel:tunnel[@"id"]]];
-            
-            [_tunnelPopUp addItemWithTitle:[NSString stringWithFormat:@"-- %@ - %@ --", tunnel[@"id"], [_tunnelInfoList lastObject][@"type"]]];
-            
-            if ([_config[@"tunnel_id"] isEqualToString:tunnel[@"id"]]) {
-                tunnelSelectIndex = [_tunnelInfoList count] - 1;
-                //tunnelid = [tunnel objectForKey:@"id"];
-            }
-        }
-        */
-                
-        /*
-        if ([tunnelList count]) {
+    if ([[_maiccu adapter] isValid]) {
+        [_usernameMarker setHidden:YES];
+        [_passwordMarker setHidden:YES];
+
+        [_tunnelPopUp removeAllItems];
+        if ([[[_maiccu adapter] tunnelList] count]) {
+            [_tunnelPopUp addItemsWithTitles:[[_maiccu adapter] tunnelList]];
+            [_tunnelPopUp selectItemWithTitle:[[_maiccu adapter]config:@"tunnel_id"]];
             [_tunnelPopUp setEnabled:YES];
+
             [_infoButton setEnabled:YES];
             [_natDetectButton setEnabled:YES];
             [_exportButton setEnabled:YES];
-            
-            _config[@"tunnel_id"] = _tunnelInfoList[tunnelSelectIndex][@"id"];
-            [_tunnelPopUp selectItemAtIndex:tunnelSelectIndex];
-            
-            //refesh popover menu
-            [self tunnelPopUpHasChanged:nil];
-            
         }
-        else*/ {
+        else {
             [_tunnelPopUp addItemWithTitle:@"--no tunnels--"];
             [_tunnelPopUp setEnabled:NO];
+
             [_infoButton setEnabled:NO];
             [_natDetectButton setEnabled:NO];
             [_exportButton setEnabled:NO];
         }
-        
-        
-        [[sheet statusLabel] setStringValue:@"Successfully completed."];
-        [[sheet progressIndicator] incrementBy:100.0f];
-        [NSThread sleepForTimeInterval:0.5f];
-        
-        [_usernameMarker setHidden:YES];
-        [_passwordMarker setHidden:YES];
-        
-        
     }
-    //if something went wrong
     else {
-        [_config removeAllObjects];
-        
-        [[sheet statusLabel] setStringValue:@"Invalid login credentials"];
-        [[sheet statusLabel] setTextColor:[NSColor redColor]];
-        [[sheet progressIndicator] setIndeterminate:YES];
-        [NSThread sleepForTimeInterval:2.0f];
-        
-               
-        [_passwordField becomeFirstResponder]; 
+        [_passwordField becomeFirstResponder];
         
         [_tunnelPopUp setEnabled:NO];
         [_infoButton setEnabled:NO];
@@ -236,23 +162,8 @@
         
         [_usernameMarker setHidden:NO];
         [_passwordMarker setHidden:NO];
-        
     }
-    
-    
-    //[_adapter logoutFromTicServerWithMessage:@"Bye Bye"];
-
-    [NSApp endSheet:[sheet window]];
-    [[sheet window] orderOut:nil];
-    
-    
-    //if (!errorCode) {
-    //    [NSThread sleepForTimeInterval:0.1f];
-    //    [_toolbar setSelectedItemIdentifier:[_setupItem itemIdentifier]];
-    //    [self toolbarWasClicked:_setupItem];
-    //}
 }
-
 
 - (void)doNATDetection:(TKZSheetController *)sheet {
     
@@ -284,11 +195,8 @@
                 break;
             }
         }
-        NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];
-        NSString *tunnelType = tunnelInfo[@"type"];
         
-        
-        if (!behindNAT || [tunnelType isEqualToString:@"ayiya"]) {
+        if (!behindNAT || [[_maiccu adapter] forNat]) {
             [[sheet statusLabel] setStringValue:@"Everthing seems to be fine."];
             //[NSThread sleepForTimeInterval:2.0f];
         }
@@ -308,8 +216,6 @@
 
     [NSApp endSheet:[sheet window]];
     [[sheet window] orderOut:nil];
-    
-    [self syncConfig];
 }
 
 - (IBAction)logButtonWasClicked:(id)sender {
@@ -354,27 +260,34 @@
 }
 
 - (IBAction)infoWasClicked:(id)sender {
+    NSLog(@"infoWasClicked");
     if ([sender state]) {
+        NSDictionary *tunnelInfo = [[_maiccu adapter] tunnelInfo];
+        
+        //set text in popup view
+        [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];
+        [_tunnelInfoField setStringValue:[NSString stringWithFormat:
+                                          @"Popid     : %@\n"
+                                          @"Type      : %@\n\n"
+                                          @"IPv4 local: %@\n"
+                                          @"IPv4 pop  : %@\n\n"
+                                          @"IPv6 local: %@/%@\n"
+                                          @"IPv6 pop  : %@/%@\n\n"
+                                          @"MTU       : %@"
+                                          ,
+                                          tunnelInfo[@"pop_id"],
+                                          tunnelInfo[@"type"],
+                                          tunnelInfo[@"ipv4_local"],
+                                          tunnelInfo[@"ipv4_pop"],
+                                          tunnelInfo[@"ipv6_local"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
+                                          tunnelInfo[@"ipv6_pop"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
+                                          [tunnelInfo[@"mtu"] stringValue]
+                                          ]];
+
         [_tunnelPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
     }
     else {
         [_tunnelPopOver close];
-    }
-}
-
-- (void)windowWillClose:(NSNotification *)notification {
-    [self syncConfig];
-}
-
-
-- (void)syncConfig {
-    if ([_config count]) {
-        //NSLog(@"saving aiccu config");
-        //[_adapter saveConfig:_config toFile:[_maiccu aiccuConfigPath]];
-    }
-    else {
-        //NSLog(@"deleting aiccu config");
-        [[NSFileManager defaultManager] removeItemAtPath:[_maiccu aiccuConfigPath] error:nil];
     }
 }
 
@@ -383,35 +296,7 @@
 }
 
 - (IBAction)tunnelPopUpHasChanged:(id)sender {
-    NSLog(@"%@",[[_tunnelPopUp selectedItem] title]);
-/*
-    //
-    NSDictionary *tunnelInfo = _tunnelInfoList[[_tunnelPopUp indexOfSelectedItem]];
-    
-    //set current tunnel id
-    //_config[@"tunnel_id"] = tunnelInfo[@"id"];
-    
-    //set text in popup view
-    [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];
-    [_tunnelInfoField setStringValue:[NSString stringWithFormat:
-                               @"Popid     : %@\n"
-                               @"Type      : %@\n\n"
-                               @"IPv4 local: %@\n"
-                               @"IPv4 pop  : %@\n\n"
-                               @"IPv6 local: %@/%@\n"
-                               @"IPv6 pop  : %@/%@\n\n"
-                               @"MTU       : %@"
-                               ,
-                               tunnelInfo[@"pop_id"],
-                               tunnelInfo[@"type"],
-                               tunnelInfo[@"ipv4_local"],
-                               tunnelInfo[@"ipv4_pop"],
-                               tunnelInfo[@"ipv6_local"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
-                               tunnelInfo[@"ipv6_pop"], [tunnelInfo[@"ipv6_prefixlength"] stringValue],
-                               [tunnelInfo[@"mtu"] stringValue]
-                               ]];
-    [self syncConfig];
- */
+    [[_maiccu adapter]setConfig:[_tunnelPopUp titleOfSelectedItem] toKey:@"tunnel_id"];
 }
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {
@@ -445,6 +330,6 @@
 }
 
 - (IBAction)serverHasChanged:(id)sender {
-    [_maiccu setAdapterConfig:[_serverField stringValue] toKey:@"server"];
+    [[_maiccu adapter]setConfig:[_serverField stringValue] toKey:@"server"];
 }
 @end

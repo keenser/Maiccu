@@ -9,19 +9,12 @@
 #import <Foundation/Foundation.h>
 #include "genericAdapter.h"
 
-extern NSString * const TKZAiccuDidTerminate;
-extern NSString * const TKZAiccuStatus;
-
 @interface TKZAiccuAdapter : genericAdapter {
 @private
     struct TIC_conf	*tic;
-    NSTask *_task;
-    NSPipe *_pipe;
-    NSTimer *_postTimer;
-    NSMutableArray *_statusQueue;
-    NSUInteger _statusNotificationCount;
+    NSMutableDictionary *_tunnelList;
 }
 
-@property (strong) NSDictionary *tunnelInfo;
+//@property (strong) NSDictionary *tunnelInfo;
 
 @end
