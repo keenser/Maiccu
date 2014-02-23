@@ -28,12 +28,11 @@
 		6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; };
 		6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */; };
 		6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A46471749E024008389B4 /* TKZMaiccu.m */; };
+		7E2D3B0218B9F65C00CD7DBF /* darwin_route.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E47AD1C18B962D600990BD6 /* darwin_route.c */; };
 		7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
 		7E3B868D1897EA24008D0AB1 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
 		7E3B868E1897EAB2008D0AB1 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
 		7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
-		7E47AD1D18B9630900990BD6 /* darwin_route.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E47AD1C18B962D600990BD6 /* darwin_route.c */; };
-		7E4CBD6218B259E100536814 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
@@ -115,7 +114,7 @@
 			remoteGlobalIDString = 6D949027173514E2002283B0;
 			remoteInfo = maiccu;
 		};
-		7E47AD1E18B963EB00990BD6 /* PBXContainerItemProxy */ = {
+		7E4CBD6518B73B8500536814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6D949020173514E1002283B0 /* Project object */;
 			proxyType = 1;
@@ -393,7 +392,6 @@
 		7EA1890818B4CCAF00943303 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		7EA1892018B4FC1600943303 /* gogoc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gogoc; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA1892C18B4FD6F00943303 /* unix-main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "unix-main.c"; sourceTree = "<group>"; };
-		7EA1892F18B4FE6400943303 /* os_uname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_uname.h; sourceTree = "<group>"; };
 		7EA1893A18B52FF400943303 /* client-hook */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "client-hook"; path = "miredo/client-hook"; sourceTree = "<group>"; };
 		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
 		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gogocAdapter.m; sourceTree = "<group>"; };
@@ -1069,7 +1067,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				7E47AD1F18B963EB00990BD6 /* PBXTargetDependency */,
+				7E4CBD6618B73B8500536814 /* PBXTargetDependency */,
 			);
 			name = Maiccu;
 			productName = maiccu;
@@ -1338,8 +1336,7 @@
 				7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */,
 				7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */,
 				7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */,
-				7E58A98B18B651D2009D7FF9 /* tsp_setup.c in Sources */,
-				7E47AD1D18B9630900990BD6 /* darwin_route.c in Sources */,
+				7E2D3B0218B9F65C00CD7DBF /* darwin_route.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,10 +1401,10 @@
 			target = 6D949027173514E2002283B0 /* Maiccu */;
 			targetProxy = 6D94904C173514E2002283B0 /* PBXContainerItemProxy */;
 		};
-		7E47AD1F18B963EB00990BD6 /* PBXTargetDependency */ = {
+		7E4CBD6618B73B8500536814 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7EA1891F18B4FC1600943303 /* gogoc */;
-			targetProxy = 7E47AD1E18B963EB00990BD6 /* PBXContainerItemProxy */;
+			targetProxy = 7E4CBD6518B73B8500536814 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

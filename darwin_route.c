@@ -35,7 +35,9 @@
 #error "SCRIPT_TMP_FILE is not defined in platform.h"
 #endif
 
-
+// original source code functions routepr, get_rtaddrs, np_rtentry see at
+// http://www.opensource.apple.com/source/network_cmds/network_cmds-433/netstat.tproj/route.c
+//
 
 /* alignment constraint for routing socket */
 #define ROUNDUP(a) \
@@ -202,11 +204,6 @@ sint32_t execCmd( const char *cmd[] )
 #define sh(...) {const char *arg[] = {__VA_ARGS__,NULL} ; execCmd(arg);}
 static const char route[] = "/sbin/route";
 static const char ifconfig[] = "/sbin/ifconfig";
-static const char deletetunnel[] = "deletetunnel";
-static const char dfault[] = "default";
-static const char sinet6[] = "-inet6";
-static const char inet6[] = "inet6";
-static const char tsp_tun_if[] = "TSP_TUNNEL_INTERFACE";
 static char *originalroute = NULL;
 
 sint32_t execScript( const char * cmd)
@@ -216,7 +213,12 @@ sint32_t execScript( const char * cmd)
     
     if (!strcmp(getenv("TSP_OPERATION"),"TSP_TUNNEL_TEARDOWN"))
     {
-        sh(route,"delete","-inet6","default");
+        if ( originalroute ) {
+            sh(route,"change","-inet6",originalroute);
+        }
+        else {
+            sh(route,"delete","-inet6","default");
+        }
         sh(route,"delete","-inet6",TSP_CLIENT_ADDRESS_IPV6);
         sh(ifconfig,TSP_TUNNEL_INTERFACE,"deletetunnel");
     }
@@ -234,12 +236,26 @@ sint32_t execScript( const char * cmd)
         sh(ifconfig,TSP_TUNNEL_INTERFACE,"mtu","1280");
         
         //Delete any default IPv6 route, and add ours.
-        sh(route,"delete","-inet6","default");
-        sh(route,"add","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
+        originalroute = routepr();
+        if ( originalroute ) {
+            sh(route,"change","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
+        }
+        else {
+            sh(route,"add","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
+        }
     }
     return 0;
 }
 
+/*
+ -----------------------------------------------------------------------------
+ $Id: tsp_setup.c,v 1.2 2010/03/07 20:14:32 carl Exp $
+ -----------------------------------------------------------------------------
+ Copyright (c) 2001-2007 gogo6 Inc. All rights reserved.
+ 
+ For license information refer to CLIENT-LICENSE.TXT
+ -----------------------------------------------------------------------------
+ */
 
 // --------------------------------------------------------------------------
 // This function validates the information found in the tunnel information
