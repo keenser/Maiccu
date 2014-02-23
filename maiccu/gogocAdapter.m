@@ -63,7 +63,7 @@
         gpConfig->Set_IfTunV6V4( "gif0" );
         gpConfig->Set_IfTunV6UDPV4( "tun0" );
         //gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
-        //gpConfig->Set_Log("stderr","3");
+        //gpConfig->Set_Log("stderr","0");
 
         // Saves the configuration
         iRet = gpConfig->Save() ? 0 : -1;
