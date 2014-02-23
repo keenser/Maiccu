@@ -1,17 +1,110 @@
-/*
- -----------------------------------------------------------------------------
- $Id: tsp_setup.c,v 1.2 2010/03/07 20:14:32 carl Exp $
- -----------------------------------------------------------------------------
- Copyright (c) 2001-2007 gogo6 Inc. All rights reserved.
- 
- For license information refer to CLIENT-LICENSE.TXT
- -----------------------------------------------------------------------------
- */
+//
+//  darwin_route.c
+//  maiccu
+//
+//  Created by German Skalauhov on 23.02.14.
+//
 
+#include <net/if_types.h>
+#include <net/route.h>
+#include <sys/sysctl.h>
+#include <netdb.h>
+#include <stdlib.h>
 #include <spawn.h>
 #include "platform.h"
 #include "log.h"          // Display()
 #include "hex_strings.h"  // Strings for Display()
+
+
+/* alignment constraint for routing socket */
+#define ROUNDUP(a) \
+((a) > 0 ? (1 + (((a) - 1) | (sizeof(uint32_t) - 1))) : sizeof(uint32_t))
+
+static char *np_rtentry __P((struct rt_msghdr2 *));
+
+/*
+ * Print routing tables.
+ */
+char*
+routepr(void)
+{
+	size_t needed;
+	int mib[6];
+	char *buf, *next, *lim;
+	struct rt_msghdr2 *rtm;
+    char *gate = NULL;
+    
+	mib[0] = CTL_NET;
+	mib[1] = PF_ROUTE;
+	mib[2] = 0;
+	mib[3] = PF_INET6;
+	mib[4] = NET_RT_FLAGS;
+	mib[5] = RTF_STATIC;
+	if (sysctl(mib, 6, NULL, &needed, NULL, 0) < 0) {
+        return NULL;
+	}
+    
+	if ( (buf = malloc(needed)) ) {
+        if (sysctl(mib, 6, buf, &needed, NULL, 0) >= 0) {
+            lim  = buf + needed;
+            for (next = buf; next < lim; next += rtm->rtm_msglen) {
+                rtm = (struct rt_msghdr2 *)next;
+                if ( (gate = np_rtentry(rtm)) ) {
+                    break;
+                }
+            }
+        }
+        free(buf);
+	}
+    return gate;
+}
+
+static void
+get_rtaddrs(int addrs, struct sockaddr *sa, struct sockaddr **rti_info)
+{
+    int i;
+    
+    for (i = 0; i < RTAX_MAX; i++) {
+        if (addrs & (1 << i)) {
+            rti_info[i] = sa;
+            sa = (struct sockaddr *)(ROUNDUP(sa->sa_len) + (char *)sa);
+		} else {
+            rti_info[i] = NULL;
+        }
+    }
+}
+
+
+static char*
+np_rtentry(struct rt_msghdr2 *rtm)
+{
+	struct sockaddr *sa = (struct sockaddr *)(rtm + 1);
+	struct sockaddr *rti_info[RTAX_MAX];
+	struct sockaddr_in6 *addr, *mask;
+    struct sockaddr *gate;
+    
+    if (!(rtm->rtm_flags & ( RTF_GATEWAY | RTF_STATIC | RTF_PRCLONING))) return NULL;
+	if ((rtm->rtm_flags & RTF_WASCLONED) ) return NULL;
+    
+	get_rtaddrs(rtm->rtm_addrs, sa, rti_info);
+    
+    if (rti_info[RTAX_DST]->sa_family != AF_INET6) return NULL;
+    
+    addr = (struct sockaddr_in6*)rti_info[RTAX_DST];
+    mask = (struct sockaddr_in6*)rti_info[RTAX_NETMASK];
+    gate = (struct sockaddr*)rti_info[RTAX_GATEWAY];
+    
+    if (mask && mask->sin6_len == 0 && IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr)) {
+        static char line[MAXHOSTNAMELEN];
+        int flag = NI_WITHSCOPEID | NI_NUMERICHOST;
+        
+        getnameinfo(gate, gate->sa_len,
+                    line, sizeof(line), NULL, 0, flag);
+        return line;
+    }
+    else
+        return NULL;
+}
 
 /* Execute cmd and send output to log subsystem */
 sint32_t execCmd( const char *cmd[] )
@@ -90,6 +183,7 @@ static const char dfault[] = "default";
 static const char sinet6[] = "-inet6";
 static const char inet6[] = "inet6";
 static const char tsp_tun_if[] = "TSP_TUNNEL_INTERFACE";
+static char *originalroute = NULL;
 
 sint32_t execScript( const char * cmd)
 {
