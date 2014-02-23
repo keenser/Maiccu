@@ -218,9 +218,9 @@ int heartbeat_send(SOCKET sockfd, char *sIPv4Local, char *sIPv6Local, char *sPas
 		(long int)time_tee, sPassword);
 
 	/* Generate a MD5 */
-	MD5InitA(&md5);
-	MD5UpdateA(&md5, buf, (unsigned int)strlen((char *)buf));
-	MD5FinalA(our_digest, &md5);
+	MD5Init(&md5);
+	MD5Update(&md5, buf, (unsigned int)strlen((char *)buf));
+	MD5Final(our_digest, &md5);
 
 	/* Overwrite it without password */
 	p = buf;
