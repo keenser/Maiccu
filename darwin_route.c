@@ -236,7 +236,9 @@ sint32_t execScript( const char * cmd)
         
         //Delete any default IPv6 route, and add ours.
         originalroute = routepr();
+        
         if ( originalroute ) {
+            Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", originalroute );
             sh(route,"change","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
         }
         else {
