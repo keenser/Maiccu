@@ -142,10 +142,11 @@ sint32_t execCmd( const char *cmd[] )
     int i=0;
     while (cmd[i] != NULL)
     {
-        printf("%s ",cmd[i]);
+        Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", cmd[i] );
+//        printf("%s ",cmd[i]);
         i++;
     }
-    puts("\n");
+//    puts("\n");
     
     if ( (retVal = pipe(in)) ) {
         Display( LOG_LEVEL_1, ELError, "execScript", "Failed to open pipe for command: %s. %s (%d).", cmd[0], strerror(errno), errno);
@@ -203,22 +204,23 @@ sint32_t execCmd( const char *cmd[] )
 #define sh(...) {const char *arg[] = {__VA_ARGS__,NULL} ; execCmd(arg);}
 static const char route[] = "/sbin/route";
 static const char ifconfig[] = "/sbin/ifconfig";
-static char *originalroute = NULL;
 
 sint32_t execScript( const char * cmd)
 {
     char *TSP_TUNNEL_INTERFACE = getenv("TSP_TUNNEL_INTERFACE");
     char *TSP_CLIENT_ADDRESS_IPV6 = getenv("TSP_CLIENT_ADDRESS_IPV6");
+    char *TSP_ORIGINAL_GATEWAY = getenv("TSP_ORIGINAL_GATEWAY");
     
     if (!strcmp(getenv("TSP_OPERATION"),"TSP_TUNNEL_TEARDOWN"))
     {
-        if ( originalroute ) {
-            sh(route,"change","-inet6",originalroute);
+        if ( TSP_ORIGINAL_GATEWAY ) {
+            sh(route,"change","-inet6","default",TSP_ORIGINAL_GATEWAY);
+            sh(route,"add","-inet6","default",TSP_ORIGINAL_GATEWAY);
         }
         else {
             sh(route,"delete","-inet6","default");
         }
-        sh(route,"delete","-inet6",TSP_CLIENT_ADDRESS_IPV6);
+        //sh(route,"delete","-inet6",TSP_CLIENT_ADDRESS_IPV6);
         sh(ifconfig,TSP_TUNNEL_INTERFACE,"deletetunnel");
     }
     else if(!strcmp(getenv("TSP_HOST_TYPE"),"host"))
@@ -234,11 +236,8 @@ sint32_t execScript( const char * cmd)
         
         sh(ifconfig,TSP_TUNNEL_INTERFACE,"mtu","1280");
         
-        //Delete any default IPv6 route, and add ours.
-        originalroute = routepr();
-        
-        if ( originalroute ) {
-            Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", originalroute );
+        if ( TSP_ORIGINAL_GATEWAY ) {
+            Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", TSP_ORIGINAL_GATEWAY );
             sh(route,"change","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
         }
         else {
@@ -439,6 +438,10 @@ void set_tsp_env_variables( const tConf* pConfig, const tTunnel* pTunnelInfo )
         tspSetEnv("TSP_PREFIXLEN", pTunnelInfo->prefix_length, 1);
         strcat( gTunnelInfo.szDelegatedPrefix, "/" );
         strcat( gTunnelInfo.szDelegatedPrefix, pTunnelInfo->prefix_length );
+    }
+    
+    if(pTunnelInfo->originalgateway) {
+        tspSetEnv("TSP_ORIGINAL_GATEWAY", pTunnelInfo->originalgateway, 1);
     }
 }
 

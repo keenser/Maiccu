@@ -16,5 +16,6 @@ Copyright (c) 2001-2007 gogo6 Inc. All rights reserved.
 #include "pal.h"
 
 #define SCRIPT_TMP_FILE                   "/tmp/gogoc-tmp.log"
+char *routepr(void);
 
 #endif

@@ -48,6 +48,7 @@ typedef struct stTunnel {
               *broker_redirect_ipv4,
               *broker_redirect_ipv6,
               *broker_redirect_dn;
+    char *originalgateway;
 } tTunnel;
 
 

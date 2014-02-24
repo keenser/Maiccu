@@ -176,6 +176,8 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
     TunName( tunfd, c->if_tunnel_v6udpv4, IFNAMSIZ );
   }
 
+  t->originalgateway = routepr();
+    
   while( 1 ) // Dummy loop. 'break' instruction at the end.
   {
     // Run the config script in another thread, without giving it our tunnel
