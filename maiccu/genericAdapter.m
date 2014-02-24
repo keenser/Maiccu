@@ -81,7 +81,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 }
 
 - (BOOL)isRunning {
-    return _task?YES:NO;
+    return [_task isRunning];
 }
 
 - (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
