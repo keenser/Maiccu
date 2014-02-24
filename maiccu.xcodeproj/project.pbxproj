@@ -268,6 +268,93 @@
 		7E22E95B18AFA08D0044F1AB /* haccessdevicemappingconfig.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = haccessdevicemappingconfig.cc; sourceTree = "<group>"; };
 		7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = namevalueconfig.cc; sourceTree = "<group>"; };
 		7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = namevalueparser.cc; sourceTree = "<group>"; };
+		7E2D3B0A18BA22A700CD7DBF /* clearenv.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clearenv.c; sourceTree = "<group>"; };
+		7E2D3B0B18BA22A700CD7DBF /* clock_gettime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clock_gettime.c; sourceTree = "<group>"; };
+		7E2D3B0C18BA22A700CD7DBF /* clock_nanosleep.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clock_nanosleep.c; sourceTree = "<group>"; };
+		7E2D3B0D18BA22A700CD7DBF /* closefrom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = closefrom.c; sourceTree = "<group>"; };
+		7E2D3B0E18BA22A700CD7DBF /* dummy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
+		7E2D3B0F18BA22A700CD7DBF /* fdatasync.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fdatasync.c; sourceTree = "<group>"; };
+		7E2D3B1018BA22A700CD7DBF /* fixups.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixups.h; sourceTree = "<group>"; };
+		7E2D3B1118BA22A700CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B1218BA22A700CD7DBF /* strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = strlcpy.c; sourceTree = "<group>"; };
+		7E2D3B1318BA22A700CD7DBF /* test-closefrom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-closefrom.c"; sourceTree = "<group>"; };
+		7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-strlcpy.c"; sourceTree = "<group>"; };
+		7E2D3B1818BA22A700CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7E2D3B1918BA22A700CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B1A18BA22A700CD7DBF /* miredo-checkconf.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-checkconf.8-in"; sourceTree = "<group>"; };
+		7E2D3B1B18BA22A800CD7DBF /* miredo-server.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-server.8-in"; sourceTree = "<group>"; };
+		7E2D3B1C18BA22A800CD7DBF /* miredo-server.conf.5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-server.conf.5"; sourceTree = "<group>"; };
+		7E2D3B1D18BA22A800CD7DBF /* miredo.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo.8-in"; sourceTree = "<group>"; };
+		7E2D3B1E18BA22A800CD7DBF /* miredo.conf.5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = miredo.conf.5; sourceTree = "<group>"; };
+		7E2D3B1F18BA22A800CD7DBF /* rfc4380.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rfc4380.txt; sourceTree = "<group>"; };
+		7E2D3B2018BA22A800CD7DBF /* teredo-mire.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "teredo-mire.1"; sourceTree = "<group>"; };
+		7E2D3B2318BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7E2D3B2518BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7E2D3B2618BA22A800CD7DBF /* checksum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checksum.h; sourceTree = "<group>"; };
+		7E2D3B2718BA22A800CD7DBF /* clock.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clock.c; sourceTree = "<group>"; };
+		7E2D3B2818BA22A800CD7DBF /* clock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = clock.h; sourceTree = "<group>"; };
+		7E2D3B2918BA22A800CD7DBF /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		7E2D3B2A18BA22A800CD7DBF /* discovery.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = discovery.c; sourceTree = "<group>"; };
+		7E2D3B2B18BA22A800CD7DBF /* discovery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = discovery.h; sourceTree = "<group>"; };
+		7E2D3B2C18BA22A800CD7DBF /* init.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = init.c; sourceTree = "<group>"; };
+		7E2D3B2D18BA22A800CD7DBF /* iothread.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = iothread.c; sourceTree = "<group>"; };
+		7E2D3B2E18BA22A800CD7DBF /* iothread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iothread.h; sourceTree = "<group>"; };
+		7E2D3B2F18BA22A800CD7DBF /* libteredo.sym */ = {isa = PBXFileReference; lastKnownFileType = text; path = libteredo.sym; sourceTree = "<group>"; };
+		7E2D3B3018BA22A800CD7DBF /* maintain.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = maintain.c; sourceTree = "<group>"; };
+		7E2D3B3118BA22A800CD7DBF /* maintain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = maintain.h; sourceTree = "<group>"; };
+		7E2D3B3218BA22A800CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B3318BA22A800CD7DBF /* md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
+		7E2D3B3418BA22A800CD7DBF /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		7E2D3B3518BA22A800CD7DBF /* mire.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mire.c; sourceTree = "<group>"; };
+		7E2D3B3618BA22A800CD7DBF /* packets.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = packets.c; sourceTree = "<group>"; };
+		7E2D3B3718BA22A800CD7DBF /* packets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = packets.h; sourceTree = "<group>"; };
+		7E2D3B3818BA22A800CD7DBF /* peerlist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = peerlist.c; sourceTree = "<group>"; };
+		7E2D3B3918BA22A800CD7DBF /* peerlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = peerlist.h; sourceTree = "<group>"; };
+		7E2D3B3A18BA22A800CD7DBF /* relay.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = relay.c; sourceTree = "<group>"; };
+		7E2D3B3B18BA22A800CD7DBF /* security.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = security.c; sourceTree = "<group>"; };
+		7E2D3B3C18BA22A800CD7DBF /* security.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
+		7E2D3B3D18BA22A800CD7DBF /* server.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = server.c; sourceTree = "<group>"; };
+		7E2D3B3E18BA22A800CD7DBF /* server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = server.h; sourceTree = "<group>"; };
+		7E2D3B3F18BA22A800CD7DBF /* stub.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stub.c; sourceTree = "<group>"; };
+		7E2D3B4018BA22A800CD7DBF /* teredo-udp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "teredo-udp.h"; sourceTree = "<group>"; };
+		7E2D3B4118BA22A800CD7DBF /* teredo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = teredo.c; sourceTree = "<group>"; };
+		7E2D3B4218BA22A800CD7DBF /* teredo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = teredo.h; sourceTree = "<group>"; };
+		7E2D3B4418BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7E2D3B4518BA22A800CD7DBF /* addrcmp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = addrcmp.c; sourceTree = "<group>"; };
+		7E2D3B4618BA22A800CD7DBF /* clock.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clock.c; sourceTree = "<group>"; };
+		7E2D3B4718BA22A800CD7DBF /* hmac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
+		7E2D3B4818BA22A800CD7DBF /* list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		7E2D3B4918BA22A800CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B4A18BA22A800CD7DBF /* md5test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = md5test.c; sourceTree = "<group>"; };
+		7E2D3B4B18BA22A800CD7DBF /* stresslist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stresslist.c; sourceTree = "<group>"; };
+		7E2D3B4C18BA22A800CD7DBF /* teredo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = teredo.c; sourceTree = "<group>"; };
+		7E2D3B4D18BA22A800CD7DBF /* v4global.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = v4global.c; sourceTree = "<group>"; };
+		7E2D3B4E18BA22A800CD7DBF /* tunnel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tunnel.h; sourceTree = "<group>"; };
+		7E2D3B4F18BA22A800CD7DBF /* v4global.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = v4global.c; sourceTree = "<group>"; };
+		7E2D3B5018BA22A800CD7DBF /* v4global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = v4global.h; sourceTree = "<group>"; };
+		7E2D3B5318BA22A800CD7DBF /* diag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = diag.c; sourceTree = "<group>"; };
+		7E2D3B5418BA22A800CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B5518BA22A800CD7DBF /* test_diag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = test_diag.c; sourceTree = "<group>"; };
+		7E2D3B5618BA22A800CD7DBF /* tun6.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tun6.c; sourceTree = "<group>"; };
+		7E2D3B5718BA22A800CD7DBF /* tun6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tun6.h; sourceTree = "<group>"; };
+		7E2D3B6318BA22A800CD7DBF /* client-hook.bsd */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "client-hook.bsd"; sourceTree = "<group>"; };
+		7E2D3B6418BA22A800CD7DBF /* client-hook.darwin */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "client-hook.darwin"; sourceTree = "<group>"; };
+		7E2D3B6818BA22A800CD7DBF /* miredo.conf-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo.conf-in"; sourceTree = "<group>"; };
+		7E2D3B6918BA22A800CD7DBF /* miredo.service-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo.service-in"; sourceTree = "<group>"; };
+		7E2D3B7918BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7E2D3B7A18BA22A800CD7DBF /* binreloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binreloc.c; sourceTree = "<group>"; };
+		7E2D3B7B18BA22A800CD7DBF /* binreloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = binreloc.h; sourceTree = "<group>"; };
+		7E2D3B7C18BA22A800CD7DBF /* checkconf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkconf.c; sourceTree = "<group>"; };
+		7E2D3B7D18BA22A800CD7DBF /* conf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = conf.c; sourceTree = "<group>"; };
+		7E2D3B7E18BA22A800CD7DBF /* conf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = conf.h; sourceTree = "<group>"; };
+		7E2D3B7F18BA22A800CD7DBF /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		7E2D3B8018BA22A800CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7E2D3B8118BA22A800CD7DBF /* miredo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = miredo.c; sourceTree = "<group>"; };
+		7E2D3B8218BA22A800CD7DBF /* miredo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = miredo.h; sourceTree = "<group>"; };
+		7E2D3B8318BA22A800CD7DBF /* privproc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = privproc.c; sourceTree = "<group>"; };
+		7E2D3B8418BA22A800CD7DBF /* privproc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = privproc.h; sourceTree = "<group>"; };
+		7E2D3B8518BA22A800CD7DBF /* relayd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = relayd.c; sourceTree = "<group>"; };
+		7E2D3B8618BA22A800CD7DBF /* serverd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = serverd.c; sourceTree = "<group>"; };
 		7E47AD1C18B962D600990BD6 /* darwin_route.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = darwin_route.c; sourceTree = "<group>"; };
 		7E4CBCB018AE65B600536814 /* pal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pal.h; sourceTree = "<group>"; };
 		7E4CBCB118AE65B600536814 /* pal_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pal_version.h; sourceTree = "<group>"; };
@@ -427,7 +514,6 @@
 		7EA1890818B4CCAF00943303 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		7EA1892018B4FC1600943303 /* gogoc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gogoc; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA1892C18B4FD6F00943303 /* unix-main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "unix-main.c"; sourceTree = "<group>"; };
-		7EA1893A18B52FF400943303 /* client-hook */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "client-hook"; path = "miredo/client-hook"; sourceTree = "<group>"; };
 		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
 		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gogocAdapter.m; sourceTree = "<group>"; };
 		7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genericAdapter.h; sourceTree = "<group>"; };
@@ -502,9 +588,8 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
-				7E47AD1C18B962D600990BD6 /* darwin_route.c */,
+				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
-				7EA1893918B5222A00943303 /* miredo */,
 				7E0FA2E518A0CF0700C9C189 /* gogoc */,
 				6D94909417352725002283B0 /* aiccu */,
 				6D949031173514E2002283B0 /* maiccu */,
@@ -641,6 +726,7 @@
 		7E0FA2E518A0CF0700C9C189 /* gogoc */ = {
 			isa = PBXGroup;
 			children = (
+				7E47AD1C18B962D600990BD6 /* darwin_route.c */,
 				7E22E94318AFA08C0044F1AB /* gogoc-config */,
 				7E4CBD0518AE660900536814 /* gogoc-messaging */,
 				7E4CBCA018AE65B600536814 /* gogoc-pal */,
@@ -690,6 +776,164 @@
 				7E22E95B18AFA08D0044F1AB /* haccessdevicemappingconfig.cc */,
 				7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */,
 				7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		7E2D3B0318BA22A700CD7DBF /* miredo */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B0818BA22A700CD7DBF /* compat */,
+				7E2D3B1718BA22A700CD7DBF /* doc */,
+				7E2D3B2218BA22A800CD7DBF /* include */,
+				7E2D3B2418BA22A800CD7DBF /* libteredo */,
+				7E2D3B5118BA22A800CD7DBF /* libtun6 */,
+				7E2D3B6118BA22A800CD7DBF /* misc */,
+				7E2D3B7818BA22A800CD7DBF /* src */,
+			);
+			path = miredo;
+			sourceTree = "<group>";
+		};
+		7E2D3B0818BA22A700CD7DBF /* compat */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B0A18BA22A700CD7DBF /* clearenv.c */,
+				7E2D3B0B18BA22A700CD7DBF /* clock_gettime.c */,
+				7E2D3B0C18BA22A700CD7DBF /* clock_nanosleep.c */,
+				7E2D3B0D18BA22A700CD7DBF /* closefrom.c */,
+				7E2D3B0E18BA22A700CD7DBF /* dummy.c */,
+				7E2D3B0F18BA22A700CD7DBF /* fdatasync.c */,
+				7E2D3B1018BA22A700CD7DBF /* fixups.h */,
+				7E2D3B1118BA22A700CD7DBF /* Makefile.am */,
+				7E2D3B1218BA22A700CD7DBF /* strlcpy.c */,
+				7E2D3B1318BA22A700CD7DBF /* test-closefrom.c */,
+				7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */,
+			);
+			path = compat;
+			sourceTree = "<group>";
+		};
+		7E2D3B1718BA22A700CD7DBF /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B1818BA22A700CD7DBF /* .gitignore */,
+				7E2D3B1918BA22A700CD7DBF /* Makefile.am */,
+				7E2D3B1A18BA22A700CD7DBF /* miredo-checkconf.8-in */,
+				7E2D3B1B18BA22A800CD7DBF /* miredo-server.8-in */,
+				7E2D3B1C18BA22A800CD7DBF /* miredo-server.conf.5 */,
+				7E2D3B1D18BA22A800CD7DBF /* miredo.8-in */,
+				7E2D3B1E18BA22A800CD7DBF /* miredo.conf.5 */,
+				7E2D3B1F18BA22A800CD7DBF /* rfc4380.txt */,
+				7E2D3B2018BA22A800CD7DBF /* teredo-mire.1 */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		7E2D3B2218BA22A800CD7DBF /* include */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B2318BA22A800CD7DBF /* .gitignore */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		7E2D3B2418BA22A800CD7DBF /* libteredo */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B2518BA22A800CD7DBF /* .gitignore */,
+				7E2D3B2618BA22A800CD7DBF /* checksum.h */,
+				7E2D3B2718BA22A800CD7DBF /* clock.c */,
+				7E2D3B2818BA22A800CD7DBF /* clock.h */,
+				7E2D3B2918BA22A800CD7DBF /* debug.h */,
+				7E2D3B2A18BA22A800CD7DBF /* discovery.c */,
+				7E2D3B2B18BA22A800CD7DBF /* discovery.h */,
+				7E2D3B2C18BA22A800CD7DBF /* init.c */,
+				7E2D3B2D18BA22A800CD7DBF /* iothread.c */,
+				7E2D3B2E18BA22A800CD7DBF /* iothread.h */,
+				7E2D3B2F18BA22A800CD7DBF /* libteredo.sym */,
+				7E2D3B3018BA22A800CD7DBF /* maintain.c */,
+				7E2D3B3118BA22A800CD7DBF /* maintain.h */,
+				7E2D3B3218BA22A800CD7DBF /* Makefile.am */,
+				7E2D3B3318BA22A800CD7DBF /* md5.c */,
+				7E2D3B3418BA22A800CD7DBF /* md5.h */,
+				7E2D3B3518BA22A800CD7DBF /* mire.c */,
+				7E2D3B3618BA22A800CD7DBF /* packets.c */,
+				7E2D3B3718BA22A800CD7DBF /* packets.h */,
+				7E2D3B3818BA22A800CD7DBF /* peerlist.c */,
+				7E2D3B3918BA22A800CD7DBF /* peerlist.h */,
+				7E2D3B3A18BA22A800CD7DBF /* relay.c */,
+				7E2D3B3B18BA22A800CD7DBF /* security.c */,
+				7E2D3B3C18BA22A800CD7DBF /* security.h */,
+				7E2D3B3D18BA22A800CD7DBF /* server.c */,
+				7E2D3B3E18BA22A800CD7DBF /* server.h */,
+				7E2D3B3F18BA22A800CD7DBF /* stub.c */,
+				7E2D3B4018BA22A800CD7DBF /* teredo-udp.h */,
+				7E2D3B4118BA22A800CD7DBF /* teredo.c */,
+				7E2D3B4218BA22A800CD7DBF /* teredo.h */,
+				7E2D3B4318BA22A800CD7DBF /* test */,
+				7E2D3B4E18BA22A800CD7DBF /* tunnel.h */,
+				7E2D3B4F18BA22A800CD7DBF /* v4global.c */,
+				7E2D3B5018BA22A800CD7DBF /* v4global.h */,
+			);
+			path = libteredo;
+			sourceTree = "<group>";
+		};
+		7E2D3B4318BA22A800CD7DBF /* test */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B4418BA22A800CD7DBF /* .gitignore */,
+				7E2D3B4518BA22A800CD7DBF /* addrcmp.c */,
+				7E2D3B4618BA22A800CD7DBF /* clock.c */,
+				7E2D3B4718BA22A800CD7DBF /* hmac.c */,
+				7E2D3B4818BA22A800CD7DBF /* list.c */,
+				7E2D3B4918BA22A800CD7DBF /* Makefile.am */,
+				7E2D3B4A18BA22A800CD7DBF /* md5test.c */,
+				7E2D3B4B18BA22A800CD7DBF /* stresslist.c */,
+				7E2D3B4C18BA22A800CD7DBF /* teredo.c */,
+				7E2D3B4D18BA22A800CD7DBF /* v4global.c */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		7E2D3B5118BA22A800CD7DBF /* libtun6 */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B5318BA22A800CD7DBF /* diag.c */,
+				7E2D3B5418BA22A800CD7DBF /* Makefile.am */,
+				7E2D3B5518BA22A800CD7DBF /* test_diag.c */,
+				7E2D3B5618BA22A800CD7DBF /* tun6.c */,
+				7E2D3B5718BA22A800CD7DBF /* tun6.h */,
+			);
+			path = libtun6;
+			sourceTree = "<group>";
+		};
+		7E2D3B6118BA22A800CD7DBF /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B6318BA22A800CD7DBF /* client-hook.bsd */,
+				7E2D3B6418BA22A800CD7DBF /* client-hook.darwin */,
+				7E2D3B6818BA22A800CD7DBF /* miredo.conf-in */,
+				7E2D3B6918BA22A800CD7DBF /* miredo.service-in */,
+			);
+			path = misc;
+			sourceTree = "<group>";
+		};
+		7E2D3B7818BA22A800CD7DBF /* src */ = {
+			isa = PBXGroup;
+			children = (
+				7E2D3B7918BA22A800CD7DBF /* .gitignore */,
+				7E2D3B7A18BA22A800CD7DBF /* binreloc.c */,
+				7E2D3B7B18BA22A800CD7DBF /* binreloc.h */,
+				7E2D3B7C18BA22A800CD7DBF /* checkconf.c */,
+				7E2D3B7D18BA22A800CD7DBF /* conf.c */,
+				7E2D3B7E18BA22A800CD7DBF /* conf.h */,
+				7E2D3B7F18BA22A800CD7DBF /* main.c */,
+				7E2D3B8018BA22A800CD7DBF /* Makefile.am */,
+				7E2D3B8118BA22A800CD7DBF /* miredo.c */,
+				7E2D3B8218BA22A800CD7DBF /* miredo.h */,
+				7E2D3B8318BA22A800CD7DBF /* privproc.c */,
+				7E2D3B8418BA22A800CD7DBF /* privproc.h */,
+				7E2D3B8518BA22A800CD7DBF /* relayd.c */,
+				7E2D3B8618BA22A800CD7DBF /* serverd.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1046,14 +1290,6 @@
 				7EA1892C18B4FD6F00943303 /* unix-main.c */,
 			);
 			path = "unix-common";
-			sourceTree = "<group>";
-		};
-		7EA1893918B5222A00943303 /* miredo */ = {
-			isa = PBXGroup;
-			children = (
-				7EA1893A18B52FF400943303 /* client-hook */,
-			);
-			name = miredo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
