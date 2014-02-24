@@ -156,6 +156,41 @@
 			remoteGlobalIDString = 7E4DD02518B005F60029F38B;
 			remoteInfo = "gogoc-tsp";
 		};
+		7E4CBD7718BB547900536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04418B0072D0029F38B;
+			remoteInfo = "gogoc-pal";
+		};
+		7E4CBD7918BB548D00536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04418B0072D0029F38B;
+			remoteInfo = "gogoc-pal";
+		};
+		7E4CBD7B18BB54A100536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04418B0072D0029F38B;
+			remoteInfo = "gogoc-pal";
+		};
+		7E4CBD7D18BB54A200536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04D18B009DD0029F38B;
+			remoteInfo = "gogoc-config";
+		};
+		7E4CBD7F18BB54A300536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD05F18B00B770029F38B;
+			remoteInfo = "gogoc-messaging";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -279,15 +314,6 @@
 		7E2D3B1218BA22A700CD7DBF /* strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = strlcpy.c; sourceTree = "<group>"; };
 		7E2D3B1318BA22A700CD7DBF /* test-closefrom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-closefrom.c"; sourceTree = "<group>"; };
 		7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-strlcpy.c"; sourceTree = "<group>"; };
-		7E2D3B1818BA22A700CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		7E2D3B1918BA22A700CD7DBF /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		7E2D3B1A18BA22A700CD7DBF /* miredo-checkconf.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-checkconf.8-in"; sourceTree = "<group>"; };
-		7E2D3B1B18BA22A800CD7DBF /* miredo-server.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-server.8-in"; sourceTree = "<group>"; };
-		7E2D3B1C18BA22A800CD7DBF /* miredo-server.conf.5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo-server.conf.5"; sourceTree = "<group>"; };
-		7E2D3B1D18BA22A800CD7DBF /* miredo.8-in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "miredo.8-in"; sourceTree = "<group>"; };
-		7E2D3B1E18BA22A800CD7DBF /* miredo.conf.5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = miredo.conf.5; sourceTree = "<group>"; };
-		7E2D3B1F18BA22A800CD7DBF /* rfc4380.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rfc4380.txt; sourceTree = "<group>"; };
-		7E2D3B2018BA22A800CD7DBF /* teredo-mire.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "teredo-mire.1"; sourceTree = "<group>"; };
 		7E2D3B2318BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7E2D3B2518BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7E2D3B2618BA22A800CD7DBF /* checksum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checksum.h; sourceTree = "<group>"; };
@@ -784,7 +810,6 @@
 			isa = PBXGroup;
 			children = (
 				7E2D3B0818BA22A700CD7DBF /* compat */,
-				7E2D3B1718BA22A700CD7DBF /* doc */,
 				7E2D3B2218BA22A800CD7DBF /* include */,
 				7E2D3B2418BA22A800CD7DBF /* libteredo */,
 				7E2D3B5118BA22A800CD7DBF /* libtun6 */,
@@ -810,22 +835,6 @@
 				7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */,
 			);
 			path = compat;
-			sourceTree = "<group>";
-		};
-		7E2D3B1718BA22A700CD7DBF /* doc */ = {
-			isa = PBXGroup;
-			children = (
-				7E2D3B1818BA22A700CD7DBF /* .gitignore */,
-				7E2D3B1918BA22A700CD7DBF /* Makefile.am */,
-				7E2D3B1A18BA22A700CD7DBF /* miredo-checkconf.8-in */,
-				7E2D3B1B18BA22A800CD7DBF /* miredo-server.8-in */,
-				7E2D3B1C18BA22A800CD7DBF /* miredo-server.conf.5 */,
-				7E2D3B1D18BA22A800CD7DBF /* miredo.8-in */,
-				7E2D3B1E18BA22A800CD7DBF /* miredo.conf.5 */,
-				7E2D3B1F18BA22A800CD7DBF /* rfc4380.txt */,
-				7E2D3B2018BA22A800CD7DBF /* teredo-mire.1 */,
-			);
-			path = doc;
 			sourceTree = "<group>";
 		};
 		7E2D3B2218BA22A800CD7DBF /* include */ = {
@@ -1376,6 +1385,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				7E4CBD7C18BB54A100536814 /* PBXTargetDependency */,
+				7E4CBD7E18BB54A200536814 /* PBXTargetDependency */,
+				7E4CBD8018BB54A300536814 /* PBXTargetDependency */,
 			);
 			name = "gogoc-tsp";
 			productName = "gogoc-tsp";
@@ -1410,6 +1422,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7E4CBD7A18BB548D00536814 /* PBXTargetDependency */,
 			);
 			name = "gogoc-config";
 			productName = "gogoc-config";
@@ -1427,6 +1440,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7E4CBD7818BB547900536814 /* PBXTargetDependency */,
 			);
 			name = "gogoc-messaging";
 			productName = "gogoc-messaging";
@@ -1706,6 +1720,31 @@
 			isa = PBXTargetDependency;
 			target = 7E4DD02518B005F60029F38B /* gogoc-tsp */;
 			targetProxy = 7E4CBD7518BB3DF200536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7818BB547900536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04418B0072D0029F38B /* gogoc-pal */;
+			targetProxy = 7E4CBD7718BB547900536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7A18BB548D00536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04418B0072D0029F38B /* gogoc-pal */;
+			targetProxy = 7E4CBD7918BB548D00536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7C18BB54A100536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04418B0072D0029F38B /* gogoc-pal */;
+			targetProxy = 7E4CBD7B18BB54A100536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7E18BB54A200536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
+			targetProxy = 7E4CBD7D18BB54A200536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD8018BB54A300536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD05F18B00B770029F38B /* gogoc-messaging */;
+			targetProxy = 7E4CBD7F18BB54A300536814 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
