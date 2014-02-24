@@ -8,14 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TKZAppDelegate : NSObject <NSApplicationDelegate> {
+@interface TKZAppDelegate : NSObject <NSApplicationDelegate,NSMenuDelegate> {
 
     
 }
 
-@property (assign) IBOutlet NSWindow *window;
+//@property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSMenu *menu;
 @property (weak) IBOutlet NSMenuItem *startstopItem;
+@property (weak) IBOutlet NSMenuItem *bandwidthItem;
 
 - (IBAction)clickedDetails:(id)sender;
 - (IBAction)clickedQuit:(id)sender;
