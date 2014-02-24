@@ -31,8 +31,9 @@ extern int indSigHUP; /* Declared in every unix platform tsp_local.c */
 */
 void signal_handler( int sigraised )
 {
-  if( sigraised == SIGHUP )
-    indSigHUP = 1;
+//  if( sigraised == SIGHUP )
+  indSigHUP = 1;
+  signal(sigraised, SIG_IGN);
 }
 
 
@@ -63,6 +64,8 @@ int main(int argc, char *argv[])
 #endif
   /* Install new signal handler for HUP signal. */
   signal( SIGHUP, &signal_handler );
+  signal( SIGTERM, &signal_handler );
+  signal( SIGINT, &signal_handler );
 
 #ifdef HACCESS
   /* Initialize the HACCESS module. */

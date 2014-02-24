@@ -121,6 +121,41 @@
 			remoteGlobalIDString = 7EA1891F18B4FC1600943303;
 			remoteInfo = gogoc;
 		};
+		7E4CBD6D18BB3DD600536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04D18B009DD0029F38B;
+			remoteInfo = "gogoc-config";
+		};
+		7E4CBD6F18BB3DEA00536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD05F18B00B770029F38B;
+			remoteInfo = "gogoc-messaging";
+		};
+		7E4CBD7118BB3DEC00536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04D18B009DD0029F38B;
+			remoteInfo = "gogoc-config";
+		};
+		7E4CBD7318BB3DF100536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD04418B0072D0029F38B;
+			remoteInfo = "gogoc-pal";
+		};
+		7E4CBD7518BB3DF200536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD02518B005F60029F38B;
+			remoteInfo = "gogoc-tsp";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1068,6 +1103,7 @@
 			);
 			dependencies = (
 				7E4CBD6618B73B8500536814 /* PBXTargetDependency */,
+				7E4CBD6E18BB3DD600536814 /* PBXTargetDependency */,
 			);
 			name = Maiccu;
 			productName = maiccu;
@@ -1173,6 +1209,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				7E4CBD7018BB3DEA00536814 /* PBXTargetDependency */,
+				7E4CBD7418BB3DF100536814 /* PBXTargetDependency */,
+				7E4CBD7618BB3DF200536814 /* PBXTargetDependency */,
+				7E4CBD7218BB3DEC00536814 /* PBXTargetDependency */,
 			);
 			name = gogoc;
 			productName = gogoc;
@@ -1405,6 +1445,31 @@
 			isa = PBXTargetDependency;
 			target = 7EA1891F18B4FC1600943303 /* gogoc */;
 			targetProxy = 7E4CBD6518B73B8500536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD6E18BB3DD600536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
+			targetProxy = 7E4CBD6D18BB3DD600536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7018BB3DEA00536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD05F18B00B770029F38B /* gogoc-messaging */;
+			targetProxy = 7E4CBD6F18BB3DEA00536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7218BB3DEC00536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
+			targetProxy = 7E4CBD7118BB3DEC00536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7418BB3DF100536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD04418B0072D0029F38B /* gogoc-pal */;
+			targetProxy = 7E4CBD7318BB3DF100536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD7618BB3DF200536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD02518B005F60029F38B /* gogoc-tsp */;
+			targetProxy = 7E4CBD7518BB3DF200536814 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
