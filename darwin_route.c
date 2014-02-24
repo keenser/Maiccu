@@ -62,7 +62,7 @@ routepr(void)
 	mib[2] = 0;
 	mib[3] = PF_INET6;
 	mib[4] = NET_RT_FLAGS;
-	mib[5] = RTF_STATIC;
+	mib[5] = RTF_GATEWAY;
 	if (sysctl(mib, 6, NULL, &needed, NULL, 0) < 0) {
         return NULL;
 	}
@@ -106,7 +106,6 @@ np_rtentry(struct rt_msghdr2 *rtm)
 	struct sockaddr_in6 *addr, *mask;
     struct sockaddr *gate;
     
-    if (!(rtm->rtm_flags & ( RTF_GATEWAY | RTF_STATIC | RTF_PRCLONING))) return NULL;
 	if ((rtm->rtm_flags & RTF_WASCLONED) ) return NULL;
     
 	get_rtaddrs(rtm->rtm_addrs, sa, rti_info);
