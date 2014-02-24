@@ -176,12 +176,14 @@
 }
 
 - (void)updateNetActivityDisplay:(NSTimer *)timer {
-//    [updateTimer invalidate];  // Runloop releases and retains the next one
     float sampleInterval = 1.0;
+    char ifname[]="tun0";
     if (menuActive)
     {
+//        NSLog(@"%@",timer);
         // Get sizing info from sysctl and resize as needed.
-        int	mib[] = { CTL_NET, PF_ROUTE, 0, 0, NET_RT_IFLIST2, 0 };
+        int if_index = if_nametoindex(ifname);
+        int	mib[] = { CTL_NET, PF_ROUTE, 0, 0, NET_RT_IFLIST2, if_index };
         size_t currentSize = 0;
         if (sysctl(mib, 6, NULL, &currentSize, NULL, 0) != 0) return;
         if (!sysctlBuffer || (currentSize > sysctlBufferSize)) {
@@ -229,72 +231,43 @@
             // Load in old statistics for this interface
             NSDictionary *oldStats = [lastData objectForKey:interfaceName];
             
-            if ([interfaceName hasPrefix:@"ppp"]) {
-            } else {
-                // Not a PPP connection
-                if (oldStats && (ifmsg->ifm_flags & IFF_UP)) {
-                    // Non-PPP data is sized at u_long, which means we need to deal
-                    // with 32-bit and 64-bit differently
-                    uint64_t lastTotalIn = [[oldStats objectForKey:@"totalin"] unsignedLongLongValue];
-                    uint64_t lastTotalOut = [[oldStats objectForKey:@"totalout"] unsignedLongLongValue];
-                    // New totals
-                    uint64_t totalIn = 0, totalOut = 0;
-                    // Values are always 32 bit and can overflow
-                    uint32_t lastifIn = [[oldStats objectForKey:@"ifin"] unsignedIntValue];
-                    uint32_t lastifOut = [[oldStats objectForKey:@"ifout"] unsignedIntValue];
-                    if (lastifIn > ifmsg->ifm_data.ifi_ibytes) {
-                        totalIn = lastTotalIn + ifmsg->ifm_data.ifi_ibytes + UINT_MAX - lastifIn + 1;
-                    } else {
-                        totalIn = lastTotalIn + (ifmsg->ifm_data.ifi_ibytes - lastifIn);
-                    }
-                    if (lastifOut > ifmsg->ifm_data.ifi_obytes) {
-                        totalOut = lastTotalOut + ifmsg->ifm_data.ifi_obytes + UINT_MAX - lastifOut + 1;
-                    } else {
-                        totalOut = lastTotalOut + (ifmsg->ifm_data.ifi_obytes - lastifOut);
-                    }
-                    // New deltas (64-bit overflow guard, full paranoia)
-                    uint64_t deltaIn = (totalIn > lastTotalIn) ? (totalIn - lastTotalIn) : 0;
-                    uint64_t deltaOut = (totalOut > lastTotalOut) ? (totalOut - lastTotalOut) : 0;
-                    // Peak
-                    double peak = [[oldStats objectForKey:@"peak"] doubleValue];
-                    if (sampleInterval > 0) {
-                        if (peak < (deltaIn / sampleInterval)) peak = deltaIn / sampleInterval;
-                        if (peak < (deltaOut / sampleInterval)) peak = deltaOut / sampleInterval;
-                    }
-                    [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithUnsignedLong:ifmsg->ifm_data.ifi_ibytes],
-                                         @"ifin",
-                                         [NSNumber numberWithUnsignedLong:ifmsg->ifm_data.ifi_obytes],
-                                         @"ifout",
-                                         [NSNumber numberWithUnsignedLongLong:deltaIn],
-                                         @"deltain",
-                                         [NSNumber numberWithUnsignedLongLong:deltaOut],
-                                         @"deltaout",
-                                         [NSNumber numberWithUnsignedLongLong:totalIn],
-                                         @"totalin",
-                                         [NSNumber numberWithUnsignedLongLong:totalOut],
-                                         @"totalout",
-                                         [NSNumber numberWithDouble:peak],
-                                         @"peak",
-                                         nil]
-                                 forKey:interfaceName];
-                } else {
-                    [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                         // Paranoia, is this where the neg numbers came from?
-                                         [NSNumber numberWithUnsignedLong:ifmsg->ifm_data.ifi_ibytes],
-                                         @"ifin",
-                                         [NSNumber numberWithUnsignedLong:ifmsg->ifm_data.ifi_obytes],
-                                         @"ifout",
-                                         [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_ibytes],
-                                         @"totalin",
-                                         [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_obytes],
-                                         @"totalout",
-                                         [NSNumber numberWithDouble:0],
-                                         @"peak",
-                                         nil]
-                                 forKey:interfaceName];
+            if (oldStats && (ifmsg->ifm_flags & IFF_UP)) {
+                uint64_t lastifIn = [[oldStats objectForKey:@"ifin"] unsignedLongLongValue];
+                uint64_t lastifOut = [[oldStats objectForKey:@"ifout"] unsignedLongLongValue];
+                uint64_t deltaIn = ifmsg->ifm_data.ifi_ibytes - lastifIn;
+                uint64_t deltaOut = ifmsg->ifm_data.ifi_obytes - lastifOut;
+                // Peak
+                double peak = [[oldStats objectForKey:@"peak"] doubleValue];
+                if (sampleInterval > 0) {
+                    if (peak < (deltaIn / sampleInterval)) peak = deltaIn / sampleInterval;
+                    if (peak < (deltaOut / sampleInterval)) peak = deltaOut / sampleInterval;
                 }
+                [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_ibytes],
+                                     @"ifin",
+                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_obytes],
+                                     @"ifout",
+                                     [NSNumber numberWithUnsignedLongLong:deltaIn],
+                                     @"deltain",
+                                     [NSNumber numberWithUnsignedLongLong:deltaOut],
+                                     @"deltaout",
+                                     [NSNumber numberWithDouble:peak],
+                                     @"peak",
+                                     nil]
+                             forKey:interfaceName];
+            } else {
+                [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                     // Paranoia, is this where the neg numbers came from?
+                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_ibytes],
+                                     @"ifin",
+                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_obytes],
+                                     @"ifout",
+                                     [NSNumber numberWithDouble:0],
+                                     @"peak",
+                                     nil]
+                             forKey:interfaceName];
             }
+
             
             // Continue on
             currentData += ifmsg->ifm_msglen;
@@ -303,8 +276,8 @@
         // Store and return
         lastData = newStats;
 
-        NSString *string = [NSString stringWithFormat:@"%@/%@ B/S RX/TX",newStats[@"tun0"][@"deltain"],newStats[@"tun0"][@"deltaout"]];
-        NSLog(@"%@",newStats[@"tun0"]);
+        NSString *string = [NSString stringWithFormat:@"%@/%@ B/S Rx/Tx",newStats[@"tun0"][@"deltain"],newStats[@"tun0"][@"deltaout"]];
+//        NSLog(@"%@",newStats);
         [_bandwidthItem setTitle:string];
     }
 }
