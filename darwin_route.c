@@ -26,15 +26,6 @@
 // gogoCLIENT Messaging Subsystem.
 #include <gogocmessaging/gogoc_c_wrapper.h>
 
-#define TSP_OPERATION_CREATETUNNEL    "TSP_TUNNEL_CREATION"
-#define TSP_OPERATION_TEARDOWNTUNNEL  "TSP_TUNNEL_TEARDOWN"
-
-
-/*  Should be defined in platform.h  */
-#ifndef SCRIPT_TMP_FILE
-#error "SCRIPT_TMP_FILE is not defined in platform.h"
-#endif
-
 // original source code functions routepr, get_rtaddrs, np_rtentry see at
 // http://www.opensource.apple.com/source/network_cmds/network_cmds-433/netstat.tproj/route.c
 //
@@ -139,14 +130,15 @@ sint32_t execCmd( const char *cmd[] )
     posix_spawn_file_actions_t action;
     int status;
     
-    int i=0;
+    strcpy(buf,cmd[0]);
+    int i=1;
     while (cmd[i] != NULL)
     {
-        Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", cmd[i] );
-//        printf("%s ",cmd[i]);
+        strcat(buf," ");
+        strcat(buf,cmd[i]);
         i++;
     }
-//    puts("\n");
+    Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", buf );
     
     if ( (retVal = pipe(in)) ) {
         Display( LOG_LEVEL_1, ELError, "execScript", "Failed to open pipe for command: %s. %s (%d).", cmd[0], strerror(errno), errno);
@@ -204,48 +196,6 @@ sint32_t execCmd( const char *cmd[] )
 #define sh(...) {const char *arg[] = {__VA_ARGS__,NULL} ; execCmd(arg);}
 static const char route[] = "/sbin/route";
 static const char ifconfig[] = "/sbin/ifconfig";
-
-sint32_t execScript( const char * cmd)
-{
-    char *TSP_TUNNEL_INTERFACE = getenv("TSP_TUNNEL_INTERFACE");
-    char *TSP_CLIENT_ADDRESS_IPV6 = getenv("TSP_CLIENT_ADDRESS_IPV6");
-    char *TSP_ORIGINAL_GATEWAY = getenv("TSP_ORIGINAL_GATEWAY");
-    
-    if (!strcmp(getenv("TSP_OPERATION"),"TSP_TUNNEL_TEARDOWN"))
-    {
-        if ( TSP_ORIGINAL_GATEWAY ) {
-            sh(route,"change","-inet6","default",TSP_ORIGINAL_GATEWAY);
-            sh(route,"add","-inet6","default",TSP_ORIGINAL_GATEWAY);
-        }
-        else {
-            sh(route,"delete","-inet6","default");
-        }
-        //sh(route,"delete","-inet6",TSP_CLIENT_ADDRESS_IPV6);
-        sh(ifconfig,TSP_TUNNEL_INTERFACE,"deletetunnel");
-    }
-    else if(!strcmp(getenv("TSP_HOST_TYPE"),"host"))
-    {
-        char *TSP_CLIENT_ADDRESS_IPV4 = getenv("TSP_CLIENT_ADDRESS_IPV4");
-        char *TSP_SERVER_ADDRESS_IPV4 = getenv("TSP_SERVER_ADDRESS_IPV4");
-        char *TSP_SERVER_ADDRESS_IPV6 = getenv("TSP_SERVER_ADDRESS_IPV6");
-        char *TSP_TUNNEL_PREFIXLEN = getenv("TSP_TUNNEL_PREFIXLEN");
-        
-        sh(ifconfig,TSP_TUNNEL_INTERFACE,"deletetunnel");
-        sh(ifconfig,TSP_TUNNEL_INTERFACE,"tunnel",TSP_CLIENT_ADDRESS_IPV4,TSP_SERVER_ADDRESS_IPV4);
-        sh(ifconfig,TSP_TUNNEL_INTERFACE,"inet6",TSP_CLIENT_ADDRESS_IPV6,TSP_SERVER_ADDRESS_IPV6,"prefixlen",TSP_TUNNEL_PREFIXLEN,"alias");
-        
-        sh(ifconfig,TSP_TUNNEL_INTERFACE,"mtu","1280");
-        
-        if ( TSP_ORIGINAL_GATEWAY ) {
-            Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", TSP_ORIGINAL_GATEWAY );
-            sh(route,"change","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
-        }
-        else {
-            sh(route,"add","-inet6","default",TSP_SERVER_ADDRESS_IPV6);
-        }
-    }
-    return 0;
-}
 
 /*
  -----------------------------------------------------------------------------
@@ -321,82 +271,56 @@ sint32_t validate_tunnel_info( const tTunnel* pTunnelInfo )
 
 
 // --------------------------------------------------------------------------
-
-void set_tsp_env_variables( const tConf* pConfig, const tTunnel* pTunnelInfo )
+// This function will set the required environment variables that will later
+// be used when invoking the template script to actually create the tunnel.
+//
+gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
 {
-    char buffer[8];
+    gogoc_status status = STATUS_SUCCESS_INIT;
+    char *tunnel_interface = NULL;
+    char *tunnel_prefixlen = NULL;
+    gogocTunnelType tunnelType;
     
-    // Specify log verbosity (MAXIMAL).
-    pal_snprintf( buffer, sizeof buffer, "%d", LOG_LEVEL_MAX );
-    tspSetEnv("TSP_VERBOSE", buffer, 1);
-    
-    // Specify gogoCLIENT installation directory.
-    tspSetEnv("TSP_HOME_DIR", TspHomeDir, 1);
-    
-    // Specify the tunnel mode.
-    tspSetEnv("TSP_TUNNEL_MODE", pTunnelInfo->type, 1);
-    
-    // Specify host type {router, host}
-    tspSetEnv("TSP_HOST_TYPE", pConfig->host_type, 1);
+    // Perform validation on tunnel information provided by server.
+    if( validate_tunnel_info(t) != 0 )
+    {
+        // Errors occured during verification of tunnel parameters.
+        Display( LOG_LEVEL_1, ELError, "tspSetupInterface", STR_TSP_ERRS_TUN_PARAM_FROM_SERVER );
+        return make_status(CTX_TUNINTERFACESETUP, ERR_BAD_TUNNEL_PARAM);
+    }
     
     // Specify tunnel interface, for setup.
-    if (pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6V4) == 0 )
+    if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6V4) == 0 )
     {
-        tspSetEnv("TSP_TUNNEL_INTERFACE", pConfig->if_tunnel_v6v4, 1);
-        gTunnelInfo.eTunnelType = TUNTYPE_V6V4;
-    }
-    else if (pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6UDPV4) == 0 )
-    {
-        tspSetEnv("TSP_TUNNEL_INTERFACE", pConfig->if_tunnel_v6udpv4, 1);
-        gTunnelInfo.eTunnelType = TUNTYPE_V6UDPV4;
+        tunnel_interface = c->if_tunnel_v6v4;
+        tunnel_prefixlen = "128";
+        tunnelType = TUNTYPE_V6V4;
     }
 #ifdef V4V6_SUPPORT
-    else if (pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V4V6) == 0 )
+    else if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V4V6) == 0 )
     {
-        tspSetEnv("TSP_TUNNEL_INTERFACE", pConfig->if_tunnel_v4v6, 1);
-        gTunnelInfo.eTunnelType = TUNTYPE_V4V6;
+        tunnel_interface = c->if_tunnel_v4v6;
+        tunnel_prefixlen = "32";
+        tunnelType = TUNTYPE_V4V6;
     }
 #endif /* V4V6_SUPPORT */
-    
-    // Specify what interface will be used for routing advertizement,
-    // if enabled.
-    tspSetEnv("TSP_HOME_INTERFACE", pConfig->if_prefix, 1);
-    
-    // Specify local endpoint IPv4 address
-    tspSetEnv("TSP_CLIENT_ADDRESS_IPV4", pTunnelInfo->client_address_ipv4, 1);
-    gTunnelInfo.szIPV4AddrLocalEndpoint = pTunnelInfo->client_address_ipv4;
-    
-    // Specify local endpoint IPv6 address
-    tspSetEnv("TSP_CLIENT_ADDRESS_IPV6", pTunnelInfo->client_address_ipv6, 1);
-    gTunnelInfo.szIPV6AddrLocalEndpoint = pTunnelInfo->client_address_ipv6;
-    
-    // Specify client dns IPv6 address
-    tspSetEnv("TSP_CLIENT_DNS_ADDRESS_IPV6", pTunnelInfo->client_dns_server_address_ipv6, 1);
-    gTunnelInfo.szIPV6AddrDns = pTunnelInfo->client_dns_server_address_ipv6;
-    
-    // Specify local endpoint domain name
-    if( pTunnelInfo->client_dns_name != NULL)
+    else //if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6UDPV4) == 0 )
     {
-        tspSetEnv("TSP_CLIENT_DNS_NAME", pTunnelInfo->client_dns_name, 1);
-        gTunnelInfo.szUserDomain = pTunnelInfo->client_dns_name;
+        tunnel_interface = c->if_tunnel_v6udpv4;
+        tunnel_prefixlen = "128";
+        tunnelType = TUNTYPE_V6UDPV4;
     }
     
-    // Specify remote endpoint IPv4 address.
-    tspSetEnv("TSP_SERVER_ADDRESS_IPV4", pTunnelInfo->server_address_ipv4, 1);
-    gTunnelInfo.szIPV4AddrRemoteEndpoint = pTunnelInfo->server_address_ipv4;
-    
-    // Specify remote endpoint IPv6 address.
-    tspSetEnv("TSP_SERVER_ADDRESS_IPV6", pTunnelInfo->server_address_ipv6, 1);
-    gTunnelInfo.szIPV6AddrRemoteEndpoint = pTunnelInfo->server_address_ipv6;
-    
-    // Specify prefix for tunnel endpoint.
-    if ((pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6V4) == 0) ||
-        (pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6UDPV4) == 0))
-        tspSetEnv("TSP_TUNNEL_PREFIXLEN", "128", 1);
-#ifdef V4V6_SUPPORT
-    else
-        tspSetEnv("TSP_TUNNEL_PREFIXLEN", "32", 1);
-#endif /* V4V6_SUPPORT */
+    gTunnelInfo.eTunnelType = tunnelType;
+    gTunnelInfo.szIPV4AddrLocalEndpoint = t->client_address_ipv4;
+    gTunnelInfo.szIPV6AddrLocalEndpoint = t->client_address_ipv6;
+    gTunnelInfo.szIPV6AddrDns = t->client_dns_server_address_ipv6;
+    if( t->client_dns_name != NULL)
+    {
+        gTunnelInfo.szUserDomain = t->client_dns_name;
+    }
+    gTunnelInfo.szIPV4AddrRemoteEndpoint = t->server_address_ipv4;
+    gTunnelInfo.szIPV6AddrRemoteEndpoint = t->server_address_ipv6;
     
     
     // Free and clear delegated prefix from tunnel info.
@@ -407,69 +331,35 @@ void set_tsp_env_variables( const tConf* pConfig, const tTunnel* pTunnelInfo )
     }
     
     // Have we been allocated a prefix for routing advertizement..?
-    if( pTunnelInfo->prefix != NULL )
+    if( t->prefix != NULL )
     {
         char chPrefix[128];
         size_t len, sep;
         
         /* Compute the number of characters that are significant out of the prefix. */
         /* This is meaningful only for IPv6 prefixes; no contraction is possible for IPv4. */
-        if ((pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6V4) == 0) ||
-            (pal_strcasecmp(pTunnelInfo->type, STR_XML_TUNNELMODE_V6UDPV4) == 0))
+        if (tunnelType == TUNTYPE_V6V4 || tunnelType == TUNTYPE_V6UDPV4)
         {
-            len = (atoi(pTunnelInfo->prefix_length) % 16) ? (atoi(pTunnelInfo->prefix_length) / 16 + 1) * 4 : atoi(pTunnelInfo->prefix_length) / 16 * 4;
-            sep = (atoi(pTunnelInfo->prefix_length) % 16) ? (atoi(pTunnelInfo->prefix_length) / 16) : (atoi(pTunnelInfo->prefix_length) / 16) -1;
+            len = (atoi(t->prefix_length) % 16) ? (atoi(t->prefix_length) / 16 + 1) * 4 : atoi(t->prefix_length) / 16 * 4;
+            sep = (atoi(t->prefix_length) % 16) ? (atoi(t->prefix_length) / 16) : (atoi(t->prefix_length) / 16) -1;
         }
         else
         {
-            len = pal_strlen( pTunnelInfo->prefix );
+            len = pal_strlen( t->prefix );
             sep = 0;
         }
         
         memset(chPrefix, 0, 128);
-        memcpy(chPrefix, pTunnelInfo->prefix, len+sep);
+        memcpy(chPrefix, t->prefix, len+sep);
         
         // Specify delegated prefix for routing advertizement, if enabled.
-        tspSetEnv("TSP_PREFIX", chPrefix, 1);
         gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(chPrefix) + 10/*To append prefix_length*/ );
         strcpy( gTunnelInfo.szDelegatedPrefix, chPrefix );
         
         // Specify prefix length for routing advertizement, if enabled.
-        tspSetEnv("TSP_PREFIXLEN", pTunnelInfo->prefix_length, 1);
         strcat( gTunnelInfo.szDelegatedPrefix, "/" );
-        strcat( gTunnelInfo.szDelegatedPrefix, pTunnelInfo->prefix_length );
+        strcat( gTunnelInfo.szDelegatedPrefix, t->prefix_length );
     }
-    
-    if(pTunnelInfo->originalgateway) {
-        tspSetEnv("TSP_ORIGINAL_GATEWAY", pTunnelInfo->originalgateway, 1);
-    }
-}
-
-
-// --------------------------------------------------------------------------
-// This function will set the required environment variables that will later
-// be used when invoking the template script to actually create the tunnel.
-//
-gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
-{
-    gogoc_status status = STATUS_SUCCESS_INIT;
-    char* template_script = c->template;
-    
-    
-    // Perform validation on tunnel information provided by server.
-    if( validate_tunnel_info(t) != 0 )
-    {
-        // Errors occured during verification of tunnel parameters.
-        Display( LOG_LEVEL_1, ELError, "tspSetupInterface", STR_TSP_ERRS_TUN_PARAM_FROM_SERVER );
-        return make_status(CTX_TUNINTERFACESETUP, ERR_BAD_TUNNEL_PARAM);
-    }
-    
-    
-    // Specify TSP Operation: Tunnel Creation.
-    tspSetEnv("TSP_OPERATION", TSP_OPERATION_CREATETUNNEL, 1 );
-    
-    // Set environment variable for script execution.
-    set_tsp_env_variables( c, t );
     
     
     // Do some platform-specific stuff before tunnel setup script is launched.
@@ -481,16 +371,52 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     }
     
     
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
     // Run the interface configuration script to bring the tunnel up.
     // ---------------------------------------------------------------
-    Display( LOG_LEVEL_2, ELInfo, "tspSetupInterface", STR_GEN_EXEC_CFG_SCRIPT, template_script );
-    if( execScript( template_script ) != 0 )
-    {
-        // Error executing script.
-        Display(LOG_LEVEL_1, ELError, "tspSetupInterface", STR_GEN_SCRIPT_EXEC_FAILED);
-        return make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
+    if (tunnelType == TUNTYPE_V6V4) {
+        // Delete first any previous tunnel.
+        sh(ifconfig,tunnel_interface,"deletetunnel");
+        sh(ifconfig,tunnel_interface,"tunnel",t->client_address_ipv4,t->server_address_ipv4);
+        
+        //Check if the interface already has an IPv6 configuration
+        //list=`$ifconfig $TSP_TUNNEL_INTERFACE | grep inet6 | awk '{print $2}' | grep -v '^fe80'`
+        //for ipv6address in $list
+        //do
+        //    Exec $ifconfig $TSP_TUNNEL_INTERFACE inet6 $ipv6address delete
+        //done
     }
+    
+    sh(ifconfig,tunnel_interface,"inet6",t->client_address_ipv6,t->server_address_ipv6,"prefixlen",tunnel_prefixlen,"alias");
+    sh(ifconfig,tunnel_interface,"mtu","1280");
+    
+    if ( t->originalgateway ) {
+        Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", t->originalgateway );
+        sh(route,"change","-inet6","default",t->server_address_ipv6);
+    }
+    else {
+        sh(route,"add","-inet6","default",t->server_address_ipv6);
+    }
+    
+    // Router configuration if host_type=router
+    if ( pal_strcasecmp(c->host_type, "router") == 0 ) {
+        sh("/usr/sbin/sysctl","-w","net.inet6.ip6.forwarding=1"); // ipv6_forwarding enabled
+        sh("/usr/sbin/sysctl","-w","net.inet6.ip6.accept_rtadv=0"); // routed must disable any router advertisement incoming
+
+        // Add the IPv6 PREFIX::1 address to advertising interface.
+        sh(ifconfig, c->if_prefix,"inet6","$TSP_PREFIX::1","prefixlen","64");
+        
+        // If prefix length is not 64 bits, then blackhole the remaining part.
+        // Because we're only advertising the first /64 part of the prefix.
+        if ( pal_strcasecmp(t->prefix_length, "64") ){
+            sh(route,"add","-inet6","$TSP_PREFIX::","-prefixlen",t->prefix_length,"::1");
+        }
+    
+        // Stop and start router advertisement daemon.
+        sh("/usr/bin/killall","rtadvd");
+        sh("/usr/sbin/rtadvd",c->if_prefix);
+    }
+
     Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", STR_GEN_SCRIPT_EXEC_SUCCESS);
     
     
@@ -533,27 +459,63 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
 // be used when invoking the template script to tear down the existing
 // tunnel.
 //
-gogoc_status tspTearDownTunnel( tConf* pConf, tTunnel* pTunInfo )
+gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
 {
-    char* scriptName = pConf->template;
-    
-    
-    // Specify TSP Operation: Tunnel Teardown.
-    tspSetEnv( "TSP_OPERATION", TSP_OPERATION_TEARDOWNTUNNEL, 1 );
-    
-    // Set environment variables (They may be not set).
-    set_tsp_env_variables( pConf, pTunInfo );
-    
-    // Run the template script to tear the tunnel down.
-    Display(LOG_LEVEL_2, ELInfo, "tspTearDownTunnel", STR_GEN_EXEC_CFG_SCRIPT, scriptName );
-    if( execScript( scriptName ) != 0 )
+    char *tunnel_interface = NULL;
+    gogocTunnelType tunnelType;
+
+    // Specify tunnel interface, for setup.
+    if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6V4) == 0 )
     {
-        // Error executing script.
-        Display(LOG_LEVEL_1, ELError, "tspTearDownTunnel", STR_GEN_SCRIPT_EXEC_FAILED );
-        return make_status(CTX_GOGOCTEARDOWN, ERR_INTERFACE_SETUP_FAILED);
+        tunnel_interface = c->if_tunnel_v6v4;
+        tunnelType = TUNTYPE_V6V4;
     }
-    Display(LOG_LEVEL_2, ELInfo, "tspTearDownTunnel", STR_GEN_SCRIPT_EXEC_SUCCESS );
+#ifdef V4V6_SUPPORT
+    else if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V4V6) == 0 )
+    {
+        tunnel_interface = c->if_tunnel_v4v6;
+        tunnelType = TUNTYPE_V4V6;
+    }
+#endif /* V4V6_SUPPORT */
+    else //if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6UDPV4) == 0 )
+    {
+        tunnel_interface = c->if_tunnel_v6udpv4;
+        tunnelType = TUNTYPE_V6UDPV4;
+    }
     
+    // Router deconfiguration
+    if ( pal_strcasecmp(c->host_type, "router") == 0 ) {
+        // Remove prefix routing on TSP_HOME_INTERFACE
+        //sh(route,"delete","-inet6", "$TSP_PREFIX::");
+        
+        // Remove blackhole.
+        //if [ X"${TSP_PREFIXLEN}" != X"64" ]; then
+        //  sh(route,"delete","-inet6","$TSP_PREFIX::","-prefixlen","$TSP_PREFIXLEN","::1");
+        //fi
+        // Remove static IPv6 address
+        //sh(ifconfig,c->if_prefix,"inet6","$TSP_PREFIX::1","delete");
+
+        // Kill router advertisement daemon
+        //sh("/usr/bin/killall","rtadvd");
+    }
+    
+    //Delete default IPv6 route
+    if ( t->originalgateway ) {
+        sh(route,"change","-inet6","default",t->originalgateway);
+        sh(route,"add","-inet6","default",t->originalgateway);
+    }
+    else {
+        sh(route,"delete","-inet6","default");
+    }
+
+    if (tunnelType == TUNTYPE_V6V4) {
+        // Delete the interface IPv6 configuration
+        sh(ifconfig,tunnel_interface,"inet6",t->client_address_ipv6,"delete");
+        // Delete tunnel
+        sh(ifconfig,tunnel_interface,"deletetunnel");
+    }
+    
+    Display(LOG_LEVEL_2, ELInfo, "tspTearDownTunnel", STR_GEN_SCRIPT_EXEC_SUCCESS );
     
     // Return script execution return code.
     return STATUS_SUCCESS_INIT;
