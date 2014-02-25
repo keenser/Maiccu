@@ -61,7 +61,7 @@
         gpConfig->Set_TunnelMode(str_buf = [[self config:@"tunnel_id"] UTF8String]);
         gpConfig->Set_Template("darwin");
         gpConfig->Set_IfTunV6V4( "gif0" );
-        gpConfig->Set_IfTunV6UDPV4( "tun0" );
+        gpConfig->Set_IfTunV6UDPV4( [self device] );
         //gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
         gpConfig->Set_Log("file","3");
         gpConfig->Set_LogFileName("/tmp/gogoc.log");

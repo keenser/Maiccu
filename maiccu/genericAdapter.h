@@ -49,5 +49,6 @@ extern NSString * const TKZAiccuStatus;
 - (BOOL)isRunning;
 - (BOOL)isValid;
 - (NSDictionary*)tunnelInfo;
+- (char*)device;
 
 @end

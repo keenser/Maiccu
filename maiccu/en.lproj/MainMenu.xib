@@ -1308,7 +1308,7 @@
 						<reference key="NSMenu" ref="418982328"/>
 						<bool key="NSIsDisabled">YES</bool>
 						<bool key="NSIsHidden">YES</bool>
-						<string key="NSTitle">0.0/0.0 kB/s up/down</string>
+						<string key="NSTitle">0.0/0.0 bit/s Rx/Tx</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>

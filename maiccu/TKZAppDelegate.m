@@ -15,6 +15,7 @@
 #import <net/if.h>
 #import <net/if_dl.h>
 #import <net/route.h>
+#import <net/if_mib.h>
 
 @interface TKZAppDelegate () {
 @private
@@ -23,8 +24,6 @@
     TKZDetailsController *_detailsController;
 	NSTimer *updateTimer;
     BOOL menuActive;
-	size_t sysctlBufferSize;
-	uint8_t *sysctlBuffer;
 	NSMutableDictionary		*lastData;
 }
 
@@ -98,6 +97,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
         
+        lastData = [[NSMutableDictionary alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
         menuActive = NO;
         
@@ -113,8 +113,6 @@
     [_bandwidthItem setHidden:YES];
     [updateTimer invalidate];
 	updateTimer = nil;
-    if (sysctlBuffer) free(sysctlBuffer);
-
 }
 
 - (void)aiccuNotification:(NSNotification *)aNotification {
@@ -147,6 +145,7 @@
 
 -(void) menuDidClose:(NSMenu *) theMenu {
     menuActive = NO;
+    [lastData removeAllObjects];
 }
 
 - (IBAction)clickedDetails:(id)sender {
@@ -176,108 +175,56 @@
 }
 
 - (void)updateNetActivityDisplay:(NSTimer *)timer {
-    float sampleInterval = 1.0;
-    char ifname[]="tun0";
+    char *ifname=[[_maiccu adapter] device];
     if (menuActive)
     {
-//        NSLog(@"%@",timer);
-        // Get sizing info from sysctl and resize as needed.
-        int if_index = if_nametoindex(ifname);
-        int	mib[] = { CTL_NET, PF_ROUTE, 0, 0, NET_RT_IFLIST2, if_index };
-        size_t currentSize = 0;
-        if (sysctl(mib, 6, NULL, &currentSize, NULL, 0) != 0) return;
-        if (!sysctlBuffer || (currentSize > sysctlBufferSize)) {
-            if (sysctlBuffer) free(sysctlBuffer);
-            sysctlBufferSize = 0;
-            sysctlBuffer = malloc(currentSize);
-            if (!sysctlBuffer) return;
-            sysctlBufferSize = currentSize;
+        struct ifmibdata ifmd;
+        size_t len = sizeof(ifmd);
+        int			name[6];
+        name[0] = CTL_NET;
+        name[1] = PF_LINK;
+        name[2] = NETLINK_GENERIC;
+        name[3] = IFMIB_IFDATA;
+        name[4] = if_nametoindex(ifname);
+        name[5] = IFDATA_GENERAL;
+        if (sysctl(name, 6, &ifmd, &len, (void*)0, 0) < 0) {
+            return;
         }
         
-        // Read in new data
-        if (sysctl(mib, 6, sysctlBuffer, &currentSize, NULL, 0) != 0) return;
+        double floatIn = 0;
+        double floatOut = 0;
+        NSString *prefix = @"bit/s";
         
-        // Walk through the reply
-        uint8_t *currentData = sysctlBuffer;
-        uint8_t *currentDataEnd = sysctlBuffer + currentSize;
-        NSMutableDictionary	*newStats = [NSMutableDictionary dictionary];
-        while (currentData < currentDataEnd) {
-            // Expecting interface data
-            struct if_msghdr2 *ifmsg = (struct if_msghdr2 *)currentData;
-            if (ifmsg->ifm_type != RTM_IFINFO2) {
-                currentData += ifmsg->ifm_msglen;
-                continue;
-            }
-            // Must not be loopback
-            if (ifmsg->ifm_flags & IFF_LOOPBACK) {
-                currentData += ifmsg->ifm_msglen;
-                continue;
-            }
-            // Only look at link layer items
-            struct sockaddr_dl *sdl = (struct sockaddr_dl *)(ifmsg + 1);
-            if (sdl->sdl_family != AF_LINK) {
-                currentData += ifmsg->ifm_msglen;
-                continue;
-            }
-            // Build the interface name to string so we can key off it
-            // (using NSData here because initWithBytes is 10.3 and later)
-            NSString *interfaceName = [[NSString alloc]
-										initWithData:[NSData dataWithBytes:sdl->sdl_data length:sdl->sdl_nlen]
-                                        encoding:NSASCIIStringEncoding];
-            if (!interfaceName) {
-                currentData += ifmsg->ifm_msglen;
-                continue;
-            }
-            // Load in old statistics for this interface
-            NSDictionary *oldStats = [lastData objectForKey:interfaceName];
-            
-            if (oldStats && (ifmsg->ifm_flags & IFF_UP)) {
-                uint64_t lastifIn = [[oldStats objectForKey:@"ifin"] unsignedLongLongValue];
-                uint64_t lastifOut = [[oldStats objectForKey:@"ifout"] unsignedLongLongValue];
-                uint64_t deltaIn = ifmsg->ifm_data.ifi_ibytes - lastifIn;
-                uint64_t deltaOut = ifmsg->ifm_data.ifi_obytes - lastifOut;
-                // Peak
-                double peak = [[oldStats objectForKey:@"peak"] doubleValue];
-                if (sampleInterval > 0) {
-                    if (peak < (deltaIn / sampleInterval)) peak = deltaIn / sampleInterval;
-                    if (peak < (deltaOut / sampleInterval)) peak = deltaOut / sampleInterval;
-                }
-                [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_ibytes],
-                                     @"ifin",
-                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_obytes],
-                                     @"ifout",
-                                     [NSNumber numberWithUnsignedLongLong:deltaIn],
-                                     @"deltain",
-                                     [NSNumber numberWithUnsignedLongLong:deltaOut],
-                                     @"deltaout",
-                                     [NSNumber numberWithDouble:peak],
-                                     @"peak",
-                                     nil]
-                             forKey:interfaceName];
-            } else {
-                [newStats setObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     // Paranoia, is this where the neg numbers came from?
-                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_ibytes],
-                                     @"ifin",
-                                     [NSNumber numberWithUnsignedLongLong:ifmsg->ifm_data.ifi_obytes],
-                                     @"ifout",
-                                     [NSNumber numberWithDouble:0],
-                                     @"peak",
-                                     nil]
-                             forKey:interfaceName];
-            }
+        if (ifmd.ifmd_flags & IFF_UP) {
+            uint64_t lastifIn = [lastData[@"ifin"] unsignedLongLongValue];
+            uint64_t lastifOut = [lastData[@"ifout"] unsignedLongLongValue];
+            lastData[@"ifin"] = [NSNumber numberWithUnsignedLongLong:ifmd.ifmd_data.ifi_ibytes];
+            lastData[@"ifout"] = [NSNumber numberWithUnsignedLongLong:ifmd.ifmd_data.ifi_obytes];
 
-            
-            // Continue on
-            currentData += ifmsg->ifm_msglen;
+            if (lastifIn == 0) lastifIn = ifmd.ifmd_data.ifi_ibytes;
+            if (lastifOut == 0) lastifOut = ifmd.ifmd_data.ifi_obytes;
+
+            uint64_t deltaIn = ifmd.ifmd_data.ifi_ibytes - lastifIn;
+            uint64_t deltaOut = ifmd.ifmd_data.ifi_obytes - lastifOut;
+
+            uint64_t deltaMax = (deltaIn >= deltaOut)? deltaIn:deltaOut;
+
+            if (deltaMax / (1024 * 1024 / 8) ) {
+                floatIn = (double)deltaIn / (1024.0 * 1024.0 / 8.0);
+                floatOut = (double)deltaOut / (1024.0 * 1024.0 / 8.0);
+                prefix = @"Mbit/s";
+            }
+            else if (deltaMax / (1024 / 8) ) {
+                floatIn = (double)deltaIn / (1024.0 / 8.0);
+                floatOut = (double)deltaOut / (1024.0 / 8.0);
+                prefix = @"Kbit/s";
+            }
+            else {
+                floatIn = (double)deltaIn * 8;
+                floatOut = (double)deltaOut * 8;
+            }
         }
-        
-        // Store and return
-        lastData = newStats;
-
-        NSString *string = [NSString stringWithFormat:@"%@/%@ B/S Rx/Tx",newStats[@"tun0"][@"deltain"],newStats[@"tun0"][@"deltaout"]];
-//        NSLog(@"%@",newStats);
+        NSString *string = [NSString stringWithFormat:@"%0.1f/%0.1f %@ Rx/Tx",floatIn,floatOut,prefix];
         [_bandwidthItem setTitle:string];
     }
 }

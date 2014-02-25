@@ -35,6 +35,7 @@
 		7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
+		7E4CBD8818BCBB3200536814 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -99,7 +100,6 @@
 		7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
 		7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
 		7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
-		7EA1893318B4FF2200943303 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
 		7EA1893418B4FF8600943303 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
 		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; };
@@ -127,13 +127,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7E4DD04D18B009DD0029F38B;
 			remoteInfo = "gogoc-config";
-		};
-		7E4CBD6F18BB3DEA00536814 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6D949020173514E1002283B0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E4DD05F18B00B770029F38B;
-			remoteInfo = "gogoc-messaging";
 		};
 		7E4CBD7118BB3DEC00536814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -184,7 +177,14 @@
 			remoteGlobalIDString = 7E4DD04D18B009DD0029F38B;
 			remoteInfo = "gogoc-config";
 		};
-		7E4CBD7F18BB54A300536814 /* PBXContainerItemProxy */ = {
+		7E4CBD8418BCBB2900536814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4DD05F18B00B770029F38B;
+			remoteInfo = "gogoc-messaging";
+		};
+		7E4CBD8618BCBB2E00536814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6D949020173514E1002283B0 /* Project object */;
 			proxyType = 1;
@@ -601,10 +601,10 @@
 			files = (
 				7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */,
 				7EA1893418B4FF8600943303 /* libstdc++.dylib in Frameworks */,
+				7E4CBD8818BCBB3200536814 /* libgogoc-messaging.a in Frameworks */,
 				7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */,
 				7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */,
 				7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */,
-				7EA1893318B4FF2200943303 /* libgogoc-messaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1387,7 +1387,7 @@
 			dependencies = (
 				7E4CBD7C18BB54A100536814 /* PBXTargetDependency */,
 				7E4CBD7E18BB54A200536814 /* PBXTargetDependency */,
-				7E4CBD8018BB54A300536814 /* PBXTargetDependency */,
+				7E4CBD8518BCBB2900536814 /* PBXTargetDependency */,
 			);
 			name = "gogoc-tsp";
 			productName = "gogoc-tsp";
@@ -1459,9 +1459,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				7E4CBD7018BB3DEA00536814 /* PBXTargetDependency */,
 				7E4CBD7418BB3DF100536814 /* PBXTargetDependency */,
 				7E4CBD7618BB3DF200536814 /* PBXTargetDependency */,
+				7E4CBD8718BCBB2E00536814 /* PBXTargetDependency */,
 				7E4CBD7218BB3DEC00536814 /* PBXTargetDependency */,
 			);
 			name = gogoc;
@@ -1701,11 +1701,6 @@
 			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
 			targetProxy = 7E4CBD6D18BB3DD600536814 /* PBXContainerItemProxy */;
 		};
-		7E4CBD7018BB3DEA00536814 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7E4DD05F18B00B770029F38B /* gogoc-messaging */;
-			targetProxy = 7E4CBD6F18BB3DEA00536814 /* PBXContainerItemProxy */;
-		};
 		7E4CBD7218BB3DEC00536814 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
@@ -1741,10 +1736,15 @@
 			target = 7E4DD04D18B009DD0029F38B /* gogoc-config */;
 			targetProxy = 7E4CBD7D18BB54A200536814 /* PBXContainerItemProxy */;
 		};
-		7E4CBD8018BB54A300536814 /* PBXTargetDependency */ = {
+		7E4CBD8518BCBB2900536814 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7E4DD05F18B00B770029F38B /* gogoc-messaging */;
-			targetProxy = 7E4CBD7F18BB54A300536814 /* PBXContainerItemProxy */;
+			targetProxy = 7E4CBD8418BCBB2900536814 /* PBXContainerItemProxy */;
+		};
+		7E4CBD8718BCBB2E00536814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E4DD05F18B00B770029F38B /* gogoc-messaging */;
+			targetProxy = 7E4CBD8618BCBB2E00536814 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

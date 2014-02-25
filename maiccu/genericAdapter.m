@@ -203,4 +203,13 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return nil;
 }
 
+- (char*)device {
+    NSString *dev = [self config:@"dev"];
+    if ( [dev length] )
+        return nstocs(dev);
+    else {
+        return "tun0";
+    }
+}
+
 @end
