@@ -40,7 +40,7 @@
     g_aiccu->password = nstocs(config[@"password"]);
     g_aiccu->protocol = nstocs(@"tic");
     g_aiccu->server = nstocs(@"tic.sixxs.net");
-    g_aiccu->ipv6_interface = nstocs(@"tun0");
+    g_aiccu->ipv6_interface = [self device];
     g_aiccu->tunnel_id = nstocs(config[@"tunnel_id"]);
     g_aiccu->automatic = true;
     g_aiccu->setupscript = false;
