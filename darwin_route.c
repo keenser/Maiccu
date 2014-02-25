@@ -130,12 +130,12 @@ sint32_t execCmd( const char *cmd[] )
     posix_spawn_file_actions_t action;
     int status;
     
-    strcpy(buf,cmd[0]);
+    strncpy(buf,cmd[0], sizeof(buf)-1);
     int i=1;
     while (cmd[i] != NULL)
     {
-        strcat(buf," ");
-        strcat(buf,cmd[i]);
+        strncat(buf, " ", sizeof(buf)-1);
+        strncat(buf, cmd[i], sizeof(buf)-1);
         i++;
     }
     Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", buf );
@@ -333,34 +333,14 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     // Have we been allocated a prefix for routing advertizement..?
     if( t->prefix != NULL )
     {
-        char chPrefix[128];
-        size_t len, sep;
-        
-        /* Compute the number of characters that are significant out of the prefix. */
-        /* This is meaningful only for IPv6 prefixes; no contraction is possible for IPv4. */
-        if (tunnelType == TUNTYPE_V6V4 || tunnelType == TUNTYPE_V6UDPV4)
-        {
-            len = (atoi(t->prefix_length) % 16) ? (atoi(t->prefix_length) / 16 + 1) * 4 : atoi(t->prefix_length) / 16 * 4;
-            sep = (atoi(t->prefix_length) % 16) ? (atoi(t->prefix_length) / 16) : (atoi(t->prefix_length) / 16) -1;
-        }
-        else
-        {
-            len = pal_strlen( t->prefix );
-            sep = 0;
-        }
-        
-        memset(chPrefix, 0, 128);
-        memcpy(chPrefix, t->prefix, len+sep);
-        
         // Specify delegated prefix for routing advertizement, if enabled.
-        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(chPrefix) + 10/*To append prefix_length*/ );
-        strcpy( gTunnelInfo.szDelegatedPrefix, chPrefix );
+        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(t->prefix) + 10/*To append prefix_length*/ );
+        strcpy( gTunnelInfo.szDelegatedPrefix, t->prefix );
         
         // Specify prefix length for routing advertizement, if enabled.
         strcat( gTunnelInfo.szDelegatedPrefix, "/" );
         strcat( gTunnelInfo.szDelegatedPrefix, t->prefix_length );
-    }
-    
+    }    
     
     // Do some platform-specific stuff before tunnel setup script is launched.
     // The "tspSetupInterfaceLocal" is defined in tsp_local.c in every platform.
@@ -409,7 +389,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
         // If prefix length is not 64 bits, then blackhole the remaining part.
         // Because we're only advertising the first /64 part of the prefix.
         if ( pal_strcasecmp(t->prefix_length, "64") ){
-            sh(route,"add","-inet6","$TSP_PREFIX::","-prefixlen",t->prefix_length,"::1");
+            sh(route,"add","-inet6",t->prefix,"-prefixlen",t->prefix_length,"::1");
         }
     
         // Stop and start router advertisement daemon.
@@ -483,20 +463,32 @@ gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
         tunnelType = TUNTYPE_V6UDPV4;
     }
     
+    // Have we been allocated a prefix for routing advertizement..?
+    if( t->prefix != NULL )
+    {
+        // Specify delegated prefix for routing advertizement, if enabled.
+        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(t->prefix) + 10/*To append prefix_length*/ );
+        strcpy( gTunnelInfo.szDelegatedPrefix, t->prefix );
+        
+        // Specify prefix length for routing advertizement, if enabled.
+        strcat( gTunnelInfo.szDelegatedPrefix, "/" );
+        strcat( gTunnelInfo.szDelegatedPrefix, t->prefix_length );
+    }
+
     // Router deconfiguration
-    if ( pal_strcasecmp(c->host_type, "router") == 0 ) {
+    if ( pal_strcasecmp(c->host_type, "router") == 0 && t->prefix) {
         // Remove prefix routing on TSP_HOME_INTERFACE
-        //sh(route,"delete","-inet6", "$TSP_PREFIX::");
+        sh(route,"delete","-inet6", t->prefix);
         
         // Remove blackhole.
-        //if [ X"${TSP_PREFIXLEN}" != X"64" ]; then
-        //  sh(route,"delete","-inet6","$TSP_PREFIX::","-prefixlen","$TSP_PREFIXLEN","::1");
-        //fi
+        if ( pal_strcasecmp(t->prefix_length,"64") ) {
+            sh(route,"delete","-inet6",t->prefix,"-prefixlen",t->prefix_length,"::1");
+        }
         // Remove static IPv6 address
         //sh(ifconfig,c->if_prefix,"inet6","$TSP_PREFIX::1","delete");
 
         // Kill router advertisement daemon
-        //sh("/usr/bin/killall","rtadvd");
+        sh("/usr/bin/killall","rtadvd");
     }
     
     //Delete default IPv6 route
