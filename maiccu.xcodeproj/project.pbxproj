@@ -36,6 +36,13 @@
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBD8818BCBB3200536814 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
+		7E4CBDA518BDDCC900536814 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDA418BDDCC900536814 /* main.cpp */; };
+		7E4CBDA718BDDCC900536814 /* messager.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E4CBDA618BDDCC900536814 /* messager.1 */; };
+		7E4CBDAB18BDDCE000536814 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
+		7E4CBDAE18BE319500536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
+		7E4CBDB218BE331D00536814 /* threadwrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2F18AE660900536814 /* threadwrapper.cc */; };
+		7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2D18AE660900536814 /* pipeserver.cc */; };
+		7E4CBDB418BE333000536814 /* semaphore.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2E18AE660900536814 /* semaphore.cc */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -203,6 +210,16 @@
 				6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E4CBDA018BDDCBE00536814 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				7E4CBDA718BDDCC900536814 /* messager.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		7EA1891E18B4FC1600943303 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -530,6 +547,10 @@
 		7E4CBD5818AE677C00536814 /* xml_req.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xml_req.c; sourceTree = "<group>"; };
 		7E4CBD5918AE677C00536814 /* xml_tun.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xml_tun.c; sourceTree = "<group>"; };
 		7E4CBD5A18AE677C00536814 /* xmlparse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xmlparse.c; sourceTree = "<group>"; };
+		7E4CBDA218BDDCBE00536814 /* messager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = messager; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E4CBDA418BDDCC900536814 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7E4CBDA618BDDCC900536814 /* messager.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = messager.1; sourceTree = "<group>"; };
+		7E4CBDAC18BE30F200536814 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		7E4DD02618B005F60029F38B /* libgogoc-tsp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-tsp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04518B0072D0029F38B /* libgogoc-pal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-pal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04E18B009DD0029F38B /* libgogoc-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -564,6 +585,15 @@
 			files = (
 				6D94904A173514E2002283B0 /* SenTestingKit.framework in Frameworks */,
 				6D94904B173514E2002283B0 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E4CBD9F18BDDCBE00536814 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E4CBDAE18BE319500536814 /* libstdc++.dylib in Frameworks */,
+				7E4CBDAB18BDDCE000536814 /* libgogoc-messaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,12 +644,14 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
+				7E4CBDAC18BE30F200536814 /* libc++.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
 				7E0FA2E518A0CF0700C9C189 /* gogoc */,
 				6D94909417352725002283B0 /* aiccu */,
 				6D949031173514E2002283B0 /* maiccu */,
 				6D94904E173514E2002283B0 /* maiccuTests */,
+				7E4CBDA318BDDCBE00536814 /* messager */,
 				6D94902A173514E2002283B0 /* Frameworks */,
 				6D949029173514E2002283B0 /* Products */,
 			);
@@ -635,6 +667,7 @@
 				7E4DD04E18B009DD0029F38B /* libgogoc-config.a */,
 				7E4DD06018B00B770029F38B /* libgogoc-messaging.a */,
 				7EA1892018B4FC1600943303 /* gogoc */,
+				7E4CBDA218BDDCBE00536814 /* messager */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1284,6 +1317,15 @@
 			path = xml;
 			sourceTree = "<group>";
 		};
+		7E4CBDA318BDDCBE00536814 /* messager */ = {
+			isa = PBXGroup;
+			children = (
+				7E4CBDA418BDDCC900536814 /* main.cpp */,
+				7E4CBDA618BDDCC900536814 /* messager.1 */,
+			);
+			path = messager;
+			sourceTree = "<group>";
+		};
 		7EA188FD18B4CCAD00943303 /* template */ = {
 			isa = PBXGroup;
 			children = (
@@ -1373,6 +1415,23 @@
 			productName = maiccuTests;
 			productReference = 6D949048173514E2002283B0 /* maiccuTests.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		7E4CBDA118BDDCBE00536814 /* messager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */;
+			buildPhases = (
+				7E4CBD9E18BDDCBE00536814 /* Sources */,
+				7E4CBD9F18BDDCBE00536814 /* Frameworks */,
+				7E4CBDA018BDDCBE00536814 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = messager;
+			productName = messager;
+			productReference = 7E4CBDA218BDDCBE00536814 /* messager */;
+			productType = "com.apple.product-type.tool";
 		};
 		7E4DD02518B005F60029F38B /* gogoc-tsp */ = {
 			isa = PBXNativeTarget;
@@ -1498,6 +1557,7 @@
 				7E4DD04D18B009DD0029F38B /* gogoc-config */,
 				7E4DD05F18B00B770029F38B /* gogoc-messaging */,
 				7EA1891F18B4FC1600943303 /* gogoc */,
+				7E4CBDA118BDDCBE00536814 /* messager */,
 			);
 		};
 /* End PBXProject section */
@@ -1587,6 +1647,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E4CBD9E18BDDCBE00536814 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E4CBDA518BDDCC900536814 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E4DD02218B005F60029F38B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1672,6 +1740,9 @@
 				7E4DD06F18B00D8A0029F38B /* guimessengerimpl.cc in Sources */,
 				7E4DD07018B00D930029F38B /* gogoc_c_wrapper.cc in Sources */,
 				7E4DD07118B00D9E0029F38B /* gogocuistrings.c in Sources */,
+				7E4CBDB218BE331D00536814 /* threadwrapper.cc in Sources */,
+				7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */,
+				7E4CBDB418BE333000536814 /* semaphore.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1937,6 +2008,40 @@
 			};
 			name = Release;
 		};
+		7E4CBDA918BDDCC900536814 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				HEADER_SEARCH_PATHS = (
+					"gogoc/gogoc-pal/platform/common/inc",
+					"gogoc/gogoc-pal/platform/unix-common/inc",
+					"gogoc/gogoc-pal/defs",
+					"gogoc/gogoc-messaging",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7E4CBDAA18BDDCC900536814 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				HEADER_SEARCH_PATHS = (
+					"gogoc/gogoc-pal/platform/common/inc",
+					"gogoc/gogoc-pal/platform/unix-common/inc",
+					"gogoc/gogoc-pal/defs",
+					"gogoc/gogoc-messaging",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		7E4DD02718B005F60029F38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2153,6 +2258,15 @@
 			buildConfigurations = (
 				6D94905D173514E2002283B0 /* Debug */,
 				6D94905E173514E2002283B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E4CBDA918BDDCC900536814 /* Debug */,
+				7E4CBDAA18BDDCC900536814 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

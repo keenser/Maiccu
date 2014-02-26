@@ -18,6 +18,7 @@
 
 
 #include <pal.h>
+#include <pthread.h>
 
 typedef ptr_t *  thread_t;
 typedef ptr_t *  event_t;
@@ -34,6 +35,8 @@ namespace gogocmessaging
   protected:
     thread_t        m_hThread;          // Thread handle.
     event_t         m_hQuitEvent;       // Handle for quit event.
+    pthread_t       m_tID;
+    bool            m_bShouldStop;
 
     // Construction / destruction.
   protected:
@@ -51,7 +54,7 @@ namespace gogocmessaging
     bool            ShouldStop          ( void ) const;
 
   private:
-    static uint32_t WINAPI ThreadProc   ( void* lpvParam );
+    static void     *ThreadProc   ( void* lpvParam );
   };
 
 }

@@ -17,8 +17,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <assert.h>
+#include <sys/stat.h>
 
-#error THIS MODULE IS NOT FINISHED
+//#error THIS MODULE IS NOT FINISHED
 
 #define PIPE_MASK              0666
 #define SLEEP(X)               usleep( X * 1000 )
@@ -141,7 +142,7 @@ error_t PipeServer::AcceptConnection( void )
   if( hPipe == NULL )
   {
     // Error opening pipe.
-    return GOGOCM_UIS_FAILOPENPIPE;
+    return GOGOCM_UIS_CLIENTCONNFAILED;
   }
 
 
