@@ -550,7 +550,6 @@
 		7E4CBDA218BDDCBE00536814 /* messager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = messager; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4CBDA418BDDCC900536814 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7E4CBDA618BDDCC900536814 /* messager.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = messager.1; sourceTree = "<group>"; };
-		7E4CBDAC18BE30F200536814 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		7E4DD02618B005F60029F38B /* libgogoc-tsp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-tsp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04518B0072D0029F38B /* libgogoc-pal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-pal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04E18B009DD0029F38B /* libgogoc-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -644,7 +643,6 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
-				7E4CBDAC18BE30F200536814 /* libc++.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
 				7E0FA2E518A0CF0700C9C189 /* gogoc */,
