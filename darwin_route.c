@@ -330,17 +330,20 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
         gTunnelInfo.szDelegatedPrefix = NULL;
     }
     
+    char home_ip6addr[INET6_ADDRSTRLEN];
     // Have we been allocated a prefix for routing advertizement..?
-    if( t->prefix != NULL )
+    if( t->prefix )
     {
-        // Specify delegated prefix for routing advertizement, if enabled.
-        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(t->prefix) + 10/*To append prefix_length*/ );
-        strcpy( gTunnelInfo.szDelegatedPrefix, t->prefix );
+        struct in6_addr addr6;
+        inet_pton(AF_INET6, t->prefix, &addr6);
         
-        // Specify prefix length for routing advertizement, if enabled.
-        strcat( gTunnelInfo.szDelegatedPrefix, "/" );
-        strcat( gTunnelInfo.szDelegatedPrefix, t->prefix_length );
-    }    
+        // Specify delegated prefix for routing advertizement, if enabled.
+        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( INET6_ADDRSTRLEN );
+        inet_net_ntop(AF_INET6, &addr6, atoi(t->prefix_length), gTunnelInfo.szDelegatedPrefix, INET6_ADDRSTRLEN);
+        // Get first address from delegated prefix
+        addr6.__u6_addr.__u6_addr8[15]++;
+        inet_ntop(AF_INET6, &addr6, home_ip6addr,sizeof(home_ip6addr));
+    }
     
     // Do some platform-specific stuff before tunnel setup script is launched.
     // The "tspSetupInterfaceLocal" is defined in tsp_local.c in every platform.
@@ -379,12 +382,12 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     }
     
     // Router configuration if host_type=router
-    if ( pal_strcasecmp(c->host_type, "router") == 0 ) {
+    if ( pal_strcasecmp(c->host_type, "router") == 0 && t->prefix) {
         sh("/usr/sbin/sysctl","-w","net.inet6.ip6.forwarding=1"); // ipv6_forwarding enabled
         sh("/usr/sbin/sysctl","-w","net.inet6.ip6.accept_rtadv=0"); // routed must disable any router advertisement incoming
 
         // Add the IPv6 PREFIX::1 address to advertising interface.
-        sh(ifconfig, c->if_prefix,"inet6","$TSP_PREFIX::1","prefixlen","64");
+        sh(ifconfig, c->if_prefix,"inet6",home_ip6addr,"prefixlen","64");
         
         // If prefix length is not 64 bits, then blackhole the remaining part.
         // Because we're only advertising the first /64 part of the prefix.
@@ -405,8 +408,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_TUNNEL_TYPE, t->type);
     Display(LOG_LEVEL_3, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_PROXY, c->proxy_client == TRUE ? STR_LIT_ENABLED : STR_LIT_DISABLED);
     
-    if( (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6V4) == 0) ||
-       (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6UDPV4) == 0))
+    if( tunnelType == TUNTYPE_V6V4 || tunnelType == TUNTYPE_V6UDPV4)
     {
         Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV6_IP_IS, t->client_address_ipv6);
         if( (t->prefix != NULL) && (t->prefix_length != NULL) )
@@ -464,15 +466,18 @@ gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
     }
     
     // Have we been allocated a prefix for routing advertizement..?
-    if( t->prefix != NULL )
+    char home_ip6addr[INET6_ADDRSTRLEN];
+    if( t->prefix )
     {
+        struct in6_addr addr6;
+        inet_pton(AF_INET6, t->prefix, &addr6);
+
         // Specify delegated prefix for routing advertizement, if enabled.
-        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( pal_strlen(t->prefix) + 10/*To append prefix_length*/ );
-        strcpy( gTunnelInfo.szDelegatedPrefix, t->prefix );
-        
-        // Specify prefix length for routing advertizement, if enabled.
-        strcat( gTunnelInfo.szDelegatedPrefix, "/" );
-        strcat( gTunnelInfo.szDelegatedPrefix, t->prefix_length );
+        gTunnelInfo.szDelegatedPrefix = (char*) pal_malloc( INET6_ADDRSTRLEN );
+        inet_net_ntop(AF_INET6, &addr6, atoi(t->prefix_length), gTunnelInfo.szDelegatedPrefix, INET6_ADDRSTRLEN);
+        // Get first address from delegated prefix
+        addr6.__u6_addr.__u6_addr8[15]++;
+        inet_ntop(AF_INET6, &addr6, home_ip6addr,sizeof(home_ip6addr));
     }
 
     // Router deconfiguration
@@ -485,7 +490,7 @@ gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
             sh(route,"delete","-inet6",t->prefix,"-prefixlen",t->prefix_length,"::1");
         }
         // Remove static IPv6 address
-        //sh(ifconfig,c->if_prefix,"inet6","$TSP_PREFIX::1","delete");
+        sh(ifconfig,c->if_prefix,"inet6",home_ip6addr,"delete");
 
         // Kill router advertisement daemon
         sh("/usr/bin/killall","rtadvd");
