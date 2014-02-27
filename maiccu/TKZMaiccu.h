@@ -20,7 +20,6 @@
 @property (strong) genericAdapter *adapter;
 @property (strong) genericAdapter *runningAdapter;
 
-- (NSString *) aiccuConfigPath;
 - (BOOL) aiccuConfigExists;
 
 - (NSString *)aiccuPath;

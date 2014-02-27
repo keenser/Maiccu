@@ -20,6 +20,9 @@ static TKZMaiccu *defaultMaiccu = nil;
 
         _aiccu = [[TKZAiccuAdapter alloc] init];
         _gogoc = [[gogocAdapter alloc] init];
+        [_aiccu setConfigPath:[[self appSupportURL] path]];
+        [_gogoc setConfigPath:[[self appSupportURL] path]];
+        
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
         if ([adapter isEqualToString:[_aiccu name]] || adapter == nil) {
@@ -68,12 +71,8 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 
-- (BOOL) aiccuConfigExists {    
-    return [_fileManager fileExistsAtPath:[self aiccuConfigPath]];
-}
-
-- (NSString *) aiccuConfigPath {
-    return [[[self appSupportURL] URLByAppendingPathComponent:[_adapter configfile]] path];
+- (BOOL) aiccuConfigExists {
+    return [_fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",[_adapter configPath],[_adapter configFile]]];
 }
 
 - (void)writeLogMessage:(NSString *)logMessage {    
@@ -100,7 +99,6 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (BOOL)startStopAdapter {
-    NSLog(@"startStopAdapter %d",[_runningAdapter isRunning]);
     if ([_runningAdapter isRunning]) {
         [self stopAdapter];
     }
@@ -112,7 +110,7 @@ static TKZMaiccu *defaultMaiccu = nil;
 
 - (void)startAdapter {
     [self setRunningAdapter:_adapter];
-    [_runningAdapter startFrom:[self aiccuPath] withConfigDir:[[self appSupportURL] path]];
+    [_runningAdapter startFrom:[self aiccuPath]];
 }
 
 - (void)stopAdapter {

@@ -12,7 +12,7 @@
 extern NSString * const TKZAiccuDidTerminate;
 extern NSString * const TKZAiccuStatus;
 
-#define __cstons(__cstring__)  [NSString stringWithCString:__cstring__ encoding:NSUTF8StringEncoding]
+#define __cstons(__cstring__)  [NSString stringWithUTF8String:__cstring__]
 
 #define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
 
@@ -29,8 +29,9 @@ extern NSString * const TKZAiccuStatus;
 }
 
 @property (strong) NSString *name;
-@property (strong) NSString *configfile;
+@property (strong) NSString *configFile;
 @property (strong) NSMenuItem *view;
+@property (strong) NSString *configPath;
 
 - (NSArray *)tunnelList;
 - (NSArray *)serverList;
@@ -38,8 +39,8 @@ extern NSString * const TKZAiccuStatus;
 
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path;
 
-- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath;
-- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath withArgs:(NSArray *)args;
+- (BOOL)startFrom:(NSString *)path;
+- (BOOL)startFrom:(NSString *)path withArgs:(NSArray *)args;
 - (void)stopFrom;
 
 - (void)setConfig:(NSString*)value toKey:(NSString*)key;
