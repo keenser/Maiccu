@@ -14,7 +14,6 @@
 
 @interface TKZDetailsController () {
     NSMutableDictionary *_config;
-//    NSMutableArray *_tunnelInfoList;
     TKZMaiccu *_maiccu;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
@@ -28,7 +27,6 @@
     self = [super initWithWindowNibName:@"TKZDetailsController"];
     if (self) {
         _config = [[NSMutableDictionary alloc] init];
-//        _tunnelInfoList = [[NSMutableArray alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sheetNotification:) name:sheetControllerStatus object:nil];
     }
@@ -39,7 +37,6 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        NSLog(@"initWithWindow");
     }
     
     return self;
@@ -47,7 +44,6 @@
 
 - (void)windowDidLoad
 {
-    NSLog(@"windowDidLoad");
     [super windowDidLoad];
     [_maiccu setAiccuView:_aiccuView];
     [_maiccu setGogocView:_gogocView];
@@ -96,7 +92,6 @@
 }
 
 - (void)awakeFromNib {
-    NSLog(@"awakeFromNib");
     [_signupLabel setAllowsEditingTextAttributes:YES];
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
@@ -127,8 +122,6 @@
 }
 
 - (void)sheetNotification:(NSNotification *)aNotification {
-    NSLog(@"sheetNotification %@", aNotification);
-    
     if ([[_maiccu adapter] isValid]) {
         [_usernameMarker setHidden:YES];
         [_passwordMarker setHidden:YES];
@@ -260,7 +253,6 @@
 }
 
 - (IBAction)infoWasClicked:(id)sender {
-    NSLog(@"infoWasClicked");
     if ([sender state]) {
         NSDictionary *tunnelInfo = [[_maiccu adapter] tunnelInfo];
         

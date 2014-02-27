@@ -27,11 +27,11 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return YES;
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath {
+- (BOOL)startFrom:(NSString *)path {
     return TRUE;
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath withArgs:(NSArray *)args
+- (BOOL)startFrom:(NSString *)path withArgs:(NSArray *)args
 {
     // Is the task running?
     if (!_task){
@@ -43,7 +43,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         _task = [[NSTask alloc] init];
         [_task setLaunchPath:path];
 		[_task setArguments:args];
-		[_task setCurrentDirectoryPath:configPath];
+		[_task setCurrentDirectoryPath:_configPath];
 		// Create a new pipe
 		_pipe = [[NSPipe alloc] init];
 		[_task setStandardOutput:_pipe];

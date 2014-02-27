@@ -22,7 +22,7 @@
         memset(tic, 0, sizeof(struct TIC_conf));
         
         [self setName:@"aiccu"];
-        [self setConfigfile:@"aiccu.conf"];
+        [self setConfigFile:@"aiccu.conf"];
     }
     return self;
 }
@@ -66,7 +66,7 @@
     return YES;
 }
 
-#if 0
+#if 1 
 - (NSDictionary *)requestTunnelInfoForTunnel:(NSString *)tunnel {
     struct TIC_Tunnel *hTunnel;
     
@@ -244,9 +244,9 @@
     return @[@"tic.sixxs.net"];
 }
 
-- (BOOL)startFrom:(NSString *)path withConfigDir:(NSString *)configPath
+- (BOOL)startFrom:(NSString *)path
 {
-    return [self startFrom:path withConfigDir:configPath withArgs:@[@"start", [self name]]];
+    return [self startFrom:path withArgs:@[@"start", [self name]]];
 }
 
 - (void)showSheet:(NSWindow*)window {
