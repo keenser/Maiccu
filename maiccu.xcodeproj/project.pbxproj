@@ -23,16 +23,26 @@
 		6D94904B173514E2002283B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94902B173514E2002283B0 /* Cocoa.framework */; };
 		6D949053173514E2002283B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D949051173514E2002283B0 /* InfoPlist.strings */; };
 		6D949056173514E2002283B0 /* maiccuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D949055173514E2002283B0 /* maiccuTests.m */; };
-		6D9490B217352725002283B0 /* aiccu_darwin.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909817352725002283B0 /* aiccu_darwin.c */; };
 		6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; };
 		6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */; };
 		6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A46471749E024008389B4 /* TKZMaiccu.m */; };
 		7E1D9C8218BFACDE00D32099 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
-		7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
-		7E3B868D1897EA24008D0AB1 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
-		7E3B868E1897EAB2008D0AB1 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
-		7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
+		7E1D9C9018BFB12800D32099 /* aiccu_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B39001735783E009C3AC7 /* aiccu_main.c */; };
+		7E21B89718BFBFE6003F4F70 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B89618BFBFE6003F4F70 /* libresolv.dylib */; };
+		7E21B8A518BFC958003F4F70 /* tun.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AE17352725002283B0 /* tun.c */; };
+		7E21B8A618BFC95F003F4F70 /* tic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AC17352725002283B0 /* tic.c */; };
+		7E21B8A718BFC96B003F4F70 /* resolver.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AA17352725002283B0 /* resolver.c */; };
+		7E21B8A918BFC973003F4F70 /* heartbeat.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A817352725002283B0 /* heartbeat.c */; };
+		7E21B8AA18BFC977003F4F70 /* hash_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A617352725002283B0 /* hash_sha1.c */; };
+		7E21B8AB18BFC981003F4F70 /* hash_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A417352725002283B0 /* hash_md5.c */; };
+		7E21B8AC18BFC987003F4F70 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A217352725002283B0 /* common.c */; };
+		7E21B8AD18BFC98C003F4F70 /* ayiya.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490A017352725002283B0 /* ayiya.c */; };
+		7E21B8AE18BFC991003F4F70 /* aiccu_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909F17352725002283B0 /* aiccu_test.c */; };
+		7E21B8AF18BFC997003F4F70 /* aiccu_darwin.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909817352725002283B0 /* aiccu_darwin.c */; };
+		7E21B8B018BFC99D003F4F70 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
+		7E21B8B118BFC9A6003F4F70 /* liblibaiccu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */; };
+		7E21B8B218BFC9A8003F4F70 /* liblibaiccu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */; };
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDA518BDDCC900536814 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDA418BDDCC900536814 /* main.cpp */; };
@@ -43,7 +53,6 @@
 		7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2D18AE660900536814 /* pipeserver.cc */; };
 		7E4CBDB418BE333000536814 /* semaphore.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2E18AE660900536814 /* semaphore.cc */; };
 		7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
-		7E4CBDBA18BF586300536814 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -119,6 +128,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6D949027173514E2002283B0;
 			remoteInfo = maiccu;
+		};
+		7E21B8B318BFC9B6003F4F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E21B8A018BFC93E003F4F70;
+			remoteInfo = libaiccu;
+		};
+		7E21B8B518BFC9CC003F4F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E21B8A018BFC93E003F4F70;
+			remoteInfo = libaiccu;
+		};
+		7E21B8B718BFC9D1003F4F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D949020173514E1002283B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E1D9C8618BFB06800D32099;
+			remoteInfo = aiccu;
 		};
 		7E4CBD6518B73B8500536814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -196,6 +226,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E1D9C8518BFB06800D32099 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		7E4CBDA018BDDCBE00536814 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -226,7 +265,6 @@
 		6D4FFE861745C60900E4E511 /* TKZSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKZSheetController.xib; sourceTree = "<group>"; };
 		6D77C329173981840069047A /* aiccu */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = aiccu; sourceTree = "<group>"; };
 		6D8B39001735783E009C3AC7 /* aiccu_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aiccu_main.c; sourceTree = "<group>"; };
-		6D8B3902173578AD009C3AC7 /* aiccu_main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aiccu_main.h; sourceTree = "<group>"; };
 		6D8B390317357B1C009C3AC7 /* TKZAiccuAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKZAiccuAdapter.h; sourceTree = "<group>"; };
 		6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKZAiccuAdapter.m; sourceTree = "<group>"; };
 		6D949028173514E2002283B0 /* Maiccu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maiccu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,6 +313,9 @@
 		6D9A46471749E024008389B4 /* TKZMaiccu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKZMaiccu.m; sourceTree = "<group>"; };
 		7E0FA2E618A0D00C00C9C189 /* gogoc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = gogoc; path = gogoc/gogoc; sourceTree = "<group>"; };
 		7E1D9C8018BFACD400D32099 /* tsp_setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tsp_setup.c; sourceTree = "<group>"; };
+		7E1D9C8718BFB06800D32099 /* aiccu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aiccu; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E21B89618BFBFE6003F4F70 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibaiccu.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E22E92818AF9DF40044F1AB /* pal_criticalsection.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pal_criticalsection.def; sourceTree = "<group>"; };
 		7E22E92918AF9DF40044F1AB /* pal_getopt.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pal_getopt.def; sourceTree = "<group>"; };
 		7E22E92A18AF9DF40044F1AB /* pal_inet.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pal_inet.def; sourceTree = "<group>"; };
@@ -559,6 +600,7 @@
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
 				7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */,
+				7E21B8B218BFC9A8003F4F70 /* liblibaiccu.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +610,22 @@
 			files = (
 				6D94904A173514E2002283B0 /* SenTestingKit.framework in Frameworks */,
 				6D94904B173514E2002283B0 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E1D9C8418BFB06800D32099 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E21B89718BFBFE6003F4F70 /* libresolv.dylib in Frameworks */,
+				7E21B8B118BFC9A6003F4F70 /* liblibaiccu.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E21B89E18BFC93E003F4F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +684,7 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
+				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
 				7E0FA2E518A0CF0700C9C189 /* gogoc */,
@@ -649,6 +708,8 @@
 				7E4DD06018B00B770029F38B /* libgogoc-messaging.a */,
 				7EA1892018B4FC1600943303 /* gogoc */,
 				7E4CBDA218BDDCBE00536814 /* messager */,
+				7E1D9C8718BFB06800D32099 /* aiccu */,
+				7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -758,7 +819,6 @@
 				6D9490AD17352725002283B0 /* tic.h */,
 				6D9490AE17352725002283B0 /* tun.c */,
 				6D9490AF17352725002283B0 /* tun.h */,
-				6D8B3902173578AD009C3AC7 /* aiccu_main.h */,
 			);
 			path = aiccu;
 			sourceTree = "<group>";
@@ -1326,6 +1386,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		7E21B89F18BFC93E003F4F70 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E4DD02418B005F60029F38B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1371,6 +1438,8 @@
 			dependencies = (
 				7E4CBD6618B73B8500536814 /* PBXTargetDependency */,
 				7E4CBD6E18BB3DD600536814 /* PBXTargetDependency */,
+				7E21B8B818BFC9D1003F4F70 /* PBXTargetDependency */,
+				7E21B8B618BFC9CC003F4F70 /* PBXTargetDependency */,
 			);
 			name = Maiccu;
 			productName = maiccu;
@@ -1395,6 +1464,41 @@
 			productName = maiccuTests;
 			productReference = 6D949048173514E2002283B0 /* maiccuTests.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		7E1D9C8618BFB06800D32099 /* aiccu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E1D9C8F18BFB06900D32099 /* Build configuration list for PBXNativeTarget "aiccu" */;
+			buildPhases = (
+				7E1D9C8318BFB06800D32099 /* Sources */,
+				7E1D9C8418BFB06800D32099 /* Frameworks */,
+				7E1D9C8518BFB06800D32099 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E21B8B418BFC9B6003F4F70 /* PBXTargetDependency */,
+			);
+			name = aiccu;
+			productName = aiccu;
+			productReference = 7E1D9C8718BFB06800D32099 /* aiccu */;
+			productType = "com.apple.product-type.tool";
+		};
+		7E21B8A018BFC93E003F4F70 /* libaiccu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E21B8A218BFC93E003F4F70 /* Build configuration list for PBXNativeTarget "libaiccu" */;
+			buildPhases = (
+				7E21B89D18BFC93E003F4F70 /* Sources */,
+				7E21B89E18BFC93E003F4F70 /* Frameworks */,
+				7E21B89F18BFC93E003F4F70 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libaiccu;
+			productName = libaiccu;
+			productReference = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 		7E4CBDA118BDDCBE00536814 /* messager */ = {
 			isa = PBXNativeTarget;
@@ -1536,6 +1640,8 @@
 				7E4DD05F18B00B770029F38B /* gogoc-messaging */,
 				7EA1891F18B4FC1600943303 /* gogoc */,
 				7E4CBDA118BDDCBE00536814 /* messager */,
+				7E1D9C8618BFB06800D32099 /* aiccu */,
+				7E21B8A018BFC93E003F4F70 /* libaiccu */,
 			);
 		};
 /* End PBXProject section */
@@ -1603,15 +1709,10 @@
 			files = (
 				6D949038173514E2002283B0 /* main.m in Sources */,
 				6D94903F173514E2002283B0 /* TKZAppDelegate.m in Sources */,
-				6D9490B217352725002283B0 /* aiccu_darwin.c in Sources */,
 				6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */,
 				6D4FFE8217459CF700E4E511 /* TKZDetailsController.m in Sources */,
 				6D4FFE871745C60900E4E511 /* TKZSheetController.m in Sources */,
 				6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */,
-				7E3B868B1897E966008D0AB1 /* aiccu.c in Sources */,
-				7E3B868D1897EA24008D0AB1 /* tic.c in Sources */,
-				7E3B868E1897EAB2008D0AB1 /* common.c in Sources */,
-				7E3B86911897EBEA008D0AB1 /* hash_md5.c in Sources */,
 				7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */,
 				7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */,
 			);
@@ -1622,6 +1723,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D949056173514E2002283B0 /* maiccuTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E1D9C8318BFB06800D32099 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E1D9C9018BFB12800D32099 /* aiccu_main.c in Sources */,
+				7E21B8A718BFC96B003F4F70 /* resolver.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E21B89D18BFC93E003F4F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E21B8A518BFC958003F4F70 /* tun.c in Sources */,
+				7E21B8A618BFC95F003F4F70 /* tic.c in Sources */,
+				7E21B8A918BFC973003F4F70 /* heartbeat.c in Sources */,
+				7E21B8AA18BFC977003F4F70 /* hash_sha1.c in Sources */,
+				7E21B8AB18BFC981003F4F70 /* hash_md5.c in Sources */,
+				7E21B8AC18BFC987003F4F70 /* common.c in Sources */,
+				7E21B8AD18BFC98C003F4F70 /* ayiya.c in Sources */,
+				7E21B8AE18BFC991003F4F70 /* aiccu_test.c in Sources */,
+				7E21B8AF18BFC997003F4F70 /* aiccu_darwin.c in Sources */,
+				7E21B8B018BFC99D003F4F70 /* aiccu.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,7 +1798,6 @@
 				7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */,
 				7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */,
 				7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */,
-				7E4CBDBA18BF586300536814 /* (null) in Sources */,
 				7E1D9C8218BFACDE00D32099 /* tsp_setup.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1739,6 +1865,21 @@
 			isa = PBXTargetDependency;
 			target = 6D949027173514E2002283B0 /* Maiccu */;
 			targetProxy = 6D94904C173514E2002283B0 /* PBXContainerItemProxy */;
+		};
+		7E21B8B418BFC9B6003F4F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E21B8A018BFC93E003F4F70 /* libaiccu */;
+			targetProxy = 7E21B8B318BFC9B6003F4F70 /* PBXContainerItemProxy */;
+		};
+		7E21B8B618BFC9CC003F4F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E21B8A018BFC93E003F4F70 /* libaiccu */;
+			targetProxy = 7E21B8B518BFC9CC003F4F70 /* PBXContainerItemProxy */;
+		};
+		7E21B8B818BFC9D1003F4F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E1D9C8618BFB06800D32099 /* aiccu */;
+			targetProxy = 7E21B8B718BFC9D1003F4F70 /* PBXContainerItemProxy */;
 		};
 		7E4CBD6618B73B8500536814 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1971,6 +2112,48 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		7E1D9C8D18BFB06900D32099 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E1D9C8E18BFB06900D32099 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7E21B8A318BFC93E003F4F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E21B8A418BFC93E003F4F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -2225,6 +2408,23 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7E1D9C8F18BFB06900D32099 /* Build configuration list for PBXNativeTarget "aiccu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E1D9C8D18BFB06900D32099 /* Debug */,
+				7E1D9C8E18BFB06900D32099 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E21B8A218BFC93E003F4F70 /* Build configuration list for PBXNativeTarget "libaiccu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E21B8A318BFC93E003F4F70 /* Debug */,
+				7E21B8A418BFC93E003F4F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
 			isa = XCConfigurationList;

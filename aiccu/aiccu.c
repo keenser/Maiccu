@@ -276,7 +276,6 @@ void aiccu_install(void)
 	aiccu_os_install();
 }
 
-#if 0
 bool aiccu_setup(struct TIC_Tunnel *hTunnel, bool firstrun)
 {
 	bool ret = false;
@@ -330,7 +329,6 @@ void aiccu_beat(struct TIC_Tunnel *hTunnel)
 
 	/* L2TP Hello's are handled inside TeePee */
 }
-#endif
 
 void aiccu_reconfig(struct TIC_Tunnel *hTunnel)
 {
@@ -344,13 +342,11 @@ void aiccu_delete(struct TIC_Tunnel *hTunnel)
 	if (!g_aiccu->noconfigure) aiccu_os_delete(hTunnel);
 }
 
-#if 0
 void aiccu_test(struct TIC_Tunnel *hTunnel, bool automatic)
 {
 	D(dolog(LOG_DEBUG, "aiccu_test()\n"));
 	aiccu_os_test(hTunnel, automatic);
 }
-#endif
 
 bool aiccu_exec(const char *fmt, ...)
 {
