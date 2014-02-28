@@ -42,15 +42,6 @@ char DirSeparator = '/';
 int indSigHUP = 0;    // Set to 1 when HUP signal is trapped.
 
 
-#include <gogocmessaging/gogocuistrings.h>
-// Dummy implementation for non-win32 targets
-// (Library gogocmessaging is not linked in non-win32 targets).
-error_t send_status_info( void ) { return GOGOCM_UIS__NOERROR; }
-error_t send_tunnel_info( void ) { return GOGOCM_UIS__NOERROR; }
-error_t send_broker_list( void ) { return GOGOCM_UIS__NOERROR; }
-error_t send_haccess_status_info( void ) { return GOGOCM_UIS__NOERROR; }
-
-
 // --------------------------------------------------------------------------
 // Set an environment variable in the current process.
 //
