@@ -311,7 +311,7 @@ int main(int argc, char *argv[])
 #endif
 
 	/* Verify required parameters */
-	if (!g_aiccu->username || !g_aiccu->password)
+	if (!g_aiccu || !g_aiccu->username || !g_aiccu->password)
 	{
 		dolog(LOG_ERR, "Required parameters missing, make sure that username and password are given\n");
 		aiccu_FreeConfig();

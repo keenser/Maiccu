@@ -1,5 +1,5 @@
 //
-//  mesager.h
+//  message_wrapper.h
 //  maiccu
 //
 //  Created by German Skalauhov on 28/02/2014.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//@interface mesager : NSObject
+//@interface message_wrapper : NSObject
 
 //@end

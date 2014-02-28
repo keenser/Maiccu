@@ -139,7 +139,7 @@ void aiccu_LocateFile(const char *what, char *filename, unsigned int length)
 	strncat(filename, what, length);
 #else
 	/* Use the default location */
-	strncat(filename, what, length);
+	strncat(filename, what, length-1);
 #endif
 }
 

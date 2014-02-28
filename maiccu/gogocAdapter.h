@@ -10,8 +10,6 @@
 #import "genericAdapter.h"
 
 @interface gogocAdapter : genericAdapter {
-@private
-    BOOL anonymous;
 }
 
 @end

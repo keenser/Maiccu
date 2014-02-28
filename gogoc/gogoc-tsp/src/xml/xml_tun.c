@@ -150,6 +150,7 @@ static int AssignToList(char *str, tLinkedList **toList)
 
   if (ll->Value == NULL) {
     printf("AssignToList: Memory allocation error!\n");
+    free(ll);
     return -1;
   }
 

@@ -95,7 +95,7 @@
         _detailsController = [[TKZDetailsController alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
         
         lastData = [[NSMutableDictionary alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
@@ -116,6 +116,7 @@
 }
 
 - (void)aiccuNotification:(NSNotification *)aNotification {
+    NSLog(@"Notify %@",aNotification);
     [_maiccu writeLogMessage:[aNotification object]];
     [self postNotification:[aNotification object]];
 }

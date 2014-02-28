@@ -119,7 +119,7 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
   gogoc_status status = STATUS_SUCCESS_INIT;
   int ka_interval = 0;
   int tunfd = -1;
-  int pid;
+  //int pid;
 
 
   // Check if we got root privileges.
@@ -175,56 +175,57 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
     // descriptor. This is important because otherwise the tunnel will stay
     // open if we get killed.
     //
-    pid = fork();
+//    pid = fork();
 
-    if( pid < 0 )
-    {
+//    if( pid < 0 )
+//    {
       // fork() error
-      status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
-      break;
-    }
-    else if( pid == 0 )
-    {
+//      status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
+//      break;
+//    }
+//    else if( pid == 0 )
+//    {
       // Child processing: run template script.
-      if( tunfd != -1 )
-      {
-        close(tunfd);
-      }
+//      if( tunfd != -1 )
+//      {
+//        close(tunfd);
+//      }
 
       status = tspSetupInterface(c, t);
-      exit( status );
-    }
-    else
-    {
+//      exit( status );
+//    }
+//    else
+//    {
       // Parent processing
-      int s = 0;
+//      int s = 0;
 
       // Wait for child process to exit.
-      Display( LOG_LEVEL_3, ELInfo, "tspStartLocal", GOGO_STR_WAITING_FOR_SETUP_SCRIPT );
-      if( wait(&s) != pid )
-      {
-        // Error occured: we have no other child
-        Display( LOG_LEVEL_1, ELError, "tspStartLocal", GOGO_STR_ERR_WAITING_SCRIPT );
-        status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
-        break;
-      }
+//      Display( LOG_LEVEL_3, ELInfo, "tspStartLocal", GOGO_STR_WAITING_FOR_SETUP_SCRIPT );
+//      if( wait(&s) != pid )
+//      {
+//        // Error occured: we have no other child
+//        Display( LOG_LEVEL_1, ELError, "tspStartLocal", GOGO_STR_ERR_WAITING_SCRIPT );
+//        status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
+//        break;
+//      }
 
       // Check if process waited upon has exited.
-      if( !WIFEXITED(s) )
-      {
-        // Error: child has not exited properly. Maybe killed ?
-        Display( LOG_LEVEL_1, ELError, "tspStartLocal", STR_GEN_SCRIPT_EXEC_FAILED );
-        status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
-        break;
-      }
+//      if( !WIFEXITED(s) )
+//      {
+//        // Error: child has not exited properly. Maybe killed ?
+//        Display( LOG_LEVEL_1, ELError, "tspStartLocal", STR_GEN_SCRIPT_EXEC_FAILED );
+//        Display( LOG_LEVEL_1, ELError, "tspStartLocal", "status 0x%08X %s (%d).", s, strerror(s), errno);
+//        status = make_status(CTX_TUNINTERFACESETUP, ERR_INTERFACE_SETUP_FAILED);
+//        break;
+//      }
 
       // Check child exit code.
-      status = WEXITSTATUS(s);
+//      status = WEXITSTATUS(s);
       if( status_number(status) != SUCCESS )
       {
         break;
       }
-    }
+//    }
 
     // Retrieve keepalive inteval, if found in tunnel parameters.
     if( t->keepalive_interval != NULL )

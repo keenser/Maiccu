@@ -51,11 +51,16 @@
 		7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2D18AE660900536814 /* pipeserver.cc */; };
 		7E4CBDB418BE333000536814 /* semaphore.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2E18AE660900536814 /* semaphore.cc */; };
 		7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
-		7E4CBDC018C08EAF00536814 /* mesager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E4CBDBE18C08EA900536814 /* mesager.h */; };
-		7E4CBDC118C08EAF00536814 /* mesager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDBF18C08EAE00536814 /* mesager.m */; };
-		7E4CBDC218C09C4300536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
+		7E4CBDC018C08EAF00536814 /* message_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E4CBDBE18C08EA900536814 /* message_wrapper.h */; };
 		7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
 		7E4CBDC518C0A0B500536814 /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8718BFB06800D32099 /* aiccu */; };
+		7E4CBDC618C0A57F00536814 /* message_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDBF18C08EAE00536814 /* message_wrapper.m */; };
+		7E4CBDC718C0A62A00536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
+		7E4CBDCA18C0B95000536814 /* message_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDBF18C08EAE00536814 /* message_wrapper.m */; };
+		7E4CBDCB18C0BD3700536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
+		7E4CBDCC18C0D23F00536814 /* namevalueconfig.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */; };
+		7E4CBDCD18C0D24A00536814 /* namevalueparser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */; };
+		7E4CBDCE18C0D25600536814 /* gogocvalidation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -74,11 +79,6 @@
 		7E4DD05418B009F10029F38B /* gogoc_c_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95618AFA08D0044F1AB /* gogoc_c_wrapper.cc */; };
 		7E4DD05518B009F10029F38B /* gogocconfig.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95718AFA08D0044F1AB /* gogocconfig.cc */; };
 		7E4DD05618B009F10029F38B /* gogocuistrings.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95818AFA08D0044F1AB /* gogocuistrings.c */; };
-		7E4DD05718B009F10029F38B /* gogocvalidation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */; };
-		7E4DD05818B009F10029F38B /* haccess_devmap_c_wrap.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95A18AFA08D0044F1AB /* haccess_devmap_c_wrap.cc */; };
-		7E4DD05918B009F10029F38B /* haccessdevicemappingconfig.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95B18AFA08D0044F1AB /* haccessdevicemappingconfig.cc */; };
-		7E4DD05A18B009F10029F38B /* namevalueconfig.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */; };
-		7E4DD05B18B009F10029F38B /* namevalueparser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */; };
 		7E4DD06418B00CBA0029F38B /* ipcserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2B18AE660900536814 /* ipcserver.cc */; };
 		7E4DD06518B00CC10029F38B /* ipcclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2A18AE660900536814 /* ipcclient.cc */; };
 		7E4DD06618B00CCA0029F38B /* servent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3218AE660900536814 /* servent.cc */; };
@@ -335,8 +335,6 @@
 		7E22E94A18AFA08D0044F1AB /* gogocconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocconfig.h; sourceTree = "<group>"; };
 		7E22E94B18AFA08D0044F1AB /* gogocuistrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocuistrings.h; sourceTree = "<group>"; };
 		7E22E94C18AFA08D0044F1AB /* gogocvalidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocvalidation.h; sourceTree = "<group>"; };
-		7E22E94D18AFA08D0044F1AB /* haccess_devmap_c_wrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = haccess_devmap_c_wrap.h; sourceTree = "<group>"; };
-		7E22E94E18AFA08D0044F1AB /* haccessdevicemappingconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = haccessdevicemappingconfig.h; sourceTree = "<group>"; };
 		7E22E94F18AFA08D0044F1AB /* namevalueconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = namevalueconfig.h; sourceTree = "<group>"; };
 		7E22E95018AFA08D0044F1AB /* namevalueparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = namevalueparser.h; sourceTree = "<group>"; };
 		7E22E95118AFA08D0044F1AB /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
@@ -346,8 +344,6 @@
 		7E22E95718AFA08D0044F1AB /* gogocconfig.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gogocconfig.cc; sourceTree = "<group>"; };
 		7E22E95818AFA08D0044F1AB /* gogocuistrings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gogocuistrings.c; sourceTree = "<group>"; };
 		7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gogocvalidation.cc; sourceTree = "<group>"; };
-		7E22E95A18AFA08D0044F1AB /* haccess_devmap_c_wrap.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = haccess_devmap_c_wrap.cc; sourceTree = "<group>"; };
-		7E22E95B18AFA08D0044F1AB /* haccessdevicemappingconfig.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = haccessdevicemappingconfig.cc; sourceTree = "<group>"; };
 		7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = namevalueconfig.cc; sourceTree = "<group>"; };
 		7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = namevalueparser.cc; sourceTree = "<group>"; };
 		7E2D3B0A18BA22A700CD7DBF /* clearenv.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clearenv.c; sourceTree = "<group>"; };
@@ -578,8 +574,9 @@
 		7E4CBDA218BDDCBE00536814 /* messager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = messager; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4CBDA418BDDCC900536814 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7E4CBDA618BDDCC900536814 /* messager.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = messager.1; sourceTree = "<group>"; };
-		7E4CBDBE18C08EA900536814 /* mesager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesager.h; sourceTree = "<group>"; };
-		7E4CBDBF18C08EAE00536814 /* mesager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesager.m; sourceTree = "<group>"; };
+		7E4CBDBE18C08EA900536814 /* message_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = message_wrapper.h; sourceTree = "<group>"; };
+		7E4CBDBF18C08EAE00536814 /* message_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = message_wrapper.m; sourceTree = "<group>"; };
+		7E4CBDC818C0B4A100536814 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7E4DD02618B005F60029F38B /* libgogoc-tsp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-tsp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04518B0072D0029F38B /* libgogoc-pal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-pal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD04E18B009DD0029F38B /* libgogoc-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -624,6 +621,7 @@
 			files = (
 				7E21B89718BFBFE6003F4F70 /* libresolv.dylib in Frameworks */,
 				7E21B8B118BFC9A6003F4F70 /* liblibaiccu.a in Frameworks */,
+				7E4CBDC718C0A62A00536814 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,11 +673,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E4CBDCB18C0BD3700536814 /* Foundation.framework in Frameworks */,
 				7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */,
 				7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */,
 				7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */,
 				7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */,
-				7E4CBDC218C09C4300536814 /* Foundation.framework in Frameworks */,
 				7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,6 +688,7 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
+				7E4CBDC818C0B4A100536814 /* CoreFoundation.framework */,
 				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
@@ -860,8 +859,6 @@
 				7E22E94A18AFA08D0044F1AB /* gogocconfig.h */,
 				7E22E94B18AFA08D0044F1AB /* gogocuistrings.h */,
 				7E22E94C18AFA08D0044F1AB /* gogocvalidation.h */,
-				7E22E94D18AFA08D0044F1AB /* haccess_devmap_c_wrap.h */,
-				7E22E94E18AFA08D0044F1AB /* haccessdevicemappingconfig.h */,
 				7E22E94F18AFA08D0044F1AB /* namevalueconfig.h */,
 				7E22E95018AFA08D0044F1AB /* namevalueparser.h */,
 				7E22E95118AFA08D0044F1AB /* parser.h */,
@@ -877,8 +874,6 @@
 				7E22E95718AFA08D0044F1AB /* gogocconfig.cc */,
 				7E22E95818AFA08D0044F1AB /* gogocuistrings.c */,
 				7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */,
-				7E22E95A18AFA08D0044F1AB /* haccess_devmap_c_wrap.cc */,
-				7E22E95B18AFA08D0044F1AB /* haccessdevicemappingconfig.cc */,
 				7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */,
 				7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */,
 			);
@@ -1197,8 +1192,8 @@
 				7E4CBCF618AE65B600536814 /* tsp_local.c */,
 				7E4CBCF718AE65B600536814 /* tsp_tun.c */,
 				7E4CBCF818AE65B600536814 /* tsp_tun.h */,
-				7E4CBDBE18C08EA900536814 /* mesager.h */,
-				7E4CBDBF18C08EAE00536814 /* mesager.m */,
+				7E4CBDBE18C08EA900536814 /* message_wrapper.h */,
+				7E4CBDBF18C08EAE00536814 /* message_wrapper.m */,
 			);
 			path = darwin;
 			sourceTree = "<group>";
@@ -1405,7 +1400,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E4CBDC018C08EAF00536814 /* mesager.h in Headers */,
+				7E4CBDC018C08EAF00536814 /* message_wrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1766,6 +1761,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E4CBDA518BDDCC900536814 /* main.cpp in Sources */,
+				7E4CBDC618C0A57F00536814 /* message_wrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,8 +1803,8 @@
 				7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */,
 				7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */,
 				7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */,
-				7E4CBDC118C08EAF00536814 /* mesager.m in Sources */,
 				7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */,
+				7E4CBDCA18C0B95000536814 /* message_wrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1828,11 +1824,9 @@
 				7E4DD05418B009F10029F38B /* gogoc_c_wrapper.cc in Sources */,
 				7E4DD05518B009F10029F38B /* gogocconfig.cc in Sources */,
 				7E4DD05618B009F10029F38B /* gogocuistrings.c in Sources */,
-				7E4DD05718B009F10029F38B /* gogocvalidation.cc in Sources */,
-				7E4DD05818B009F10029F38B /* haccess_devmap_c_wrap.cc in Sources */,
-				7E4DD05918B009F10029F38B /* haccessdevicemappingconfig.cc in Sources */,
-				7E4DD05A18B009F10029F38B /* namevalueconfig.cc in Sources */,
-				7E4DD05B18B009F10029F38B /* namevalueparser.cc in Sources */,
+				7E4CBDCC18C0D23F00536814 /* namevalueconfig.cc in Sources */,
+				7E4CBDCD18C0D24A00536814 /* namevalueparser.cc in Sources */,
+				7E4CBDCE18C0D25600536814 /* gogocvalidation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

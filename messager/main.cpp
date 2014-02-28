@@ -7,9 +7,10 @@
 //
 
 #include <iostream>
-#include <gogocmessaging/guimessengerimpl.h>
+//#include <CoreFoundation/CoreFoundation.h>
+#include <gogocmessaging/gogoc_c_wrapper.h>
 
-using namespace gogocmessaging;
+//using namespace gogocmessaging;
 
 //error_t         StatusInfo       ( const gogocStatusInfo* aStatusInfo ) {
     
@@ -19,10 +20,12 @@ using namespace gogocmessaging;
 
 int main(int argc, const char * argv[])
 {
-    GUIMessengerImpl *pMessenger = NULL;
-    
-    pMessenger = new GUIMessengerImpl;
-    std::cout << "Hello, World!\n";
+    send_status_info();
+//    CFStringRef observedObject = CFSTR("com.twikz.Maiccu2");
+//    CFNotificationCenterRef center =
+//    CFNotificationCenterGetDistributedCenter();
+//    CFNotificationCenterPostNotification(center, CFSTR("AiccuStatus"),
+//                                         observedObject, NULL /* no dictionary */, TRUE);
     return 0;
 }
 

@@ -395,6 +395,7 @@ struct TIC_sTunnel *tic_ListTunnels(struct TIC_conf *tic)
 	char			buf[1024], buf2[1024];
 	struct TIC_sTunnel	*start = NULL, *last = NULL, *tun = NULL;
 	int			i;
+    bool need_clean = false;
 
 /* Request a list of Tunnels */
 	sock_printf(tic->sock, "tunnel list\n");
@@ -425,6 +426,7 @@ struct TIC_sTunnel *tic_ListTunnels(struct TIC_conf *tic)
 			break;
 		}
 
+        need_clean = true;
 		/* Allocate a new struct */
 		tun = (struct TIC_sTunnel *)malloc(sizeof(*tun));
 		if (!tun)
@@ -444,6 +446,7 @@ struct TIC_sTunnel *tic_ListTunnels(struct TIC_conf *tic)
 		if (!copyfield(buf, 4, buf2, sizeof(buf2))) break;
 		tun->sPOPId = strdup(buf2);
 		
+        need_clean = false;
 		/* Add it into the list */
 		if (last)
 		{
@@ -456,6 +459,15 @@ struct TIC_sTunnel *tic_ListTunnels(struct TIC_conf *tic)
 		}
 	}
 
+    if (need_clean) {
+        if (tun) {
+            free(tun->sId);
+            free(tun->sIPv6);
+            free(tun->sIPv4);
+            free(tun->sPOPId);
+        }
+        free(tun);
+    }
 	/* All went okay? */
 	if (buf[0] == '2' && buf[1] == '0' && buf[2] == '2')
 	{

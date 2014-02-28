@@ -23,6 +23,9 @@
 #include "hex_strings.h"  // Strings for Display()
 #include "lib.h"          // IsAll, IPv4Addr, IPv6Addr, IPAddrAny, Numeric.
 
+// gogoCLIENT Messaging Subsystem.
+#include <gogocmessaging/gogoc_c_wrapper.h>
+
 // original source code functions routepr, get_rtaddrs, np_rtentry see at
 // http://www.opensource.apple.com/source/network_cmds/network_cmds-433/netstat.tproj/route.c
 //
@@ -127,12 +130,12 @@ sint32_t execCmd( const char *cmd[] )
     posix_spawn_file_actions_t action;
     int status;
     
-    strncpy(buf,cmd[0], sizeof(buf)-1);
+    strlcpy(buf,cmd[0], sizeof(buf));
     int i=1;
     while (cmd[i] != NULL)
     {
-        strncat(buf, " ", sizeof(buf)-1);
-        strncat(buf, cmd[i], sizeof(buf)-1);
+        strlcat(buf, " ", sizeof(buf));
+        strlcat(buf, cmd[i], sizeof(buf));
         i++;
     }
     Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", buf );
@@ -399,6 +402,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
             Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV4_PREFIX_IS, t->prefix, t->prefix_length);
     }
 #endif /* V4V6_SUPPORT */
+    send_tunnel_info();
     
     return status;
 }

@@ -65,8 +65,8 @@
         gpConfig->Set_IfTunV6UDPV4( [self device] );
         gpConfig->Set_AlwaysUseLastSrv("yes");
         //gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
-        //gpConfig->Set_Log("file","3");
-        //gpConfig->Set_LogFileName("/tmp/gogoc.log");
+        gpConfig->Set_Log("file","3");
+        gpConfig->Set_LogFileName("/tmp/gogoc.log");
 
         // Saves the configuration
         iRet = gpConfig->Save() ? 0 : -1;
