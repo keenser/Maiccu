@@ -11,7 +11,6 @@
 		6D4FFE8317459CF700E4E511 /* TKZDetailsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FFE8117459CF700E4E511 /* TKZDetailsController.xib */; };
 		6D4FFE871745C60900E4E511 /* TKZSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FFE851745C60900E4E511 /* TKZSheetController.m */; };
 		6D4FFE881745C60900E4E511 /* TKZSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FFE861745C60900E4E511 /* TKZSheetController.xib */; };
-		6D77C32A173981840069047A /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 6D77C329173981840069047A /* aiccu */; };
 		6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */; };
 		6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94902B173514E2002283B0 /* Cocoa.framework */; };
 		6D949036173514E2002283B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D949034173514E2002283B0 /* InfoPlist.strings */; };
@@ -27,7 +26,6 @@
 		6D9A464017493B75008389B4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D9A463D174938DA008389B4 /* Growl.framework */; };
 		6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */; };
 		6D9A46481749E024008389B4 /* TKZMaiccu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A46471749E024008389B4 /* TKZMaiccu.m */; };
-		7E1D9C8218BFACDE00D32099 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
 		7E1D9C9018BFB12800D32099 /* aiccu_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B39001735783E009C3AC7 /* aiccu_main.c */; };
 		7E21B89718BFBFE6003F4F70 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B89618BFBFE6003F4F70 /* libresolv.dylib */; };
 		7E21B8A518BFC958003F4F70 /* tun.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D9490AE17352725002283B0 /* tun.c */; };
@@ -53,10 +51,11 @@
 		7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2D18AE660900536814 /* pipeserver.cc */; };
 		7E4CBDB418BE333000536814 /* semaphore.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2E18AE660900536814 /* semaphore.cc */; };
 		7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
-		7E4CBDBA18BF586300536814 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDB718BF4F9A00536814 /* tsp_setup.c */; };
 		7E4CBDC018C08EAF00536814 /* mesager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E4CBDBE18C08EA900536814 /* mesager.h */; };
 		7E4CBDC118C08EAF00536814 /* mesager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDBF18C08EAE00536814 /* mesager.m */; };
 		7E4CBDC218C09C4300536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
+		7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
+		7E4CBDC518C0A0B500536814 /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8718BFB06800D32099 /* aiccu */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
 		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
@@ -579,7 +578,6 @@
 		7E4CBDA218BDDCBE00536814 /* messager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = messager; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4CBDA418BDDCC900536814 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7E4CBDA618BDDCC900536814 /* messager.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = messager.1; sourceTree = "<group>"; };
-		7E4CBDB718BF4F9A00536814 /* tsp_setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tsp_setup.c; sourceTree = "<group>"; };
 		7E4CBDBE18C08EA900536814 /* mesager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesager.h; sourceTree = "<group>"; };
 		7E4CBDBF18C08EAE00536814 /* mesager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesager.m; sourceTree = "<group>"; };
 		7E4DD02618B005F60029F38B /* libgogoc-tsp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-tsp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1665,11 +1663,11 @@
 				6D949036173514E2002283B0 /* InfoPlist.strings in Resources */,
 				6D94903C173514E2002283B0 /* Credits.rtf in Resources */,
 				6D949042173514E2002283B0 /* MainMenu.xib in Resources */,
-				6D77C32A173981840069047A /* aiccu in Resources */,
 				6D4FFE8317459CF700E4E511 /* TKZDetailsController.xib in Resources */,
 				6D4FFE881745C60900E4E511 /* TKZSheetController.xib in Resources */,
 				6D9A46451749445E008389B4 /* Growl Registration Ticket.growlRegDict in Resources */,
 				7EA1892918B4FC4F00943303 /* gogoc in Resources */,
+				7E4CBDC518C0A0B500536814 /* aiccu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1809,8 +1807,8 @@
 				7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */,
 				7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */,
 				7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */,
-				7E4CBDBA18BF586300536814 /* tsp_setup.c in Sources */,
 				7E4CBDC118C08EAF00536814 /* mesager.m in Sources */,
+				7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2437,6 +2435,7 @@
 				7E21B8A418BFC93E003F4F70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
 			isa = XCConfigurationList;
