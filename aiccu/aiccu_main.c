@@ -12,7 +12,6 @@
 
 #include "aiccu.h"
 #include "tun.h"
-#include "aiccu_main.h"
 
 #ifndef _WIN32
 /* Enable/Disable heartbeating */
@@ -221,7 +220,7 @@ const char *options = "aiccu (start|stop|brokers|tunnels|test|autotest|license|"
 #endif
 	"version) [<configfile>]\n";
 
-int __main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	enum AICCU_MODES	mode = A_NONE;
 

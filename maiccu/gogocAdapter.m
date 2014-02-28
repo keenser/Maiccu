@@ -83,7 +83,6 @@
 
 - (BOOL)startFrom:(NSString *)path
 {
-//    NSLog(@"startFrom %@ %@", path,configPath);
     NSString *config = [NSString stringWithFormat:@"%@/%@",[self configPath], [self configFile]];
     if ([self saveConfig:config]) {
         NSLog(@"save config error");
