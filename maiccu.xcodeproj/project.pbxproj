@@ -11,7 +11,7 @@
 		6D4FFE8317459CF700E4E511 /* TKZDetailsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FFE8117459CF700E4E511 /* TKZDetailsController.xib */; };
 		6D4FFE871745C60900E4E511 /* TKZSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FFE851745C60900E4E511 /* TKZSheetController.m */; };
 		6D4FFE881745C60900E4E511 /* TKZSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FFE861745C60900E4E511 /* TKZSheetController.xib */; };
-		6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */; };
+		6D8B390517357B1C009C3AC7 /* TKZAiccuAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B390417357B1C009C3AC7 /* TKZAiccuAdapter.m */; settings = {COMPILER_FLAGS = "-D_DARWIN=1 -DAICCU_TYPE=\"\\\"darwin\\\"\" -DAICCU_PATCH=1"; }; };
 		6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94902B173514E2002283B0 /* Cocoa.framework */; };
 		6D949036173514E2002283B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D949034173514E2002283B0 /* InfoPlist.strings */; };
 		6D949038173514E2002283B0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D949037173514E2002283B0 /* main.m */; };
@@ -114,6 +114,8 @@
 		7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0018AE65B600536814 /* tsp_net.c */; };
 		7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0118AE65B600536814 /* tsp_redirect.c */; };
 		7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0318AE65B600536814 /* tsp_tun_mgt.c */; };
+		7E78530318C36BB000D48343 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
+		7E78530418C37A9A00D48343 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
 		7EA1892918B4FC4F00943303 /* gogoc in Resources */ = {isa = PBXBuildFile; fileRef = 7EA1892018B4FC1600943303 /* gogoc */; };
 		7EA1892E18B4FD6F00943303 /* unix-main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EA1892C18B4FD6F00943303 /* unix-main.c */; };
 		7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD02618B005F60029F38B /* libgogoc-tsp.a */; };
@@ -314,7 +316,6 @@
 		6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		6D9A46461749E024008389B4 /* TKZMaiccu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKZMaiccu.h; sourceTree = "<group>"; };
 		6D9A46471749E024008389B4 /* TKZMaiccu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKZMaiccu.m; sourceTree = "<group>"; };
-		7E0FA2E618A0D00C00C9C189 /* gogoc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = gogoc; path = gogoc/gogoc; sourceTree = "<group>"; };
 		7E1D9C8018BFACD400D32099 /* tsp_setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tsp_setup.c; sourceTree = "<group>"; };
 		7E1D9C8718BFB06800D32099 /* aiccu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aiccu; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E21B89618BFBFE6003F4F70 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
@@ -636,6 +637,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E78530418C37A9A00D48343 /* libgogoc-tsp.a in Frameworks */,
+				7E78530318C36BB000D48343 /* libgogoc-pal.a in Frameworks */,
 				7E4CBDAE18BE319500536814 /* libstdc++.dylib in Frameworks */,
 				7E4CBDAB18BDDCE000536814 /* libgogoc-messaging.a in Frameworks */,
 			);
@@ -688,7 +691,6 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
-				7E4CBDC818C0B4A100536814 /* CoreFoundation.framework */,
 				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
@@ -736,6 +738,7 @@
 		6D94902D173514E2002283B0 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7E4CBDC818C0B4A100536814 /* CoreFoundation.framework */,
 				6D94902E173514E2002283B0 /* AppKit.framework */,
 				6D94902F173514E2002283B0 /* CoreData.framework */,
 				6D949030173514E2002283B0 /* Foundation.framework */,
@@ -835,7 +838,6 @@
 				7E4CBD0518AE660900536814 /* gogoc-messaging */,
 				7E4CBCA018AE65B600536814 /* gogoc-pal */,
 				7E4CBCC518AE65B600536814 /* gogoc-tsp */,
-				7E0FA2E618A0D00C00C9C189 /* gogoc */,
 			);
 			name = gogoc;
 			sourceTree = "<group>";
@@ -1986,18 +1988,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
-					"$(inherited)",
-					"_DARWIN=1",
-					"NEED_IFHEAD=1",
-					"AICCU_TYPE=\"\\\"darwin\\\"\"",
-					"AICCU_PATCH=1",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2026,12 +2016,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"_DARWIN=1",
-					"NEED_IFHEAD=1",
-					"AICCU_TYPE=\"\\\"darwin\\\"\"",
-					"AICCU_PATCH=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2125,6 +2109,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"DEBUG=1",
+					"$(inherited)",
+					"_DARWIN=1",
+					"NEED_IFHEAD=1",
+					"AICCU_TYPE=\"\\\"darwin\\\"\"",
+					"AICCU_PATCH=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2135,6 +2127,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"_DARWIN=1",
+					"NEED_IFHEAD=1",
+					"AICCU_TYPE=\"\\\"darwin\\\"\"",
+					"AICCU_PATCH=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2146,6 +2144,14 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"DEBUG=1",
+					"$(inherited)",
+					"_DARWIN=1",
+					"NEED_IFHEAD=1",
+					"AICCU_TYPE=\"\\\"darwin\\\"\"",
+					"AICCU_PATCH=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2157,6 +2163,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"_DARWIN=1",
+					"NEED_IFHEAD=1",
+					"AICCU_TYPE=\"\\\"darwin\\\"\"",
+					"AICCU_PATCH=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2198,6 +2210,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V4V6_SUPPORT,
+					DEBUG,
+				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
@@ -2205,7 +2222,6 @@
 					"gogoc/gogoc-messaging",
 					"gogoc/gogoc-config",
 				);
-				OTHER_CFLAGS = "-D_REENTRANT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "gogoc/gogoc-tsp/include gogoc/gogoc-tsp/platform/darwin";
 			};
@@ -2216,6 +2232,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V4V6_SUPPORT,
+					NDEBUG,
+				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
@@ -2223,7 +2244,6 @@
 					"gogoc/gogoc-messaging",
 					"gogoc/gogoc-config",
 				);
-				OTHER_CFLAGS = "-D_REENTRANT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "gogoc/gogoc-tsp/include gogoc/gogoc-tsp/platform/darwin";
 			};
@@ -2236,13 +2256,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
-				);
-				OTHER_CFLAGS = (
-					"-D_REENTRANT",
-					"-DPLATFORM=\\\"darwin\\\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2255,13 +2272,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
-				);
-				OTHER_CFLAGS = (
-					"-D_REENTRANT",
-					"-DPLATFORM=\\\"darwin\\\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2273,15 +2287,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
 					"gogoc/gogoc-config",
-				);
-				OTHER_CFLAGS = (
-					"-DNDEBUG",
-					"-D_REENTRANT",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2293,15 +2304,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
 					"gogoc/gogoc-config",
-				);
-				OTHER_CFLAGS = (
-					"-DNDEBUG",
-					"-D_REENTRANT",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2314,15 +2322,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
 					"gogoc/gogoc-messaging",
-				);
-				OTHER_CFLAGS = (
-					"-DNDEBUG",
-					"-D_REENTRANT",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2335,15 +2340,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
 					"gogoc/gogoc-messaging",
-				);
-				OTHER_CFLAGS = (
-					"-DNDEBUG",
-					"-D_REENTRANT",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

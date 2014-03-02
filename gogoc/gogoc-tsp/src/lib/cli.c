@@ -29,7 +29,7 @@ void PrintUsage( char *message )
   // Print the message, if a message was passed.
   if( message )
   {
-    printf(message);
+    puts(message);
   }
 
   // Print the usage.

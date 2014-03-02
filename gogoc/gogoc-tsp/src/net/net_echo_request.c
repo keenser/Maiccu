@@ -244,8 +244,8 @@ tRedirectStatus timeEchoRequestReply(pal_socket_t sfd, char *address, rttengine_
   rudp_msghdr_t *omh = NULL;
   void *om = NULL;
   void *im = NULL;
-  sint32_t length_sent = 0;
-  sint32_t ret = 0;
+  ssize_t length_sent = 0;
+  ssize_t ret = 0;
   fd_set fs;
   struct timeval tv_select;
 
@@ -296,7 +296,7 @@ send_loop:
   /* Try to send the outgoing message */
   Display(LOG_LEVEL_3, ELInfo, "timeEchoRequestReply", GOGO_STR_RDR_SENDING_ECHO_REQUEST, (engine->retries + 1), address);
 
-  if ((length_sent = send(sfd, om, (sint32_t)(data_out_size + sizeof(rudp_msghdr_t)), 0)) == -1) {
+  if ((length_sent = send(sfd, om, data_out_size + sizeof(rudp_msghdr_t), 0)) == -1) {
     rttengine_deinit(engine, im, om);
     *distance += ECHO_REQUEST_ERROR_ADJUST;
     Display(LOG_LEVEL_1, ELError, "timeEchoRequestReply", GOGO_STR_RDR_SEND_ECHO_REQUEST_FAILED, address);

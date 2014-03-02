@@ -271,22 +271,14 @@ static int RotateLogFile( char *filename, int max_size, char *log_line )
 
 // --------------------------------------------------------------------------
 /* Send a message to syslog. */
-static int LogToSyslog(int VerboseLevel, enum tSeverityLevel SeverityLvl, const char *FunctionName, char *Format, ...)
+static int LogToSyslog(int VerboseLevel, enum tSeverityLevel SeverityLvl, const char *FunctionName, char *buffer)
 {
-  va_list argp;
-  char buffer[MAX_LOG_LINE_LENGTH];
-  char line_to_log[MAX_LOG_LINE_LENGTH];
-
-  va_start(argp, Format);
-  pal_vsnprintf(line_to_log, sizeof(line_to_log), Format, argp);
-  va_end(argp);
-
   /* Store what we want to send to syslog in a buffer, prepending */
   /* the function name if it's a debug build. */
 #if defined(_DEBUG) || defined(DEBUG)
-  pal_snprintf(buffer, sizeof(buffer),  " %s: %s", FunctionName, line_to_log);
+#define _syslog(S,B) pal_syslog(S," %s: %s", FunctionName, B)
 #else
-  pal_snprintf(buffer, sizeof(buffer),  "%s", line_to_log);
+#define _syslog(S,B) pal_syslog(S,"%s", B)
 #endif
 
   /* Send the message to syslog using the platform-specific code. */
@@ -295,14 +287,14 @@ static int LogToSyslog(int VerboseLevel, enum tSeverityLevel SeverityLvl, const 
   switch( SeverityLvl )
   {
     case ELError:
-      pal_syslog(LOG_ERR, buffer); break;
+      _syslog(LOG_ERR, buffer); break;
 
     case ELWarning:
-      pal_syslog(ELWarning, buffer); break;
+      _syslog(ELWarning, buffer); break;
 
     case ELInfo:
     case ELDebug:
-      pal_syslog(LOG_DEBUG, buffer); break;
+      _syslog(LOG_DEBUG, buffer); break;
   }
 
   return 0;
@@ -373,14 +365,12 @@ static int LogBufferLineToFile(char *LogLine, tLogConfiguration *configuration, 
 
 // --------------------------------------------------------------------------
 /* Write a log message to the log file. */
-static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *FunctionName, char *Format, ...)
+static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *FunctionName, const char *line_to_log)
 {
-  va_list argp;
   time_t t;
   struct tm *tm;
   char *s1, *s2;
   size_t i, j;
-  char line_to_log[MAX_LOG_LINE_LENGTH];
   char temp_buffer[MAX_LOG_LINE_LENGTH];
 
 
@@ -390,10 +380,6 @@ static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *Fu
   {
     return 1;
   }
-
-  va_start(argp, Format);
-  pal_vsnprintf(line_to_log, sizeof(line_to_log), Format, argp);
-  va_end(argp);
 
   /* Get a timestamp to prepend to the message */
   t = pal_time(NULL);
@@ -485,17 +471,8 @@ static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *Fu
 
 // --------------------------------------------------------------------------
 /* Send a message to the console (stdout) or stderr */
-static int LogToLocal(FILE *location, char *Format, ...)
+static int LogToLocal(FILE *location, char *buffer)
 {
-  static char buffer[MAX_LOG_LINE_LENGTH];
-  va_list argp;
-
-  va_start(argp, Format);
-
-  pal_vsnprintf(buffer, sizeof(buffer), Format, argp);
-
-  va_end(argp);
-
   /* location should be stdout or stderr. Print to that. */
   if (fprintf(location, "%s\n", buffer) < 0) {
     return 1;
@@ -513,9 +490,8 @@ static int LogToLocal(FILE *location, char *Format, ...)
 void Display(int VerboseLevel, enum tSeverityLevel SeverityLvl, const char *func, char *format, ...)
 {
   va_list argp;
-  int i, j;
-  char fmt[5000];
-  char clean[5000];
+  char buffer[MAX_LOG_LINE_LENGTH];
+  char *clean = buffer;
 
 #if !defined(_DEBUG) && !defined(DEBUG)
   // This is a RELEASE build. Remove debug messages.
@@ -525,61 +501,58 @@ void Display(int VerboseLevel, enum tSeverityLevel SeverityLvl, const char *func
   }
 #endif
 
+    if( LogConfiguration == NULL )
+    {
+        return;
+    }
 
   pal_enter_cs(&logMutex);
 
   va_start(argp, format);
-  pal_vsnprintf(fmt, sizeof(fmt), format, argp);
+  pal_vsnprintf(buffer, sizeof(buffer), format, argp);
   va_end(argp);
 
   /* Change CRLF to LF for log output */
-  for( i = 0, j = 0; i < sizeof(fmt); i++ )
+  for( int i = 0; i < sizeof(buffer); i++ )
   {
-    if( fmt[i] == '\r' && fmt[i + 1] == '\n' )
+    if( buffer[i] == '\r' )
     {
       continue;
     }
 
-    clean[j++] = fmt[i];
-    if( fmt[i] == '\0' )
+    *clean++ = buffer[i];
+    if( buffer[i] == '\0' )
     {
       break;
     }
   }
 
-  if( LogConfiguration == NULL )
-  {
-    pal_leave_cs(&logMutex);
-    return;
-  }
-
-
   /* Level says we should log the message to the console. */
   if( VerboseLevel <= LogConfiguration->log_level_console )
   {
     /* Log to the console. */
-    LogToLocal( stdout, clean );
+    LogToLocal( stdout, buffer );
   }
 
   /* Level says we should log the message to stderr. */
   if( VerboseLevel <= LogConfiguration->log_level_stderr )
   {
     /* Log to stderr. */
-    LogToLocal( stderr, clean );
+    LogToLocal( stderr, buffer );
   }
 
   /* Level says we should log the message to file. */
   if( VerboseLevel <= LogConfiguration->log_level_file )
   {
     /* Log to file. */
-    LogToFile( LogConfiguration->buffer, SeverityLvl, func, clean );
+    LogToFile( LogConfiguration->buffer, SeverityLvl, func, buffer );
   }
 
   /* Level says we should log the message to syslog. */
   if( VerboseLevel <= LogConfiguration->log_level_syslog )
   {
     /* Log to syslog. */
-    LogToSyslog( VerboseLevel, SeverityLvl, func, clean );
+    LogToSyslog( VerboseLevel, SeverityLvl, func, buffer );
   }
 
   pal_leave_cs(&logMutex);

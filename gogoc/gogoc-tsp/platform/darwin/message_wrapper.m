@@ -19,11 +19,13 @@
 NSString * const TKZAiccuStatus = @"AiccuStatus";
 
 error_t send_status_info( void ) {
-    NSConnection *theConnection;
-    id remoteObject;
-    theConnection = [NSConnection connectionWithRegisteredName:@"MyServer"
-                                                          host:nil];
-    remoteObject = [theConnection rootProxy];
+    @autoreleasepool {
+        genericAdapter *remoteObject;
+        id theObject = (id)[NSConnection rootProxyForConnectionWithRegisteredName:@"com.twikz.Maiccu" host:nil];
+
+        remoteObject = theObject;
+        [remoteObject print];
+    }
     return GOGOCM_UIS__NOERROR;
 }
 

@@ -91,24 +91,24 @@ sint32_t NetRUDP6Close( pal_socket_t sock )
 
 /* */
 
-sint32_t NetRUDP6ReadWrite( pal_socket_t sock, char *in, sint32_t il, char *out, sint32_t ol )
+ssize_t NetRUDP6ReadWrite( pal_socket_t sock, char *in, size_t il, char *out, size_t ol )
 {
 	return internal_send_recv(sock, in, il, out, ol);
 }
 
 /* */
 
-sint32_t NetRUDP6Write( pal_socket_t sock, char *b, sint32_t l ) 
+ssize_t NetRUDP6Write( pal_socket_t sock, char *b, size_t l )
 {
 	return NetRUDPReadWrite(sock, b, l, NULL, 0);
 }
 
 /* */
 
-sint32_t NetRUDP6Printf( pal_socket_t sock, char *out, sint32_t ol, char *Format, ... )
+ssize_t NetRUDP6Printf( pal_socket_t sock, char *out, size_t ol, char *Format, ... )
 {
   va_list argp;
-  sint32_t Length;
+  size_t Length;
   char Data[1024];
 
   va_start(argp, Format);
@@ -122,7 +122,7 @@ sint32_t NetRUDP6Printf( pal_socket_t sock, char *out, sint32_t ol, char *Format
 
 /* */
 
-sint32_t NetRUDP6Read( pal_socket_t sock, char *b, sint32_t l ) 
+ssize_t NetRUDP6Read( pal_socket_t sock, char *b, size_t l )
 {
 	return NetRUDP6ReadWrite(sock, NULL, 0, b, l);
 }

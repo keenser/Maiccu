@@ -60,12 +60,13 @@ gogoc_status tspClose(pal_socket_t sock, net_tools_t *nt)
 //   NOTE: plin is data to be sent and plout->payload is a buffer for data to
 //         be received.
 //
-sint32_t tspSendRecv(pal_socket_t socket, tPayload *plin, tPayload *plout, net_tools_t *nt)
+ssize_t tspSendRecv(pal_socket_t socket, tPayload *plin, tPayload *plout, net_tools_t *nt)
 {
   char string[] = "Content-length: %ld\r\n";
   char buffer[PROTOCOLFRAMESIZE];
   char *ptr_b, *ptr_c;
-  sint32_t read, ret, size, left;
+  ssize_t read, ret;
+  size_t size, left;
 
 
   // add in content-length to data to be sent.
@@ -138,11 +139,11 @@ sint32_t tspSendRecv(pal_socket_t socket, tPayload *plin, tPayload *plout, net_t
 // --------------------------------------------------------------------------
 // tspSend:
 //
-sint32_t tspSend(pal_socket_t socket, tPayload *pl, net_tools_t *nt)
+ssize_t tspSend(pal_socket_t socket, tPayload *pl, net_tools_t *nt)
 {
   char buffer[PROTOCOLFRAMESIZE];
   long ClSize;
-  sint32_t ret;
+  ssize_t ret;
 
   pal_snprintf(buffer, PROTOCOLFRAMESIZE, "Content-length: %ld\r\n", pl->size);
   ClSize = pal_strlen(buffer);

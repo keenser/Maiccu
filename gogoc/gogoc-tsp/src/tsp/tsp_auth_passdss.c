@@ -350,7 +350,10 @@ gogoc_status AuthPASSDSS_3DES_1(pal_socket_t socket, net_tools_t *nt, tConf *con
   char *s = NULL;
   u_char num[3];    /**< Array to manupulate 3 octet number (sbuflen)  */
   /* Temporary variables */
-  int  buflen, readlen, keysize, siglength;
+  size_t  buflen;
+  ssize_t readlen;
+  int  keysize;
+  int  siglength;
   gogoc_status status = STATUS_SUCCESS_INIT;
   sint32_t tsp_status;
 
@@ -587,9 +590,9 @@ gogoc_status AuthPASSDSS_3DES_1(pal_socket_t socket, net_tools_t *nt, tConf *con
   /* Get sbuflen
    * Big endian binary unsigned integer */
   buffer_get(Buf_Space, (char *)num, 3);
-  sbuflen =  (((u_long)(u_char)(num)[0] << 16) |
-        ((u_long)(u_char)(num)[1] << 8) |
-        ((u_long)(u_char)(num)[2]));
+  sbuflen =  (((uint32_t)(u_char)(num)[0] << 16) |
+        ((uint32_t)(u_char)(num)[1] << 8) |
+        ((uint32_t)(u_char)(num)[2]));
 
   /* DSS signature */
   /* Get siglength */

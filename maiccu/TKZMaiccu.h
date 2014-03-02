@@ -15,6 +15,7 @@
     NSFileManager *_fileManager;
     TKZAiccuAdapter *_aiccu;
     gogocAdapter *_gogoc;
+    NSMutableDictionary *_adapterList;
 }
 
 @property (strong) genericAdapter *adapter;
@@ -37,10 +38,8 @@
 - (void)stopAdapter;
 - (void)startAdapter;
 
-- (void) setAiccuView:(NSMenuItem *)View;
-- (void) setGogocView:(NSMenuItem *)View;
-- (void) setAdapterView:(NSMenuItem *)View;
-- (NSMenuItem *) adapterView;
+- (void) setAdapterView:(NSString *)View;
+- (NSArray*)adapterList;
 
 + (id)defaultMaiccu;
 @end

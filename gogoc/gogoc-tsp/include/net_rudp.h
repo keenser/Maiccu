@@ -21,12 +21,12 @@
 extern sint32_t     NetRUDPConnect        (pal_socket_t *, char *, uint16_t);
 extern sint32_t     NetRUDPClose          (pal_socket_t);
 
-extern sint32_t     NetRUDPReadWrite      (pal_socket_t, char *, sint32_t, char *, sint32_t);
+extern ssize_t     NetRUDPReadWrite      (pal_socket_t, char *, size_t, char *, size_t);
 
-extern sint32_t     NetRUDPWrite          (pal_socket_t, char *, sint32_t);
-extern sint32_t     NetRUDPPrintf         (pal_socket_t, char *, sint32_t, char *, ...);
+extern ssize_t     NetRUDPWrite          (pal_socket_t, char *, size_t);
+extern ssize_t     NetRUDPPrintf         (pal_socket_t, char *, size_t, char *, ...);
 
-extern sint32_t     NetRUDPRead           (pal_socket_t, char *, sint32_t);
+extern ssize_t     NetRUDPRead           (pal_socket_t, char *, size_t);
 
 
 typedef struct rudp_message_struct {
@@ -66,6 +66,6 @@ extern void         internal_discard_message(void *);
 extern float        rttengine_update      (rttengine_stat_t *, uint32_t);
 extern uint32_t     internal_get_timestamp(rttengine_stat_t *);
 extern float        internal_get_adjusted_rto(float);
-extern sint32_t     internal_send_recv    (pal_socket_t, void *, sint32_t, void *, sint32_t);
+extern ssize_t     internal_send_recv    (pal_socket_t, void *, size_t, void *, size_t);
 
 #endif

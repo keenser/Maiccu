@@ -13,13 +13,6 @@
 
 @interface TKZDetailsController : NSWindowController <NSTextFieldDelegate, NSPopoverDelegate, NSWindowDelegate>
 
-//@property (strong) TKZAiccuAdapter *aiccu;
-//@property (strong) gogocAdapter *gogoc;
-//@property (strong) genericAdapter *adapter;
-
-@property (weak) IBOutlet NSMenuItem *aiccuView;
-@property (weak) IBOutlet NSMenuItem *gogocView;
-
 //views
 @property (strong) IBOutlet NSView *accountView;
 @property (strong) IBOutlet NSView *logView;

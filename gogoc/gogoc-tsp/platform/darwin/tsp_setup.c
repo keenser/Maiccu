@@ -433,7 +433,7 @@ gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
     else if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V4V6) == 0 )
     {
         tunnel_interface = c->if_tunnel_v4v6;
-        tunnelType = TUNTYPE_V4V6;
+        tunnelType = V4V6;
     }
 #endif /* V4V6_SUPPORT */
     

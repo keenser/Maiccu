@@ -44,9 +44,9 @@ typedef struct stPayload {
 gogoc_status         tspConnect            ( pal_socket_t*, char *, uint16_t, net_tools_t * );
 gogoc_status         tspClose              ( pal_socket_t, net_tools_t * );
 
-sint32_t            tspSendRecv           ( pal_socket_t, tPayload *, tPayload *, net_tools_t * );
-sint32_t            tspSend               ( pal_socket_t, tPayload *, net_tools_t * );
-sint32_t            tspReceive            ( pal_socket_t, tPayload *, net_tools_t * );
+ssize_t            tspSendRecv           ( pal_socket_t, tPayload *, tPayload *, net_tools_t * );
+ssize_t            tspSend               ( pal_socket_t, tPayload *, net_tools_t * );
+ssize_t            tspReceive            ( pal_socket_t, tPayload *, net_tools_t * );
 
 #endif
 

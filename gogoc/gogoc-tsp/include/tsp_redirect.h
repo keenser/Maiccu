@@ -91,7 +91,7 @@ extern int tspIsRedirectStatus(int status);
 extern tRedirectStatus tspLogRedirectionList(tBrokerList *broker_list, int sorted);
 extern tRedirectStatus tspFreeBrokerList(tBrokerList *broker_list);
 extern tRedirectStatus tspHandleRedirect(char *payload, tConf *conf, tBrokerList **broker_list);
-extern tRedirectStatus tspReadLastServerFromFile(char *last_server_file, char *buffer);
+extern tRedirectStatus tspReadLastServerFromFile(char *last_server_file, char *buffer, size_t bufsize);
 extern tRedirectStatus tspWriteLastServerToFile(char *last_server_file, char *last_server);
 extern tRedirectStatus tspReadBrokerListFromFile(char *broker_list_file, tBrokerList **broker_list);
 extern tRedirectStatus tspWriteBrokerListToFile(char *broker_list_file, tBrokerList *broker_list);

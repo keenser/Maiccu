@@ -22,15 +22,16 @@ static TKZMaiccu *defaultMaiccu = nil;
         _gogoc = [[gogocAdapter alloc] init];
         [_aiccu setConfigPath:[[self appSupportURL] path]];
         [_gogoc setConfigPath:[[self appSupportURL] path]];
-        
+        _adapterList = [[NSMutableDictionary alloc] init];
+        _adapterList[[_aiccu name]] = _aiccu;
+        _adapterList[[_gogoc name]] = _gogoc;
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
-        if ([adapter isEqualToString:[_aiccu name]] || adapter == nil) {
+        [self setAdapter:_adapterList[adapter]];
+        if([self adapter] == nil) {
             [self setAdapter:_aiccu];
-        }
-        else if ([adapter isEqualToString:[_gogoc name]]) {
-            [self setAdapter:_gogoc];
-        }
+        };
+
         [self setRunningAdapter:_adapter];
     }
     return self;
@@ -43,21 +44,13 @@ static TKZMaiccu *defaultMaiccu = nil;
     return defaultMaiccu;
 }
 
-- (void) setAiccuView:(NSMenuItem *)View {
-    [_aiccu setView:View];
-}
-
-- (void) setGogocView:(NSMenuItem *)View {
-    [_gogoc setView:View];
-}
-
 - (NSURL *) appSupportURL {
     NSURL *appSupportURL = [[_fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
     return [appSupportURL URLByAppendingPathComponent:@"Maiccu"];
 }
 
 - (NSString *)aiccuPath {
-    return [[NSBundle mainBundle] pathForResource:[_adapter name] ofType:@""];
+    return [[NSBundle mainBundle] pathForResource:[_adapter binary] ofType:@""];
 }
 
 
@@ -143,16 +136,13 @@ static TKZMaiccu *defaultMaiccu = nil;
     return [plist[@"RunAtLoad"] boolValue];
 }
 
-- (void)setAdapterView:(NSMenuItem *)adapterView {
-    NSLog(@"setAdapterView %@",adapterView);
-    if ([adapterView isEqual:[_aiccu view]] ) {
-        [self setAdapter:_aiccu];
-    }
-    else if ([adapterView isEqual:[_gogoc view]] ) {
-        [self setAdapter:_gogoc];
-    }
+- (void)setAdapterView:(NSString *)adapterView {
+    [self setAdapter:_adapterList[adapterView]];
     [[NSUserDefaults standardUserDefaults] setObject:[_adapter name] forKey:@"adapter"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (NSArray*)adapterList {
+    return [_adapterList allKeys];
+}
 @end

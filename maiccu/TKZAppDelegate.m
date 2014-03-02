@@ -94,12 +94,14 @@
     if (self) {
         _detailsController = [[TKZDetailsController alloc] init];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
-        
         lastData = [[NSMutableDictionary alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
         menuActive = NO;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
+        
+        [NSThread detachNewThreadSelector:@selector(distributiveObjectManager) toTarget:self withObject:nil];
         
     }
     return self;
@@ -116,7 +118,6 @@
 }
 
 - (void)aiccuNotification:(NSNotification *)aNotification {
-    NSLog(@"Notify %@",aNotification);
     [_maiccu writeLogMessage:[aNotification object]];
     [self postNotification:[aNotification object]];
 }
@@ -228,6 +229,16 @@
         NSString *string = [NSString stringWithFormat:@"%0.1f/%0.1f %@ Rx/Tx",floatIn,floatOut,prefix];
         [_bandwidthItem setTitle:string];
     }
+}
+
+- (void)distributiveObjectManager {
+    genericAdapter *serverObject = [_maiccu adapter];
+    NSConnection *theConnection;
+    
+    theConnection = [NSConnection connectionWithReceivePort:[NSPort port] sendPort:nil];
+    [theConnection setRootObject:serverObject];
+    [theConnection registerName:@"com.twikz.Maiccu"];
+    [[NSRunLoop currentRunLoop] run];
 }
 
 @end

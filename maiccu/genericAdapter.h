@@ -28,9 +28,9 @@ extern NSString * const TKZAiccuStatus;
     NSMutableArray *_statusQueue;
 }
 
-@property (strong) NSString *name;
+@property (strong) NSString *binary;
 @property (strong) NSString *configFile;
-@property (strong) NSMenuItem *view;
+@property (strong) NSString *name;
 @property (strong) NSString *configPath;
 
 - (NSArray *)tunnelList;
@@ -51,5 +51,6 @@ extern NSString * const TKZAiccuStatus;
 - (BOOL)isValid;
 - (NSDictionary*)tunnelInfo;
 - (char*)device;
+- (void) print;
 
 @end

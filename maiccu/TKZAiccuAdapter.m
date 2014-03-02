@@ -16,13 +16,13 @@
 - (id)init
 {
     if (self=[super init]) {
-        validCredentials = NO;
         _tunnelList = [[NSMutableDictionary alloc] init];
         tic = (struct TIC_conf *)malloc(sizeof(struct TIC_conf));
         memset(tic, 0, sizeof(struct TIC_conf));
         
-        [self setName:@"aiccu"];
+        [self setBinary:@"aiccu"];
         [self setConfigFile:@"aiccu.conf"];
+        [self setName:@"SixXS.net"];
     }
     return self;
 }

@@ -69,7 +69,7 @@ sint32_t NetTCPClose( pal_socket_t Socket )
 
 
 /* */
-sint32_t NetTCPReadWrite( pal_socket_t sock, char *bi, sint32_t li, char *bo, sint32_t lo )
+ssize_t NetTCPReadWrite( pal_socket_t sock, char *bi, size_t li, char *bo, size_t lo )
 {
   if( NetTCPWrite(sock, bi, li) != li )
     return -1;
@@ -79,9 +79,10 @@ sint32_t NetTCPReadWrite( pal_socket_t sock, char *bi, sint32_t li, char *bo, si
 
 
 /* */
-sint32_t NetTCPWrite( pal_socket_t sock, char *b, sint32_t l ) 
+ssize_t NetTCPWrite( pal_socket_t sock, char *b, size_t l )
 {
-  sint32_t nleft, nwritten;
+  size_t nleft;
+  ssize_t nwritten;
   char *ptr;
 
   ptr = b;   /* can't do pointer arithmetic on void * */
@@ -102,10 +103,10 @@ sint32_t NetTCPWrite( pal_socket_t sock, char *b, sint32_t l )
 
 
 /* */
-sint32_t NetTCPPrintf( pal_socket_t sock, char *out, sint32_t pl, char *Format, ... )
+ssize_t NetTCPPrintf( pal_socket_t sock, char *out, size_t pl, char *Format, ... )
 {
   va_list argp;
-  sint32_t Length;
+  ssize_t Length;
   char Data[1024];
 
   va_start(argp, Format);
@@ -124,7 +125,7 @@ sint32_t NetTCPPrintf( pal_socket_t sock, char *out, sint32_t pl, char *Format, 
 
 
 /* */ 
-sint32_t NetTCPRead( pal_socket_t sock, char *in, sint32_t l )
+ssize_t NetTCPRead( pal_socket_t sock, char *in, size_t l )
 {
   return( recv(sock, in, l, 0) );
 }

@@ -26,11 +26,11 @@
 extern sint32_t      NetTCP6Connect        (pal_socket_t *, char *, uint16_t);
 extern sint32_t      NetTCP6Close         (pal_socket_t);
 
-extern sint32_t      NetTCP6ReadWrite     (pal_socket_t, char *, sint32_t, char *, sint32_t);
+extern ssize_t      NetTCP6ReadWrite     (pal_socket_t, char *, size_t, char *, size_t);
 
-extern sint32_t      NetTCP6Write         (pal_socket_t, char *, sint32_t);
-extern sint32_t      NetTCP6Printf        (pal_socket_t, char *, sint32_t, char *, ...);
+extern ssize_t      NetTCP6Write         (pal_socket_t, char *, size_t);
+extern ssize_t      NetTCP6Printf        (pal_socket_t, char *, size_t, char *, ...);
 
-extern sint32_t      NetTCP6Read          (pal_socket_t, char *, sint32_t);
+extern ssize_t      NetTCP6Read          (pal_socket_t, char *, size_t);
 
 #endif

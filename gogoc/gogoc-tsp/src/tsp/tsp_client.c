@@ -311,7 +311,7 @@ gogoc_status tspTunnelNegotiation( pal_socket_t socket, tTunnel *tunnel_info, tC
   tPayload plin;
   tPayload plout;
   sint32_t tsp_status;
-  sint32_t ret;
+  ssize_t ret;
 
 
   memset(&plin, 0, sizeof(plin));
@@ -973,7 +973,7 @@ sint32_t tspMain(sint32_t argc, char *argv[])
   if( (c.always_use_same_server == TRUE) && (pal_strlen(c.last_server_file) > 0) )
   {
     // Try to get the last server from the last_server file.
-    last_server_status = tspReadLastServerFromFile(c.last_server_file, last_server);
+    last_server_status = tspReadLastServerFromFile(c.last_server_file, last_server,sizeof(last_server));
 
     switch( last_server_status )
     {
@@ -1140,11 +1140,12 @@ sint32_t tspMain(sint32_t argc, char *argv[])
       }
       break;
 
+    case DSLITE:
+#ifndef DSLITE_SUPPORT
+      break;
+#endif
     case V4V6:
 #ifdef V4V6_SUPPORT
-#ifdef DSLITE_SUPPORT
-    case DSLITE:
-#endif        
         switch( cycle )
       {
         default:

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "genericAdapter.h"
 //@interface message_wrapper : NSObject
 
 //@end

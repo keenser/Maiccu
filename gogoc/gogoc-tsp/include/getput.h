@@ -35,10 +35,10 @@
            ((u_int64_t)(u_char)(cp)[6] << 8) | \
            ((u_int64_t)(u_char)(cp)[7]))
 
-#define GET_32BIT(cp) (((u_long)(u_char)(cp)[0] << 24) | \
-           ((u_long)(u_char)(cp)[1] << 16) | \
-           ((u_long)(u_char)(cp)[2] << 8) | \
-           ((u_long)(u_char)(cp)[3]))
+#define GET_32BIT(cp) (((u_int32_t)(u_char)(cp)[0] << 24) | \
+           ((u_int32_t)(u_char)(cp)[1] << 16) | \
+           ((u_int32_t)(u_char)(cp)[2] << 8) | \
+           ((u_int32_t)(u_char)(cp)[3]))
 
 #define GET_16BIT(cp) (((u_long)(u_char)(cp)[0] << 8) | \
            ((u_long)(u_char)(cp)[1]))

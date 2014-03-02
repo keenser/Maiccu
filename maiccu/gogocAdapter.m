@@ -18,8 +18,9 @@
 - (id)init
 {
     if (self=[super init]) {
-        [self setName:@"gogoc"];
+        [self setBinary:@"gogoc"];
         [self setConfigFile:@"gogoc.conf"];
+        [self setName:@"Freenet6.net"];
     }
     return self;
 }

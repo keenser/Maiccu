@@ -77,7 +77,8 @@ gogoc_status TunMainLoop( int tunfd,
                          char *keepalive_address )
 {
   fd_set rfds;
-  int count, maxfd, ret;
+  ssize_t count;
+  int maxfd, ret;
   char bufin[TUN_BUFSIZE];
   char bufout[TUN_BUFSIZE];
   struct timeval timeout;

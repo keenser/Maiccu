@@ -16,12 +16,12 @@ struct net_tools
   sint32_t      (*netopen)      (pal_socket_t *, char *, uint16_t);
   sint32_t      (*netclose)     (pal_socket_t);
 
-  sint32_t      (*netsendrecv)  (pal_socket_t, char *, sint32_t, char *, sint32_t);
+  ssize_t      (*netsendrecv)  (pal_socket_t, char *, size_t, char *, size_t);
 
-  sint32_t      (*netsend)      (pal_socket_t, char *, sint32_t);
-  sint32_t      (*netprintf)    (pal_socket_t, char *, sint32_t, char *, ...);
+  ssize_t      (*netsend)      (pal_socket_t, char *, size_t);
+  ssize_t      (*netprintf)    (pal_socket_t, char *, size_t, char *, ...);
 
-  sint32_t      (*netrecv)      (pal_socket_t, char *, sint32_t);
+  ssize_t      (*netrecv)      (pal_socket_t, char *, size_t);
   sint32_t      (*netreadline)  (char *, sint32_t, char*, sint32_t);
 };
 

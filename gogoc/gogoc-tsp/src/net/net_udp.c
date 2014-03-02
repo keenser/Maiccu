@@ -69,7 +69,7 @@ sint32_t NetUDPClose(pal_socket_t Socket)
 
 
 /* */
-sint32_t NetUDPReadWrite(pal_socket_t sock, char *bi, sint32_t li, char *bo, sint32_t lo) 
+ssize_t NetUDPReadWrite(pal_socket_t sock, char *bi, size_t li, char *bo, size_t lo)
 {
 	if ( NetUDPWrite(sock, bi, li) != li)
 		return -1;
@@ -79,9 +79,10 @@ sint32_t NetUDPReadWrite(pal_socket_t sock, char *bi, sint32_t li, char *bo, sin
 	
 
 /* */
-sint32_t NetUDPWrite(pal_socket_t sock, char *b, sint32_t l) 
+ssize_t NetUDPWrite(pal_socket_t sock, char *b, size_t l)
 {
-	sint32_t nwritten, nleft;
+	ssize_t nwritten;
+    size_t nleft;
 	char *ptr;
 
 	ptr = b;	/* can't do pointer arithmetic on void* */
@@ -100,7 +101,7 @@ sint32_t NetUDPWrite(pal_socket_t sock, char *b, sint32_t l)
 
 
 /* */
-sint32_t NetUDPPrintf(pal_socket_t sock, char *out, sint32_t ol, char *Format, ...) 
+ssize_t NetUDPPrintf(pal_socket_t sock, char *out, size_t ol, char *Format, ...)
 {
 	va_list argp;
 	char Data[1024];
@@ -114,7 +115,7 @@ sint32_t NetUDPPrintf(pal_socket_t sock, char *out, sint32_t ol, char *Format, .
 
 
 /* */
-sint32_t NetUDPRead( pal_socket_t sock, char *b, sint32_t l ) 
+ssize_t NetUDPRead( pal_socket_t sock, char *b, size_t l )
 {
 	return(recvfrom(sock, b, l, 0, NULL, NULL));
 }

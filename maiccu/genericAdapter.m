@@ -23,6 +23,10 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return self;
 }
 
+- (void) print {
+    NSLog(@"print");
+}
+
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path {
     return YES;
 }
@@ -169,14 +173,14 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 }
 
 - (void)setConfig:(NSString*)value toKey:(NSString*)key {
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[self name]]];
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:[self binary]]];
     config[key] = value;
-    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[self name]];
+    [[NSUserDefaults standardUserDefaults] setObject:config forKey:[self binary]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)config:(NSString*)key {
-    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]][key];
+    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self binary]][key];
     if (value) {
         return value;
     }
@@ -184,7 +188,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 }
 
 - (NSDictionary *)config {
-    NSDictionary *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self name]];
+    NSDictionary *value = [[NSUserDefaults standardUserDefaults] objectForKey:[self binary]];
     if (value) {
         return value;
     }

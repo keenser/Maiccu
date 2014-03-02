@@ -91,21 +91,21 @@ sint32_t NetRUDPClose(pal_socket_t sock)
 
 
 /* */
-sint32_t NetRUDPReadWrite(pal_socket_t sock, char *in, sint32_t il, char *out, sint32_t ol)
+ssize_t NetRUDPReadWrite(pal_socket_t sock, char *in, size_t il, char *out, size_t ol)
 {
 	return internal_send_recv(sock, in, il, out, ol);
 }
 
 
 /* */
-sint32_t NetRUDPWrite(pal_socket_t sock, char *b, sint32_t l) 
+ssize_t NetRUDPWrite(pal_socket_t sock, char *b, size_t l)
 {
 	return NetRUDPReadWrite(sock, b, l, NULL, 0);
 }
 
 
 /* */
-sint32_t NetRUDPPrintf(pal_socket_t sock, char *out, sint32_t ol, char *Format, ...)
+ssize_t NetRUDPPrintf(pal_socket_t sock, char *out, size_t ol, char *Format, ...)
 {
   va_list argp;
   char Data[1024];
@@ -119,7 +119,7 @@ sint32_t NetRUDPPrintf(pal_socket_t sock, char *out, sint32_t ol, char *Format, 
 
 
 /* */
-sint32_t NetRUDPRead(pal_socket_t sock, char *b, sint32_t l) 
+ssize_t NetRUDPRead(pal_socket_t sock, char *b, size_t l)
 {
 	return NetRUDPReadWrite(sock, NULL, 0, b, l);
 }
@@ -127,10 +127,10 @@ sint32_t NetRUDPRead(pal_socket_t sock, char *b, sint32_t l)
 
 /* Internal functions; not exported */
 /* needs a connected UDP socket or else all hell will break loose */ 
-sint32_t internal_send_recv(pal_socket_t fd, void *in, sint32_t il, void *out, sint32_t ol)
+ssize_t internal_send_recv(pal_socket_t fd, void *in, size_t il, void *out, size_t ol)
 {
 	fd_set fs;
-	sint32_t ret, ls;	/* return code, length sent */
+	ssize_t ret, ls;	/* return code, length sent */
 	rudp_msghdr_t *omh = NULL; /* outoing message header */
 	rudp_msghdr_t *imh = NULL; /* incoming message header */
 	void *om = NULL;

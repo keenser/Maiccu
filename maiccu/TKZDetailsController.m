@@ -45,15 +45,12 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    [_maiccu setAiccuView:_aiccuView];
-    [_maiccu setGogocView:_gogocView];
     
-    [self awakeFromNib];
+//    [self awakeFromNib];
 
-    if ([[_maiccu adapter]config:@"username"]) {
-        [[_maiccu adapter] showSheet:[self window]];
-    }
-    
+//    if ([[_maiccu adapter]config:@"username"]) {
+//        [[_maiccu adapter] showSheet:[self window]];
+//    }
 }
 
 -(void)controlTextDidEndEditing:(NSNotification *)notification
@@ -96,7 +93,8 @@
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
-    [_brokerPopUp selectItem:[[_maiccu adapter]view]];
+    [_brokerPopUp addItemsWithTitles:[_maiccu adapterList]];
+    [_brokerPopUp selectItemWithTitle:[[_maiccu adapter] name]];
     
     [_usernameField setStringValue:[[_maiccu adapter]config:@"username"]];
     [_passwordField setStringValue:[[_maiccu adapter]config:@"password"]];
@@ -292,7 +290,7 @@
 }
 
 - (IBAction)brokerPopUpHasChanged:(id)sender {
-    [_maiccu setAdapterView:[_brokerPopUp selectedItem]];
+    [_maiccu setAdapterView:[_brokerPopUp titleOfSelectedItem]];
     [self awakeFromNib];
 }
 

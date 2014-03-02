@@ -28,7 +28,7 @@ Copyright (c) 2007 gogo6 Inc. All rights reserved.
 #define pal_strncpy strncpy
 
 #undef pal_strlen
-#define pal_strlen (uint32_t)strlen
+#define pal_strlen strlen
 
 #undef pal_strcat
 #define pal_strcat strcat

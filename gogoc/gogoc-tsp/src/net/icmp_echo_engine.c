@@ -158,7 +158,7 @@ iee_priv_ret_t      _do_send              ( PICMP_ECHO_ENGINE_PARMS p_engine );
 void                _calc_icmp_csum       ( PICMP_ECHO_ENGINE_PARMS p_engine, PICMP_ECHO_HEADER icmp_hdr );
 iee_ret_t           _do_read_wrap         ( PICMP_ECHO_ENGINE_PARMS p_engine, struct timeval* tv_ref );
 iee_priv_ret_t      _do_read              ( PICMP_ECHO_ENGINE_PARMS p_engine, struct timeval* tv_delay, uint32_t* echo_seq );
-iee_priv_ret_t      _decode_icmp_packet   ( PICMP_ECHO_ENGINE_PARMS p_engine, uint8_t* pkt_data, uint32_t pkt_len, uint32_t* echo_seq );
+iee_priv_ret_t      _decode_icmp_packet   ( PICMP_ECHO_ENGINE_PARMS p_engine, uint8_t* pkt_data, size_t pkt_len, uint32_t* echo_seq );
 
 PECHO_EVENT         _create_insert_echo_event( PICMP_ECHO_ENGINE_PARMS p_engine, struct timeval* tv_sent, uint32_t echo_seq );
 void                _insert_echo_event    ( PICMP_ECHO_ENGINE_PARMS p_engine, PECHO_EVENT p_event_insert );
@@ -534,9 +534,9 @@ iee_priv_ret_t _do_send( PICMP_ECHO_ENGINE_PARMS p_engine )
 {
   PICMP_ECHO_HEADER icmp_hdr;
   uint8_t send_buf[sizeof(ICMP_ECHO_HEADER) + ICMP_ECHO_DATA_LEN];
-  const uint16_t send_buf_len = sizeof(ICMP_ECHO_HEADER) + ICMP_ECHO_DATA_LEN;
+  const size_t send_buf_len = sizeof(ICMP_ECHO_HEADER) + ICMP_ECHO_DATA_LEN;
   iee_priv_ret_t retval = SEND_PINGOUT_SUCCESS;
-  sint32_t ret;
+  ssize_t ret;
 
 
   // Map the ICMP header unto the send buffer.
@@ -813,7 +813,7 @@ iee_priv_ret_t _do_read( PICMP_ECHO_ENGINE_PARMS p_engine, struct timeval* tv_de
 {
   uint8_t read_buf[2048];
   fd_set fs;
-  sint32_t ret;
+  ssize_t ret;
   iee_priv_ret_t retval;
 
 
@@ -899,7 +899,7 @@ iee_priv_ret_t _do_read( PICMP_ECHO_ENGINE_PARMS p_engine, struct timeval* tv_de
 //   IEE_SUCCESS when no errors happened.
 //   IEE_GENERAL_ECHO_ERROR on fatal error.
 //
-iee_priv_ret_t _decode_icmp_packet( PICMP_ECHO_ENGINE_PARMS p_engine, uint8_t* pkt_data, uint32_t pkt_len, uint32_t *echo_seq )
+iee_priv_ret_t _decode_icmp_packet( PICMP_ECHO_ENGINE_PARMS p_engine, uint8_t* pkt_data, size_t pkt_len, uint32_t *echo_seq )
 {
   PICMP_ECHO_HEADER icmp_hdr = NULL;  // ICMP header pointer.
   uint8_t ip_ver, ip_len=0;             // IP header version and length.

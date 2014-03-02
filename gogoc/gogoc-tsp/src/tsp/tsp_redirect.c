@@ -60,7 +60,7 @@ tRedirectStatus tspAddBrokerToList(tBrokerList **broker_list, char *address, tBr
 	}
 
 	/* Set the broker address */
-	pal_snprintf(new_broker->address, MAX_REDIRECT_ADDRESS_LENGTH, address);
+	strlcpy(new_broker->address, address, MAX_REDIRECT_ADDRESS_LENGTH);
 
 	/* Validate that the address was set correctly */
 	if (strlen(new_broker->address) != strlen(address)) {
@@ -400,7 +400,7 @@ tRedirectStatus tspHandleRedirect(char *payload, tConf *conf, tBrokerList **brok
 }
 
 /* Read the last server from the last_server file */
-tRedirectStatus tspReadLastServerFromFile(char *last_server_file, char *buffer) {
+tRedirectStatus tspReadLastServerFromFile(char *last_server_file, char *buffer,size_t bufsize) {
 	FILE *file;
 	char line[MAX_REDIRECT_LAST_SERVER_LINE_LENGTH];
 	sint32_t found_server = 0;
@@ -433,7 +433,7 @@ tRedirectStatus tspReadLastServerFromFile(char *last_server_file, char *buffer) 
 		if (strlen(line) && (line[strlen(line) - 1] == '\n' || line[strlen(line) - 1] == '\r')) line[strlen(line) - 1] = '\0';
 
 		/* Copy the line to the buffer */
-		sprintf(buffer, line);
+		strlcpy(buffer, line, bufsize);
 
 		/* We found a server, so stop looking */
 		found_server = 1;
