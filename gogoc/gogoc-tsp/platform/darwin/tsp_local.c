@@ -29,6 +29,8 @@ Copyright (c) 2001-2007 gogo6 Inc. All rights reserved.
 #include "tsp_tun.h"      /* TunInit, TunMainLoop */
 #include "tsp_tun_mgt.h"  /* tspPerformTunnelLoop */
 
+#include <gogocmessaging/gogoc_c_wrapper.h>
+
 /* these globals are defined by US used by alot of things in  */
 #define IFNAMSIZ 16     // from net/if.h
 
@@ -226,6 +228,10 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
         break;
       }
 //    }
+      
+      gStatusInfo.eStatus = GOGOC_CLISTAT__CONNECTED;
+      gStatusInfo.nStatus = GOGOCM_UIS__NOERROR;
+      send_status_info();
 
     // Retrieve keepalive inteval, if found in tunnel parameters.
     if( t->keepalive_interval != NULL )
