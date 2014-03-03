@@ -279,7 +279,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     gogoc_status status = STATUS_SUCCESS_INIT;
     char *tunnel_interface = NULL;
     char *tunnel_prefixlen = NULL;
-    tTunnelMode tunnelType = V6ANYV4;
+    gogocTunnelType tunnelType = TUNTYPE_V6UDPV4;
     
     // Perform validation on tunnel information provided by server.
     if( validate_tunnel_info(t) != 0 )
@@ -294,20 +294,20 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     {
         tunnel_interface = c->if_tunnel_v6v4;
         tunnel_prefixlen = "128";
-        tunnelType = V6V4;
+        tunnelType = TUNTYPE_V6V4;
     }
     else if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V6UDPV4) == 0 )
     {
         tunnel_interface = c->if_tunnel_v6udpv4;
         tunnel_prefixlen = "128";
-        tunnelType = V6UDPV4;
+        tunnelType = TUNTYPE_V6UDPV4;
     }
 #ifdef V4V6_SUPPORT
     else if (pal_strcasecmp(t->type, STR_XML_TUNNELMODE_V4V6) == 0 )
     {
         tunnel_interface = c->if_tunnel_v4v6;
         tunnel_prefixlen = "32";
-        tunnelType = V4V6;
+        tunnelType = TUNTYPE_V4V6;
     }
 #endif /* V4V6_SUPPORT */
     
@@ -316,11 +316,20 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     if( t->prefix )
     {
         struct in6_addr addr6;
+        static char delegatedPrefix[INET6_ADDRSTRLEN];
+
         inet_pton(AF_INET6, t->prefix, &addr6);
         
+        // Specify delegated prefix for routing advertizement, if enabled.
+        inet_net_ntop(AF_INET6, &addr6, atoi(t->prefix_length), delegatedPrefix, INET6_ADDRSTRLEN);
+        gTunnelInfo.szDelegatedPrefix = delegatedPrefix;
+
         // Get first address from delegated prefix
         addr6.__u6_addr.__u6_addr8[15]++;
         inet_ntop(AF_INET6, &addr6, home_ip6addr,sizeof(home_ip6addr));
+    }
+    else {
+        gTunnelInfo.szDelegatedPrefix = NULL;
     }
     
     // Do some platform-specific stuff before tunnel setup script is launched.
@@ -335,7 +344,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     // -------------------------------------------------------------
     // Run the interface configuration script to bring the tunnel up.
     // ---------------------------------------------------------------
-    if (tunnelType == V6V4) {
+    if (tunnelType == TUNTYPE_V6V4) {
         // Delete first any previous tunnel.
         sh(ifconfig,tunnel_interface,"deletetunnel");
         sh(ifconfig,tunnel_interface,"tunnel",t->client_address_ipv4,t->server_address_ipv4);
@@ -386,7 +395,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_TUNNEL_TYPE, t->type);
     Display(LOG_LEVEL_3, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_PROXY, c->proxy_client == TRUE ? STR_LIT_ENABLED : STR_LIT_DISABLED);
     
-    if( tunnelType == V6V4 || tunnelType == V6UDPV4)
+    if( tunnelType == TUNTYPE_V6V4 || tunnelType == TUNTYPE_V6UDPV4)
     {
         Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV6_IP_IS, t->client_address_ipv6);
         if( (t->prefix != NULL) && (t->prefix_length != NULL) )
@@ -402,6 +411,20 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
             Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV4_PREFIX_IS, t->prefix, t->prefix_length);
     }
 #endif /* V4V6_SUPPORT */
+
+    gTunnelInfo.eTunnelType = tunnelType;
+    gTunnelInfo.szIPV4AddrLocalEndpoint = t->client_address_ipv4;
+    gTunnelInfo.szIPV6AddrLocalEndpoint = t->client_address_ipv6;
+    gTunnelInfo.szIPV6AddrDns = t->client_dns_server_address_ipv6;
+    if( t->client_dns_name != NULL)
+    {
+        gTunnelInfo.szUserDomain = t->client_dns_name;
+    }
+    gTunnelInfo.szIPV4AddrRemoteEndpoint = t->server_address_ipv4;
+    gTunnelInfo.szIPV6AddrRemoteEndpoint = t->server_address_ipv6;
+    gTunnelInfo.szBrokerName = c->server;
+    gTunnelInfo.tunnelUpTime = pal_time(NULL);
+
     send_tunnel_info();
     
     return status;

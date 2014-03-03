@@ -932,6 +932,7 @@ sint32_t tspMain(sint32_t argc, char *argv[])
   sint32_t loop_delay;
 
   // Initialize status info.
+  initialize_messaging();
   gStatusInfo.eStatus = GOGOC_CLISTAT__DISCONNECTEDIDLE;
   gStatusInfo.nStatus = GOGOCM_UIS__NOERROR;
 
@@ -1778,6 +1779,8 @@ endtspc:
     DirectErrorMessage(STR_GEN_FINISHED);
   else
     Display(LOG_LEVEL_1, ELInfo, "tspMain", STR_GEN_FINISHED);
+
+  uninitialize_messaging();
 
   // Close the log system
   LogClose();

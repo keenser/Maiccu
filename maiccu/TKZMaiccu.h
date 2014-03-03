@@ -33,6 +33,7 @@
 - (BOOL)isLaunchAgent;
 
 - (void)writeLogMessage:(NSString *)logMessage;
+- (void)postNotification:(NSString *) message;
 
 - (BOOL)startStopAdapter;
 - (void)stopAdapter;

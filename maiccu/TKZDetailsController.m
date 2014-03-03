@@ -252,7 +252,7 @@
 
 - (IBAction)infoWasClicked:(id)sender {
     if ([sender state]) {
-        NSDictionary *tunnelInfo = [[_maiccu adapter] tunnelInfo];
+        NSDictionary *tunnelInfo = [[_maiccu runningAdapter] tunnelInfo];
         
         //set text in popup view
         [_tunnelHeadField setStringValue:[NSString stringWithFormat:@"Tunnel %@", tunnelInfo[@"id"]]];

@@ -9,7 +9,6 @@
 #import "TKZAppDelegate.h"
 #import "TKZDetailsController.h"
 #import "TKZMaiccu.h"
-#import <Growl/Growl.h>
 #import <sys/sysctl.h>
 #import <sys/socket.h>
 #import <net/if.h>
@@ -92,45 +91,23 @@
 {
     self = [super init];
     if (self) {
-        _detailsController = [[TKZDetailsController alloc] init];
         
         lastData = [[NSMutableDictionary alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
         menuActive = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuDidTerminate:) name:TKZAiccuDidTerminate object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
-        
-        [NSThread detachNewThreadSelector:@selector(distributiveObjectManager) toTarget:self withObject:nil];
-        
     }
     return self;
 }
 
 - (void)aiccuDidTerminate:(NSNotification *)aNotification {
-    [_maiccu writeLogMessage:[NSString stringWithFormat:@"aiccu terminated with status %li", [[aNotification object] integerValue]]];
-    [self postNotification:[NSString stringWithFormat:@"aiccu terminated with status %li", [[aNotification object] integerValue]]];
+    [_maiccu postNotification:[NSString stringWithFormat:@"aiccu terminated with status %li", [[aNotification object] integerValue]]];
     [_startstopItem setTitle:@"Start"];
 
     [_bandwidthItem setHidden:YES];
     [updateTimer invalidate];
 	updateTimer = nil;
-}
-
-- (void)aiccuNotification:(NSNotification *)aNotification {
-    [_maiccu writeLogMessage:[aNotification object]];
-    [self postNotification:[aNotification object]];
-}
-
-- (void)postNotification:(NSString *) message{
-    NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
-    [GrowlApplicationBridge notifyWithTitle:appName
-                                description:message
-                           notificationName:@"status"
-                                   iconData:nil
-                                   priority:0
-                                   isSticky:NO
-                               clickContext:nil];
 }
 
 - (void)awakeFromNib {
@@ -151,6 +128,9 @@
 }
 
 - (IBAction)clickedDetails:(id)sender {
+    if (_detailsController == nil) {
+        _detailsController = [[TKZDetailsController alloc] init];
+    }
     [_detailsController showWindow:sender];
     [NSApp activateIgnoringOtherApps:YES];
 }
@@ -177,7 +157,7 @@
 }
 
 - (void)updateNetActivityDisplay:(NSTimer *)timer {
-    char *ifname=[[_maiccu adapter] device];
+    char *ifname=[[_maiccu runningAdapter] device];
     if (menuActive)
     {
         struct ifmibdata ifmd;
@@ -229,16 +209,6 @@
         NSString *string = [NSString stringWithFormat:@"%0.1f/%0.1f %@ Rx/Tx",floatIn,floatOut,prefix];
         [_bandwidthItem setTitle:string];
     }
-}
-
-- (void)distributiveObjectManager {
-    genericAdapter *serverObject = [_maiccu adapter];
-    NSConnection *theConnection;
-    
-    theConnection = [NSConnection connectionWithReceivePort:[NSPort port] sendPort:nil];
-    [theConnection setRootObject:serverObject];
-    [theConnection registerName:@"com.twikz.Maiccu"];
-    [[NSRunLoop currentRunLoop] run];
 }
 
 @end

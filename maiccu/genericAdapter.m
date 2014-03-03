@@ -23,8 +23,11 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return self;
 }
 
-- (void) print {
-    NSLog(@"print");
+- (id)initWithHomeDir:(NSString*)path {
+    if (self=[self init]) {
+        [self setConfigPath:path];
+    }
+    return self;
 }
 
 - (BOOL)saveConfig:(NSDictionary *)config toFile:(NSString *)path {
@@ -214,6 +217,29 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     else {
         return "tun0";
     }
+}
+
+
+- (oneway void) print:(NSDictionary*)message {
+    NSLog(@"print %@",message);
+}
+
+- (oneway void) statusUpdate:(gogocStatusInfo*)gStatusInfo {
+    NSLog(@"%d %d",gStatusInfo->eStatus,gStatusInfo->nStatus);
+}
+
+- (oneway void) tunnelUpdate:(gogocTunnelInfo*)gTunnelInfo {
+    NSLog(@"%s %d %s %s %s %s %s %s %s",
+          gTunnelInfo->szBrokerName,
+          gTunnelInfo->eTunnelType,
+          gTunnelInfo->szIPV4AddrLocalEndpoint,
+          gTunnelInfo->szIPV6AddrLocalEndpoint,
+          gTunnelInfo->szIPV6AddrDns,
+          gTunnelInfo->szIPV4AddrRemoteEndpoint,
+          gTunnelInfo->szIPV6AddrRemoteEndpoint,
+          gTunnelInfo->szDelegatedPrefix,
+          gTunnelInfo->szUserDomain
+          );
 }
 
 @end

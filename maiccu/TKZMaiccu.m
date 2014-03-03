@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Kristof Hannemann. All rights reserved.
 //
 
+#import <Growl/Growl.h>
 #import "TKZMaiccu.h"
 
 static TKZMaiccu *defaultMaiccu = nil;
@@ -18,21 +19,23 @@ static TKZMaiccu *defaultMaiccu = nil;
     if (self) {
         _fileManager = [NSFileManager defaultManager];
 
-        _aiccu = [[TKZAiccuAdapter alloc] init];
-        _gogoc = [[gogocAdapter alloc] init];
-        [_aiccu setConfigPath:[[self appSupportURL] path]];
-        [_gogoc setConfigPath:[[self appSupportURL] path]];
+        _aiccu = [[TKZAiccuAdapter alloc] initWithHomeDir:[[self appSupportURL] path]];
+        _gogoc = [[gogocAdapter alloc] initWithHomeDir:[[self appSupportURL] path]];
+
         _adapterList = [[NSMutableDictionary alloc] init];
         _adapterList[[_aiccu name]] = _aiccu;
         _adapterList[[_gogoc name]] = _gogoc;
+
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
         [self setAdapter:_adapterList[adapter]];
         if([self adapter] == nil) {
             [self setAdapter:_aiccu];
         };
-
         [self setRunningAdapter:_adapter];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
+        [NSThread detachNewThreadSelector:@selector(distributiveObjectManager) toTarget:self withObject:nil];        
     }
     return self;
 }
@@ -53,7 +56,6 @@ static TKZMaiccu *defaultMaiccu = nil;
     return [[NSBundle mainBundle] pathForResource:[_adapter binary] ofType:@""];
 }
 
-
 - (NSString *)maiccuLogPath {
     NSURL *url = [[_fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
     return [[url URLByAppendingPathComponent:@"Logs/Maiccu.log"] path];
@@ -62,7 +64,6 @@ static TKZMaiccu *defaultMaiccu = nil;
 - (BOOL) maiccuLogExists {
     return [_fileManager fileExistsAtPath:[self maiccuLogPath]];
 }
-
 
 - (BOOL) aiccuConfigExists {
     return [_fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",[_adapter configPath],[_adapter configFile]]];
@@ -84,11 +85,28 @@ static TKZMaiccu *defaultMaiccu = nil;
         if (![message isEqualToString:@""]) {
             NSString *formatedMessage = [NSString stringWithFormat:@"[%@] %@\n", timeStamp, message];
             [fileHandle writeData:[formatedMessage dataUsingEncoding:NSUTF8StringEncoding]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TKZMaiccuLog" object:formatedMessage];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"TKZMaiccuLog" object:formatedMessage];
         }
     }
     
     [fileHandle closeFile];
+}
+
+- (void)postNotification:(NSString *) message{
+    [self writeLogMessage:message];
+
+    NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
+    [GrowlApplicationBridge notifyWithTitle:appName
+                                description:message
+                           notificationName:@"status"
+                                   iconData:nil
+                                   priority:0
+                                   isSticky:NO
+                               clickContext:nil];
+}
+
+- (void)aiccuNotification:(NSNotification *)aNotification {
+    [self postNotification:[aNotification object]];
 }
 
 - (BOOL)startStopAdapter {
@@ -115,7 +133,6 @@ static TKZMaiccu *defaultMaiccu = nil;
     NSURL *libUrl = [[_fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
     return [[libUrl URLByAppendingPathComponent:[NSString stringWithFormat:@"LaunchAgents/%@.plist", [[NSBundle mainBundle] bundleIdentifier]]] path];
 }
-
 
 - (NSDictionary *)makeLaunchAgentPList {
     return @{@"Label": [[NSBundle mainBundle] bundleIdentifier],
@@ -145,4 +162,14 @@ static TKZMaiccu *defaultMaiccu = nil;
 - (NSArray*)adapterList {
     return [_adapterList allKeys];
 }
+
+- (void)distributiveObjectManager {
+    NSConnection *theConnection;
+    
+    theConnection = [NSConnection connectionWithReceivePort:[NSPort port] sendPort:nil];
+    [theConnection setRootObject:_runningAdapter];
+    [theConnection registerName:[[NSBundle mainBundle] bundleIdentifier]];
+    [[NSRunLoop currentRunLoop] run];
+}
+
 @end

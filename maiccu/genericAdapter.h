@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TKZSheetController.h"
+#import <Cocoa/Cocoa.h>
+#import <gogocmessaging/gogoc_c_wrapper.h>
 
 extern NSString * const TKZAiccuDidTerminate;
 extern NSString * const TKZAiccuStatus;
 
-#define __cstons(__cstring__)  [NSString stringWithUTF8String:__cstring__]
+#define __cstons(__cstring__) [NSString stringWithUTF8String:__cstring__]
 
-#define nstocs(__nsstring__) (char *)[__nsstring__ cStringUsingEncoding:NSUTF8StringEncoding]
+#define nstocs(__nsstring__) (char*)[__nsstring__ UTF8String]
 
 #define cstons(__cstring__)  [NSString stringWithCString:((__cstring__ != NULL) ?  __cstring__ : "") encoding:NSUTF8StringEncoding]
 
@@ -33,6 +34,7 @@ extern NSString * const TKZAiccuStatus;
 @property (strong) NSString *name;
 @property (strong) NSString *configPath;
 
+- (id)initWithHomeDir:(NSString*)path;
 - (NSArray *)tunnelList;
 - (NSArray *)serverList;
 - (void)showSheet:(NSWindow*)window;
@@ -51,6 +53,8 @@ extern NSString * const TKZAiccuStatus;
 - (BOOL)isValid;
 - (NSDictionary*)tunnelInfo;
 - (char*)device;
-- (void) print;
+- (oneway void) print:(NSDictionary*)message;
+- (oneway void) statusUpdate:(gogocStatusInfo*)gStatusInfo;
+- (oneway void) tunnelUpdate:(gogocTunnelInfo*)gTunnelInfo;
 
 @end

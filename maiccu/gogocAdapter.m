@@ -47,7 +47,7 @@
     try
     {
         std::string str_buf;
-        str_buf = [[self config:@"username"] UTF8String];
+        str_buf = nstocs([self config:@"username"]);
 
         if (str_buf.empty()) {
             gpConfig->Set_AuthMethod(STR_ANONYMOUS);
@@ -55,12 +55,12 @@
         }
         else {
             gpConfig->Set_UserID(str_buf);
-            gpConfig->Set_Passwd(str_buf = [[self config:@"password"] UTF8String]);
+            gpConfig->Set_Passwd(nstocs([self config:@"password"]));
             gpConfig->Set_AuthMethod(STR_ANY);
             gpConfig->Set_BrokerLstFile("tsp-broker-list.txt");
         }
-        gpConfig->Set_Server(str_buf = [[self config:@"server"] UTF8String]);
-        gpConfig->Set_TunnelMode(str_buf = [[self config:@"tunnel_id"] UTF8String]);
+        gpConfig->Set_Server(nstocs([self config:@"server"]));
+        gpConfig->Set_TunnelMode(nstocs([self config:@"tunnel_id"]));
         gpConfig->Set_Template("darwin");
         gpConfig->Set_IfTunV6V4( "gif0" );
         gpConfig->Set_IfTunV6UDPV4( [self device] );

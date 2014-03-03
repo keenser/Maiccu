@@ -7,6 +7,7 @@
 //
 
 #import "TKZAiccuAdapter.h"
+#import "TKZSheetController.h"
 #include "tic.h"
 #include "aiccu.h"
 
