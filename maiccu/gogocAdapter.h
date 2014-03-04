@@ -10,6 +10,14 @@
 #import "genericAdapter.h"
 
 @interface gogocAdapter : genericAdapter {
+@private
+    NSMutableDictionary *gTunnelInfo;
+    NSDictionary *gTunnelList;
 }
+
+- (oneway void) print:(NSDictionary*)message;
+- (oneway void) statusUpdate:(gogocStatusInfo*)gStatusInfo;
+- (oneway void) tunnelUpdate:(gogocTunnelInfo*)gTunnelInfo;
+- (oneway void) brokerUpdate:(gogocBrokerList*)gBrokerList;
 
 @end

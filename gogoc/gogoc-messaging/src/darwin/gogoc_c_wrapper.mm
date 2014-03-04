@@ -15,13 +15,13 @@
 // **************************************************************************
 #import <Foundation/Foundation.h>
 #include <gogocmessaging/gogoc_c_wrapper.h>
-#include "platform.h"
-#import "genericAdapter.h"
 #include <gogocmessaging/clientmsgdataretriever.h>
+#include "platform.h"
+#import "gogocAdapter.h"
 
 
 // The unique instance of the gogoCLIENT Messenger implementation object.
-genericAdapter *pMessenger = nil;
+gogocAdapter *pMessenger = nil;
 
 
 
@@ -200,7 +200,7 @@ extern "C" error_t send_broker_list( void )
     {
         @autoreleasepool {
             @try {
-//                [pMessenger brokerUpdate:pBrokerList];
+                [pMessenger brokerUpdate:pBrokerList];
             }
             @catch (NSException *exception) {
                 NSLog(@"%@",exception);
@@ -230,32 +230,6 @@ extern "C" error_t send_broker_list( void )
 // --------------------------------------------------------------------------
 extern "C" error_t send_haccess_status_info( void )
 {
-    HACCESSStatusInfo* pHACCESSStatusInfo = NULL;
-    error_t retCode = GOGOCM_UIS__NOERROR;
-    
-    
-    // Verify if messenger object has been initialized.
-    if( pMessenger == nil )
-        return GOGOCM_UIS_CWRAPNOTINIT;
-    
-    // Callback to the gogoCLIENT process, to gather required information.
-    retCode = RetrieveHACCESSStatusInfo( &pHACCESSStatusInfo );
-    if( retCode == GOGOCM_UIS__NOERROR )
-    {
-        // Send the HACCESS status info to the other side.
-        @autoreleasepool {
-            @try {
-//                [pMessenger haccessUpdate:pHACCESSStatusInfo];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"%@",exception);
-            }
-        }
-        
-        // Frees the memory used by the HACCESSStatusInfo object.
-        FreeHACCESSStatusInfo( &pHACCESSStatusInfo );
-    }
-    
-    return retCode;
+    return GOGOCM_UIS__NOERROR;
 }
 

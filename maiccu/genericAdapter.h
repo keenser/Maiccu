@@ -53,8 +53,5 @@ extern NSString * const TKZAiccuStatus;
 - (BOOL)isValid;
 - (NSDictionary*)tunnelInfo;
 - (char*)device;
-- (oneway void) print:(NSDictionary*)message;
-- (oneway void) statusUpdate:(gogocStatusInfo*)gStatusInfo;
-- (oneway void) tunnelUpdate:(gogocTunnelInfo*)gTunnelInfo;
 
 @end

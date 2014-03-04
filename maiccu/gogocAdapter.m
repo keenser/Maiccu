@@ -8,19 +8,25 @@
 
 #import "gogocAdapter.h"
 
+#include <gogocmessaging/gogocuistrings.h>
 #include <gogocconfig/gogocconfig.h>
-#include <gogocconfig/gogocuistrings.h>
 #include <gogocconfig/gogocvalidation.h>
-#include <fstream>
+#include <gogocmessaging/gogocmsgdata.h>
 
 @implementation gogocAdapter
 
 - (id)init
 {
     if (self=[super init]) {
+        gTunnelInfo = [[NSMutableDictionary alloc] init];
         [self setBinary:@"gogoc"];
         [self setConfigFile:@"gogoc.conf"];
         [self setName:@"Freenet6.net"];
+        gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNTYPE_V6UDPV4):@STR_V6UDPV4
+#ifdef V4V6_SUPPORT
+                            ,@(TUNTYPE_V4V6):@STR_V4V6
+#endif
+                            };
     }
     return self;
 }
@@ -95,11 +101,7 @@
 
 - (NSArray *)tunnelList
 {
-    return @[@STR_V6ANYV4, @STR_V6V4,@STR_V6UDPV4
-#ifdef V4V6_SUPPORT
-            ,@STR_V4V6
-#endif
-            ];
+    return [gTunnelList allValues];
 }
 
 - (NSArray *)serverList
@@ -117,6 +119,39 @@
     NSString *broker_file_contents = [NSString stringWithContentsOfFile:broker_file encoding:NSUTF8StringEncoding error:nil];
     [brokerList addObjectsFromArray:[broker_file_contents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
     return [brokerList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+}
+
+- (NSDictionary*)tunnelInfo {
+    return gTunnelInfo;
+}
+
+- (oneway void) print:(NSDictionary*)message {
+    NSLog(@"print %@",message);
+}
+
+- (oneway void) statusUpdate:(gogocStatusInfo*)pStatusInfo {
+    gTunnelInfo[@"eStatus"] = @(pStatusInfo->eStatus);
+    gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
+    NSLog(@"%@",gTunnelInfo);
+}
+
+- (oneway void) tunnelUpdate:(gogocTunnelInfo*)pTunnelInfo {
+    gTunnelInfo[@"id"] = cstons(pTunnelInfo->szBrokerName);
+    gTunnelInfo[@"ipv4_local"] = cstons(pTunnelInfo->szIPV4AddrLocalEndpoint);
+    gTunnelInfo[@"ipv6_local"] = cstons(pTunnelInfo->szIPV6AddrLocalEndpoint);
+    gTunnelInfo[@"ipv4_pop"] = cstons(pTunnelInfo->szIPV4AddrRemoteEndpoint);
+    gTunnelInfo[@"ipv6_pop"] = cstons(pTunnelInfo->szIPV6AddrRemoteEndpoint);
+    gTunnelInfo[@"type"] = gTunnelList[@(pTunnelInfo->eTunnelType)];
+    gTunnelInfo[@"ipv6_delegatedprefix"] = cstons(pTunnelInfo->szDelegatedPrefix);
+    gTunnelInfo[@"addr_dns"] = cstons(pTunnelInfo->szIPV6AddrDns);
+    gTunnelInfo[@"user_domain"] = cstons(pTunnelInfo->szUserDomain);
+}
+
+- (oneway void) brokerUpdate:(gogocBrokerList*)gBrokerList {
+    while (gBrokerList) {
+        NSLog(@"%s %d",gBrokerList->szAddress,gBrokerList->nDistance);
+        gBrokerList = gBrokerList->next;
+    }
 }
 
 @end

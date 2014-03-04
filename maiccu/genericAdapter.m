@@ -219,27 +219,4 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     }
 }
 
-
-- (oneway void) print:(NSDictionary*)message {
-    NSLog(@"print %@",message);
-}
-
-- (oneway void) statusUpdate:(gogocStatusInfo*)gStatusInfo {
-    NSLog(@"%d %d",gStatusInfo->eStatus,gStatusInfo->nStatus);
-}
-
-- (oneway void) tunnelUpdate:(gogocTunnelInfo*)gTunnelInfo {
-    NSLog(@"%s %d %s %s %s %s %s %s %s",
-          gTunnelInfo->szBrokerName,
-          gTunnelInfo->eTunnelType,
-          gTunnelInfo->szIPV4AddrLocalEndpoint,
-          gTunnelInfo->szIPV6AddrLocalEndpoint,
-          gTunnelInfo->szIPV6AddrDns,
-          gTunnelInfo->szIPV4AddrRemoteEndpoint,
-          gTunnelInfo->szIPV6AddrRemoteEndpoint,
-          gTunnelInfo->szDelegatedPrefix,
-          gTunnelInfo->szUserDomain
-          );
-}
-
 @end

@@ -45,9 +45,6 @@
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDA518BDDCC900536814 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDA418BDDCC900536814 /* main.cpp */; };
 		7E4CBDA718BDDCC900536814 /* messager.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E4CBDA618BDDCC900536814 /* messager.1 */; };
-		7E4CBDB218BE331D00536814 /* threadwrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2F18AE660900536814 /* threadwrapper.cc */; };
-		7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2D18AE660900536814 /* pipeserver.cc */; };
-		7E4CBDB418BE333000536814 /* semaphore.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD2E18AE660900536814 /* semaphore.cc */; };
 		7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
 		7E4CBDC518C0A0B500536814 /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8718BFB06800D32099 /* aiccu */; };
@@ -96,6 +93,7 @@
 		7E4DD08E18B00EF00029F38B /* tsp_net.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0018AE65B600536814 /* tsp_net.c */; };
 		7E4DD08F18B00EF00029F38B /* tsp_redirect.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0118AE65B600536814 /* tsp_redirect.c */; };
 		7E4DD09118B00EF00029F38B /* tsp_tun_mgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD0318AE65B600536814 /* tsp_tun_mgt.c */; };
+		7E6C788F18C62BE00072EFE1 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
 		7E78530818C4DD9100D48343 /* gogoc_c_wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E78530718C4DD9100D48343 /* gogoc_c_wrapper.mm */; };
 		7E78530918C5061900D48343 /* libgogoc-messaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD06018B00B770029F38B /* libgogoc-messaging.a */; };
 		7E78530A18C5062900D48343 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
@@ -106,7 +104,7 @@
 		7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
 		7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
-		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; };
+		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; settings = {COMPILER_FLAGS = "-DV4V6_SUPPORT"; }; };
 		7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */; };
 /* End PBXBuildFile section */
 
@@ -585,6 +583,7 @@
 				7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */,
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
+				7E6C788F18C62BE00072EFE1 /* libgogoc-messaging.a in Frameworks */,
 				7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */,
 				7E21B8B218BFC9A8003F4F70 /* liblibaiccu.a in Frameworks */,
 			);
@@ -1823,9 +1822,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E4DD07118B00D9E0029F38B /* gogocuistrings.c in Sources */,
-				7E4CBDB218BE331D00536814 /* threadwrapper.cc in Sources */,
-				7E4CBDB318BE332400536814 /* pipeserver.cc in Sources */,
-				7E4CBDB418BE333000536814 /* semaphore.cc in Sources */,
 				7E78530818C4DD9100D48343 /* gogoc_c_wrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

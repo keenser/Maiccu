@@ -201,7 +201,7 @@ extern "C" void set_user_id( char* szUserID )
 {
   string sValue;
   assert( gpConfig != NULL );
-  assert( *szUserID == NULL );
+  assert( szUserID == NULL );
 
   sValue = szUserID;
   TRY_OR_CLEAR( gpConfig->Set_UserID( sValue ) );
@@ -223,7 +223,7 @@ extern "C" void set_passwd( char* szUserID )
 {
   string sValue;
   assert( gpConfig != NULL );
-  assert( *szUserID == NULL );
+  assert( szUserID == NULL );
 
   sValue = szUserID;
   TRY_OR_CLEAR( gpConfig->Set_Passwd( sValue ) );
@@ -245,7 +245,7 @@ extern "C" void set_server( char* szUserID )
 {
   string sValue;
   assert( gpConfig != NULL );
-  assert( *szUserID == NULL );
+  assert( szUserID == NULL );
 
   sValue = szUserID;
   TRY_OR_CLEAR( gpConfig->Set_Server( sValue ) );
