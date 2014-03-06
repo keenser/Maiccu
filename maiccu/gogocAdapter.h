@@ -13,6 +13,7 @@
 @private
     NSMutableDictionary *gTunnelInfo;
     NSDictionary *gTunnelList;
+    NSDictionary *StatusList;
 }
 
 - (oneway void) print:(NSDictionary*)message;

@@ -27,6 +27,13 @@
                             ,@(TUNTYPE_V4V6):@STR_V4V6
 #endif
                             };
+        StatusList = @{@(GOGOC_CLISTAT__DISCONNECTEDIDLE):@"Disconnected. Idle",
+                       @(GOGOC_CLISTAT__DISCONNECTEDNORETRY):@"Disconnected. No retry",
+                       @(GOGOC_CLISTAT__DISCONNECTEDERROR):@"Disconnected. Error",
+                       @(GOGOC_CLISTAT__DISCONNECTEDHACCESSSETUPERROR):@"Disconnected. Haccess setup error",
+                       @(GOGOC_CLISTAT__DISCONNECTEDHACCESSEXPOSEDEVICESERROR):@"Disconnected. Haccess expose devices error",
+                       @(GOGOC_CLISTAT__CONNECTING):@"Connecting",
+                       @(GOGOC_CLISTAT__CONNECTED):@"Connected"};
     }
     return self;
 }
@@ -130,9 +137,9 @@
 }
 
 - (oneway void) statusUpdate:(gogocStatusInfo*)pStatusInfo {
-    gTunnelInfo[@"eStatus"] = @(pStatusInfo->eStatus);
+    gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
     gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
-    NSLog(@"%@",gTunnelInfo);
+    NSLog(@"%@ %@",gTunnelInfo[@"nStatus"],gTunnelInfo[@"eStatus"]);
 }
 
 - (oneway void) tunnelUpdate:(gogocTunnelInfo*)pTunnelInfo {
