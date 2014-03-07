@@ -206,7 +206,7 @@ gogoc_status TunMainLoop( int tunfd,
         count = recvfrom( Socket, bufin, TUN_BUFSIZE, 0, NULL, NULL );
         if (write(tunfd, bufin, count) != count)
         {
-          Display(LOG_LEVEL_1, ELError, "TunMainLoop", STR_NET_FAIL_W_TUN_DEV);
+          Display(LOG_LEVEL_1, ELError, "TunMainLoop", STR_NET_FAIL_W_TUN_DEV,strerror(errno),errno);
           status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
           goto done;
         }

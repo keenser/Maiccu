@@ -433,7 +433,7 @@ uint32_t internal_get_timestamp(rttengine_stat_t *s)
 	if (pal_gettimeofday(&tv) == -1)
 		return 0;
 
-	return ( ((tv.tv_sec - s->initial_timestamp) * 1000 ) + (tv.tv_usec / 1000) );
+	return (uint32_t)( ((tv.tv_sec - s->initial_timestamp) * 1000 ) + (tv.tv_usec / 1000) );
 }
 
 

@@ -55,7 +55,7 @@
 		7E4CBDCE18C0D25600536814 /* gogocvalidation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */; };
 		7E4DD02B18B0068C0029F38B /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3E18AE677C00536814 /* buffer.c */; };
 		7E4DD02C18B0068F0029F38B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3C18AE677C00536814 /* base64.c */; };
-		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; };
+		7E4DD03518B006970029F38B /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3D18AE677C00536814 /* bufaux.c */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		7E4DD03618B006970029F38B /* cli.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD3F18AE677C00536814 /* cli.c */; };
 		7E4DD03818B006970029F38B /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD4118AE677C00536814 /* config.c */; };
 		7E4DD03918B006970029F38B /* deque.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD4218AE677C00536814 /* deque.c */; };
@@ -86,7 +86,7 @@
 		7E4DD08718B00EE20029F38B /* xml_tun.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD5918AE677C00536814 /* xml_tun.c */; };
 		7E4DD08818B00EE60029F38B /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBD5A18AE677C00536814 /* xmlparse.c */; };
 		7E4DD08918B00EF00029F38B /* tsp_auth.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFB18AE65B600536814 /* tsp_auth.c */; };
-		7E4DD08A18B00EF00029F38B /* tsp_auth_passdss.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFC18AE65B600536814 /* tsp_auth_passdss.c */; };
+		7E4DD08A18B00EF00029F38B /* tsp_auth_passdss.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFC18AE65B600536814 /* tsp_auth_passdss.c */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		7E4DD08B18B00EF00029F38B /* tsp_cap.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFD18AE65B600536814 /* tsp_cap.c */; };
 		7E4DD08C18B00EF00029F38B /* tsp_client.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFE18AE65B600536814 /* tsp_client.c */; };
 		7E4DD08D18B00EF00029F38B /* tsp_lease.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBCFF18AE65B600536814 /* tsp_lease.c */; };
@@ -2186,7 +2186,6 @@
 					V4V6_SUPPORT,
 					DEBUG,
 				);
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
@@ -2206,9 +2205,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					V4V6_SUPPORT,
-					NDEBUG,
+					DEBUG,
 				);
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",

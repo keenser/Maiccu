@@ -385,7 +385,7 @@
 #define STR_NET_FAIL_W_SOCKET                         "Failed to write on network socket."
 #define STR_NET_FAIL_R_SOCKET                         "Failed to read from network socket."
 #define STR_NET_FAIL_R_TUN_DEV                        "Failed to read from tunnel device."
-#define STR_NET_FAIL_W_TUN_DEV                        "Failed to write to tunnel device."
+#define STR_NET_FAIL_W_TUN_DEV                        "Failed to write to tunnel device. %s (%d)"
 #define STR_NET_FAIL_TUN_DEV_BUFSMALL                 "Buffer size too small to attempt reading from tunnel device."
 
 // Miscellaneous error strings.
