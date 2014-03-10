@@ -293,7 +293,6 @@
 		6D9490AD17352725002283B0 /* tic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tic.h; sourceTree = "<group>"; };
 		6D9490AE17352725002283B0 /* tun.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tun.c; sourceTree = "<group>"; };
 		6D9490AF17352725002283B0 /* tun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tun.h; sourceTree = "<group>"; };
-		6D9490C4173538A7002283B0 /* libresolv.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.9.dylib; path = usr/lib/libresolv.9.dylib; sourceTree = SDKROOT; };
 		6D9A463D174938DA008389B4 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		6D9A46461749E024008389B4 /* TKZMaiccu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKZMaiccu.h; sourceTree = "<group>"; };
@@ -672,7 +671,6 @@
 		6D94901F173514E1002283B0 = {
 			isa = PBXGroup;
 			children = (
-				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
 				7E2D3B0318BA22A700CD7DBF /* miredo */,
 				6D9A46441749445E008389B4 /* Growl Registration Ticket.growlRegDict */,
 				7E0FA2E518A0CF0700C9C189 /* gogoc */,
@@ -705,9 +703,9 @@
 		6D94902A173514E2002283B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
 				7E769BBC18B0BC380040D76A /* libstdc++.dylib */,
 				7E769BBA18B0BB990040D76A /* libcrypto.dylib */,
-				6D9490C4173538A7002283B0 /* libresolv.9.dylib */,
 				6D9A463D174938DA008389B4 /* Growl.framework */,
 				6D94902B173514E2002283B0 /* Cocoa.framework */,
 				6D949049173514E2002283B0 /* SenTestingKit.framework */,
