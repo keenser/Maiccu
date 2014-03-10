@@ -155,11 +155,8 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 
 - (void)taskTerminated:(NSNotification *)note
 {
-    //NSLog(@"taskTerminated:");
-	
     [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
 	_task = nil;
-    //[startButton setState:0];
 }
 
 - (NSArray *)tunnelList

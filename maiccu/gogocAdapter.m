@@ -13,27 +13,39 @@
 #include <gogocconfig/gogocvalidation.h>
 #include <gogocmessaging/gogocmsgdata.h>
 
+NSDictionary *StatusList = @{@(GOGOC_CLISTAT__DISCONNECTEDIDLE):@"Disconnected. Idle",
+               @(GOGOC_CLISTAT__DISCONNECTEDNORETRY):@"Disconnected. No retry",
+               @(GOGOC_CLISTAT__DISCONNECTEDERROR):@"Disconnected. Error",
+               @(GOGOC_CLISTAT__DISCONNECTEDHACCESSSETUPERROR):@"Disconnected. Haccess setup error",
+               @(GOGOC_CLISTAT__DISCONNECTEDHACCESSEXPOSEDEVICESERROR):@"Disconnected. Haccess expose devices error",
+               @(GOGOC_CLISTAT__CONNECTING):@"Connecting",
+               @(GOGOC_CLISTAT__CONNECTED):@"Connected"};
+
+NSDictionary *tunnelParams = @{
+                                @STR_V6ANYV4:@{@"forNat":@YES},
+                                @STR_V6V4:@{@"forNat":@NO},
+                                @STR_V6UDPV4:@{@"forNat":@YES}
+#ifdef V4V6_SUPPORT
+                               ,@STR_V4V6:@{@"forNat":@NO}
+#endif
+                              };
+
+NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNTYPE_V6UDPV4):@STR_V6UDPV4
+#ifdef V4V6_SUPPORT
+                ,@(TUNTYPE_V4V6):@STR_V4V6
+#endif
+                };
+
 @implementation gogocAdapter
 
 - (id)init
 {
     if (self=[super init]) {
-        gTunnelInfo = [[NSMutableDictionary alloc] init];
         [self setBinary:@"gogoc"];
         [self setConfigFile:@"gogoc.conf"];
         [self setName:@"Freenet6.net"];
-        gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNTYPE_V6UDPV4):@STR_V6UDPV4
-#ifdef V4V6_SUPPORT
-                            ,@(TUNTYPE_V4V6):@STR_V4V6
-#endif
-                            };
-        StatusList = @{@(GOGOC_CLISTAT__DISCONNECTEDIDLE):@"Disconnected. Idle",
-                       @(GOGOC_CLISTAT__DISCONNECTEDNORETRY):@"Disconnected. No retry",
-                       @(GOGOC_CLISTAT__DISCONNECTEDERROR):@"Disconnected. Error",
-                       @(GOGOC_CLISTAT__DISCONNECTEDHACCESSSETUPERROR):@"Disconnected. Haccess setup error",
-                       @(GOGOC_CLISTAT__DISCONNECTEDHACCESSEXPOSEDEVICESERROR):@"Disconnected. Haccess expose devices error",
-                       @(GOGOC_CLISTAT__CONNECTING):@"Connecting",
-                       @(GOGOC_CLISTAT__CONNECTED):@"Connected"};
+
+        gTunnelInfo = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -77,9 +89,9 @@
         gpConfig->Set_Template("darwin");
         gpConfig->Set_IfTunV6V4( "gif0" );
         gpConfig->Set_IfTunV6UDPV4( [self device] );
-        gpConfig->Set_AlwaysUseLastSrv("yes");
+        //gpConfig->Set_AlwaysUseLastSrv("yes");
         //gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
-        gpConfig->Set_Log("file","3");
+        gpConfig->Set_Log("file","2");
         gpConfig->Set_LogFileName("/tmp/gogoc.log");
 
         // Saves the configuration
@@ -106,6 +118,12 @@
 
 }
 
+- (void)taskTerminated:(NSNotification *)note
+{
+    [super taskTerminated:note];
+    [gTunnelInfo removeAllObjects];
+}
+
 - (NSArray *)tunnelList
 {
     return [gTunnelList allValues];
@@ -126,6 +144,11 @@
     NSString *broker_file_contents = [NSString stringWithContentsOfFile:broker_file encoding:NSUTF8StringEncoding error:nil];
     [brokerList addObjectsFromArray:[broker_file_contents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
     return [brokerList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+}
+
+- (BOOL)forNat {
+    NSString *currentTunnel = [self config:@"tunnel_id"];
+    return [tunnelParams[currentTunnel][@"forNat"]isEqual:@YES];
 }
 
 - (NSDictionary*)tunnelInfo {

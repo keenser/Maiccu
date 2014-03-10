@@ -44,6 +44,7 @@ extern NSString * const TKZAiccuStatus;
 - (BOOL)startFrom:(NSString *)path;
 - (BOOL)startFrom:(NSString *)path withArgs:(NSArray *)args;
 - (void)stopFrom;
+- (void)taskTerminated:(NSNotification *)note;
 
 - (void)setConfig:(NSString*)value toKey:(NSString*)key;
 - (NSString *)config:(NSString*)key;
