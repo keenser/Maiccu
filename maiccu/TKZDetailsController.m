@@ -45,8 +45,14 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+
+    NSString *log = [NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil];
+
+    if (log) {
+        [_logTextView setString:log];
+    }
     
-//    [self awakeFromNib];
+    [_maiccu setLogTextView:_logTextView];
 
 //    if ([[_maiccu adapter]config:@"username"]) {
 //        [[_maiccu adapter] showSheet:[self window]];
@@ -55,7 +61,6 @@
 
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
-    NSLog(@"controlTextDidEndEditing");
     [[_maiccu adapter]setConfig:[_usernameField stringValue] toKey:@"username"];
     [[_maiccu adapter]setConfig:[_passwordField stringValue] toKey:@"password"];
 
@@ -100,15 +105,8 @@
     [_passwordField setStringValue:[[_maiccu adapter]config:@"password"]];
     
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-    [[_logTextView textContainer] setWidthTracksTextView:NO];
+//    [[_logTextView textContainer] setWidthTracksTextView:NO];
     [_logTextView setHorizontallyResizable:YES];
-    
-    
-    NSString *log = [NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil];
-    
-    if (log) {
-        [_logTextView setString:log];
-    }
     
     [_startupCheckbox setState:[_maiccu isLaunchAgent]];
     
@@ -215,9 +213,11 @@
 
     if ([sender state]) {
         newView = _logView;
+        [window setStyleMask:[window styleMask] | NSResizableWindowMask];
     }
     else {
         newView = _accountView;
+        [window setStyleMask:[window styleMask] & ~NSResizableWindowMask];
     }
 
     NSSize currentSize = [[window contentView] frame].size;
@@ -235,6 +235,10 @@
     viewScreenFrame.size.height = newSize.height;
     viewScreenFrame.size.width = newSize.width;
     windowFrame = [window frameRectForContentRect:viewScreenFrame];
+    
+    if (newView == _logView) {
+        [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
+    }
     [window setFrame:windowFrame display:YES animate:YES];
 }
 
@@ -248,6 +252,7 @@
 
 - (IBAction)reloadWasClicked:(id)sender {
     [_logTextView setString:[NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil]];
+    [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
 }
 
 - (IBAction)infoWasClicked:(id)sender {

@@ -56,15 +56,9 @@
 - (IBAction)exportWasClicked:(id)sender;
 
 
-
-
-
+//log view
 @property (unsafe_unretained) IBOutlet NSTextView *logTextView;
 - (IBAction)clearWasClicked:(id)sender;
 - (IBAction)reloadWasClicked:(id)sender;
-
-
-
-
 
 @end

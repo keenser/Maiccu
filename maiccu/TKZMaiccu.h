@@ -20,6 +20,7 @@
 
 @property (strong) genericAdapter *adapter;
 @property (strong) genericAdapter *runningAdapter;
+@property (strong) NSTextView *logTextView;
 
 - (BOOL) aiccuConfigExists;
 

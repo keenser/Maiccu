@@ -69,7 +69,12 @@ static TKZMaiccu *defaultMaiccu = nil;
     return [_fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",[_adapter configPath],[_adapter configFile]]];
 }
 
-- (void)writeLogMessage:(NSString *)logMessage {    
+- (void)writeLogMessage:(NSString *)logMessage {
+    NSDictionary *attributes;
+    if (_logTextView) {
+        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
+    }
+
     if (![self maiccuLogExists] ) {
         [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
     }
@@ -79,16 +84,21 @@ static TKZMaiccu *defaultMaiccu = nil;
     
     NSString *timeStamp = [[NSDate date] descriptionWithLocale:[NSLocale systemLocale]];
     
-    NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n\r"]];
+    NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
     for (NSString *message in messages) {
         if (![message isEqualToString:@""]) {
             NSString *formatedMessage = [NSString stringWithFormat:@"[%@] %@\n", timeStamp, message];
             [fileHandle writeData:[formatedMessage dataUsingEncoding:NSUTF8StringEncoding]];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"TKZMaiccuLog" object:formatedMessage];
+            if (_logTextView) {
+                NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:formatedMessage attributes:attributes];
+                [[_logTextView textStorage] appendAttributedString:attrString];
+            }
         }
     }
-    
+    if (_logTextView) {
+        [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
+    }
     [fileHandle closeFile];
 }
 
@@ -125,7 +135,6 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (void)stopAdapter {
-    [self writeLogMessage:@"Adapter will terminate"];
     [_runningAdapter stopFrom];
 }
 
