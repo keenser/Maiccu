@@ -110,7 +110,7 @@ gogoc_status tspGetCapabilities(pal_socket_t socket, net_tools_t *nt, tCapabilit
 	pal_snprintf(dataout, sizeof(dataout), "VERSION=%s\r\n", TSPProtoVerStr[version_index]);
 
   // Send TSP version to the server. Server should reply with the capabilities.
-	if( nt->netsendrecv(socket, dataout, pal_strlen(dataout), datain, (sint32_t)sizeof(datain)) == -1 )
+	if( nt->netsendrecv(socket, dataout, pal_strlen(dataout), datain, sizeof(datain)) == -1 )
   {
     // Error reading/writing to the socket.
 		return make_status(CTX_TSPCAPABILITIES, ERR_SOCKET_IO);

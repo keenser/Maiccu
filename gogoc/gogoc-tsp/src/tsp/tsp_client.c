@@ -186,7 +186,7 @@ char *tspAddPayloadString(tPayload *Payload, char *Addition)
       Payload->PayloadCapacity = PROTOCOLMAXPAYLOADCHUNK;
     }
 
-    if((Payload->size + (long)pal_strlen(Addition) + 1) > Payload->PayloadCapacity)
+    if((Payload->size + pal_strlen(Addition) + 1) > Payload->PayloadCapacity)
     {
       Payload->PayloadCapacity += PROTOCOLMAXPAYLOADCHUNK;
       if((NewPayload = (char *) pal_malloc(Payload->PayloadCapacity)) == NULL)
@@ -1261,7 +1261,7 @@ sint32_t tspMain(sint32_t argc, char *argv[])
         }
       }
       break;
-
+/*
     case ERR_AUTHENTICATION_FAILURE:
       // There's nothing more to do if the authentication has failed.
       // The user needs to change its username/password. Abort.
@@ -1273,7 +1273,7 @@ sint32_t tspMain(sint32_t argc, char *argv[])
         continue;
       }
       break;
-
+*/
     case ERR_NO_COMMON_AUTHENTICATION:
       // Configured authentication method is not supported by server.
       // User needs to change configuration. Abort.
@@ -1372,6 +1372,13 @@ sint32_t tspMain(sint32_t argc, char *argv[])
       }
       break;
 
+    case ERR_AUTHENTICATION_FAILURE:
+      {
+          // We can fail authentificate on one server and success on other 
+          gStatusInfo.eStatus = GOGOC_CLISTAT__DISCONNECTEDERROR;
+          gStatusInfo.nStatus = GOGOCM_UIS_ERRAUTHENTICATIONFAILURE;
+          send_status_info();
+      }
     case ERR_FAIL_SOCKET_CONNECT:
       // This means we could not connect to a server.
       // We'll try a different transport to the same server.

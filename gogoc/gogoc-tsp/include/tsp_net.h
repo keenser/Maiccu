@@ -35,7 +35,7 @@ enum {
 /* structures */
 
 typedef struct stPayload {
-  long size, PayloadCapacity;
+  size_t size, PayloadCapacity;
   char *payload;
 } tPayload;
 

@@ -142,7 +142,7 @@ ssize_t tspSendRecv(pal_socket_t socket, tPayload *plin, tPayload *plout, net_to
 ssize_t tspSend(pal_socket_t socket, tPayload *pl, net_tools_t *nt)
 {
   char buffer[PROTOCOLFRAMESIZE];
-  long ClSize;
+  size_t ClSize;
   ssize_t ret;
 
   pal_snprintf(buffer, PROTOCOLFRAMESIZE, "Content-length: %ld\r\n", pl->size);

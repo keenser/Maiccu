@@ -147,7 +147,8 @@ typedef enum {
   ANAL_PACKET_PINGIN_ONTIME,// Returned by _decode_icmp_packet & _do_read
 
   ECHO_EVENT_REMOVED,       // Returned by _remove_free_echo_event
-  ECHO_EVENT_NOTFOUND       // Returned by _remove_free_echo_event
+  ECHO_EVENT_NOTFOUND,      // Returned by _remove_free_echo_event
+  GENERAL_ECHO_ERROR
 } iee_priv_ret_t;
 
 
@@ -1029,7 +1030,7 @@ iee_priv_ret_t _decode_icmp_packet( PICMP_ECHO_ENGINE_PARMS p_engine, uint8_t* p
     if( icmp_hdr->icmp_code != ICMP_ECHO_CODE )
     {
       // If the type is an ECHO reply, the code should be ICMP_ECHO_CODE.
-      priv_retval = IEE_GENERAL_ECHO_ERROR;
+      priv_retval = GENERAL_ECHO_ERROR;
       DBG_PRINT("Invalid ICMP code for ECHO REPLY. ICMP code:%d\n", icmp_hdr->icmp_code);
       break;
     }

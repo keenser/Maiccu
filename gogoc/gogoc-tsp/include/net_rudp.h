@@ -50,7 +50,7 @@ typedef struct rttengine_statistics {
   uint32_t sequence;
   sint32_t retries;
   sint32_t last_recv_sequence;
-  __darwin_time_t initial_timestamp;
+  time_t initial_timestamp;
   sint32_t apply_backoff;
   sint32_t has_peer;
   sint32_t initiated;
