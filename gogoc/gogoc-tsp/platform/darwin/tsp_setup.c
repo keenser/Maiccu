@@ -138,7 +138,7 @@ sint32_t execCmd( const char *cmd[] )
         strlcat(buf, cmd[i], sizeof(buf));
         i++;
     }
-    Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", buf );
+    Display( LOG_LEVEL_2, ELInfo, "execScript", "%s", buf );
     
     if ( (retVal = pipe(in)) ) {
         Display( LOG_LEVEL_1, ELError, "execScript", "Failed to open pipe for command: %s. %s (%d).", cmd[0], strerror(errno), errno);
@@ -175,7 +175,7 @@ sint32_t execCmd( const char *cmd[] )
                     {
                         if( fgets( buf, sizeof(buf), f_log ) != NULL )
                         {
-                            Display( LOG_LEVEL_MAX, ELInfo, "execScript", "%s", buf );
+                            Display( LOG_LEVEL_2, ELInfo, "execScript", "%s", buf );
                         }
                     }
                     fclose(f_log);

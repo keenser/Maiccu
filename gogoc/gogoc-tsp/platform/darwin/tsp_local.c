@@ -247,8 +247,10 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
                             ka_interval, t->client_address_ipv6,
                             t->keepalive_address );
 
+      Display( LOG_LEVEL_2, ELInfo, __func__, "end TunMainLoop. Starting tspClose.");
       // We got out of main V6UDPV4 loop.
       tspClose(socket, nt);
+      Display( LOG_LEVEL_2, ELInfo, __func__, "end tspClose.");
     }
     else if( strcasecmp(t->type, STR_CONFIG_TUNNELMODE_V6V4) == 0 )
     {
