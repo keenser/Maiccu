@@ -42,7 +42,9 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 {
     // Is the task running?
     if (!_task){
-        _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
+        if(_statusQueue == nil) {
+            _statusQueue = [[NSMutableArray alloc] init];
+        }
         _statusNotificationCount = 0;
         [_postTimer invalidate];
         
@@ -91,10 +93,10 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return [_task isRunning];
 }
 
-- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
-    [array removeLastObject];
-    [array insertObject:object atIndex:0];
-}
+//- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
+//    [array removeLastObject];
+//    [array insertObject:object atIndex:0];
+//}
 
 - (void)dataReady:(NSNotification *)n
 {
@@ -105,12 +107,12 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         
         NSString *s = [[NSString alloc] initWithData:d
                                             encoding:NSUTF8StringEncoding];
-        [self shiftFIFOArray:_statusQueue withObject:s];
+        [_statusQueue addObject:s];
         
         [_postTimer invalidate];
         _statusNotificationCount++;
         
-        if (_statusNotificationCount >= [_statusQueue count] - 1) {
+        if (_statusNotificationCount >= 5) {
             if(!(_statusNotificationCount % 500)) {
                 [_postTimer invalidate];
                 [self postAiccuStatusNotification];
@@ -144,7 +146,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
         [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
     }
     
-    _statusQueue = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
+    [_statusQueue removeAllObjects];
     
 }
 

@@ -201,8 +201,8 @@ ssize_t internal_send_recv(pal_socket_t fd, void *in, size_t il, void *out, size
 		return -1; /* if the send fails, quit it */ /* XXX check for a ICMP port unreachable here */
 	}
 
-	tv_sel.tv_sec=(sint32_t)rttengine_stats.rto; /* get the RTO in a format select can understand */
-	tv_sel.tv_usec=(sint32_t)( (rttengine_stats.rto - tv_sel.tv_sec) * 1000 ); /* ie, 3.314 - 3 * 1000 = 314 milliseconds */
+	tv_sel.tv_sec=(time_t)rttengine_stats.rto; /* get the RTO in a format select can understand */
+	tv_sel.tv_usec=(suseconds_t)( (rttengine_stats.rto - tv_sel.tv_sec) * 1000 ); /* ie, 3.314 - 3 * 1000 = 314 milliseconds */
 
 	pal_gettimeofday(&tv_beg);
 	

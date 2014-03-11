@@ -91,7 +91,7 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
         gpConfig->Set_IfTunV6UDPV4( [self device] );
         //gpConfig->Set_AlwaysUseLastSrv("yes");
         //gpConfig->Set_gogocDir(str_buf = [[[NSBundle mainBundle] resourcePath] UTF8String]);
-        gpConfig->Set_Log("file","2");
+        gpConfig->Set_Log("file","3");
         gpConfig->Set_LogFileName("/tmp/gogoc.log");
 
         // Saves the configuration
@@ -162,7 +162,8 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
 - (oneway void) statusUpdate:(gogocStatusInfo*)pStatusInfo {
     gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
     gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
-    NSLog(@"%@ %@",gTunnelInfo[@"nStatus"],gTunnelInfo[@"eStatus"]);
+    NSString *wholeMessage = [NSString stringWithFormat:@"gogc status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
 }
 
 - (oneway void) tunnelUpdate:(gogocTunnelInfo*)pTunnelInfo {

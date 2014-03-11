@@ -19,8 +19,8 @@
 
 #include "config.h"       // tConf
 #include "xml_tun.h"      // tTunnel
-#include "log.h"          // Display()
-#include "hex_strings.h"  // Strings for Display()
+#include "log.h"          // LOG()
+#include "hex_strings.h"  // Strings for LOG()
 #include "lib.h"          // IsAll, IPv4Addr, IPv6Addr, IPAddrAny, Numeric.
 
 // gogoCLIENT Messaging Subsystem.
@@ -138,16 +138,16 @@ sint32_t execCmd( const char *cmd[] )
         strlcat(buf, cmd[i], sizeof(buf));
         i++;
     }
-    Display( LOG_LEVEL_2, ELInfo, "execScript", "%s", buf );
+    LOG( LOG_LEVEL_2, ELInfo, "%s", buf );
     
     if ( (retVal = pipe(in)) ) {
-        Display( LOG_LEVEL_1, ELError, "execScript", "Failed to open pipe for command: %s. %s (%d).", cmd[0], strerror(errno), errno);
+        LOG( LOG_LEVEL_1, ELError, "Failed to open pipe for command: %s. %s (%d).", cmd[0], strerror(errno), errno);
     }
     else
     {
         if ( (retVal=posix_spawn_file_actions_init(&action)) )
         {
-            Display( LOG_LEVEL_1, ELError, "execScript", "Failed to init file actions for command: %s. %s (%d).", cmd[0], strerror(retVal), retVal);
+            LOG( LOG_LEVEL_1, ELError, "Failed to init file actions for command: %s. %s (%d).", cmd[0], strerror(retVal), retVal);
             close(in[1]);
         }
         else
@@ -160,13 +160,13 @@ sint32_t execCmd( const char *cmd[] )
             close(in[1]);
             
             if (retVal) {
-                Display( LOG_LEVEL_1, ELError, "execScript", "Failed to spawn for command: %s.", cmd[0]);
+                LOG( LOG_LEVEL_1, ELError, "Failed to spawn for command: %s.", cmd[0]);
             }
             else
             {
                 waitpid(pid, &status, 0);
                 if (!WIFEXITED(status)) {
-                    Display( LOG_LEVEL_1, ELError, "execScript", "Failed to waitpid for command: %s. status 0x%08X %s (%d).", cmd[0], status, strerror(errno), errno);
+                    LOG( LOG_LEVEL_1, ELError, "Failed to waitpid for command: %s. status 0x%08X %s (%d).", cmd[0], status, strerror(errno), errno);
                 }
                 
                 if ( (f_log = fdopen(in[0], "r")) )
@@ -175,14 +175,14 @@ sint32_t execCmd( const char *cmd[] )
                     {
                         if( fgets( buf, sizeof(buf), f_log ) != NULL )
                         {
-                            Display( LOG_LEVEL_2, ELInfo, "execScript", "%s", buf );
+                            LOG( LOG_LEVEL_2, ELInfo, "%s", buf );
                         }
                     }
                     fclose(f_log);
                 }
                 else
                 {
-                    Display( LOG_LEVEL_1, ELError, "execScript", "Failed to fdopen for command: %s. %s (%d)", cmd[0], strerror(errno), errno);
+                    LOG( LOG_LEVEL_1, ELError, "Failed to fdopen for command: %s. %s (%d)", cmd[0], strerror(errno), errno);
                 }
             }
             posix_spawn_file_actions_destroy(&action);
@@ -219,13 +219,13 @@ sint32_t validate_tunnel_info( const tTunnel* pTunnelInfo )
     
     if( !IsAll(IPv4Addr, pTunnelInfo->client_address_ipv4) )
     {
-        Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_CLIENT_IPV4_RECVD);
+        LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_CLIENT_IPV4_RECVD);
         err_num++;
     }
     
     if( !IsAll(IPv6Addr, pTunnelInfo->client_address_ipv6) )
     {
-        Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_CLIENT_IPV6_RECVD);
+        LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_CLIENT_IPV6_RECVD);
         err_num++;
     }
     
@@ -233,20 +233,20 @@ sint32_t validate_tunnel_info( const tTunnel* pTunnelInfo )
     {
         if( !IsAll(IPv6Addr, pTunnelInfo->client_dns_server_address_ipv6) )
         {
-            Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_CLIENT_DNS_IPV6_RECVD);
+            LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_CLIENT_DNS_IPV6_RECVD);
             err_num++;
         }
     }
     
     if( !IsAll(IPv4Addr, pTunnelInfo->server_address_ipv4) )
     {
-        Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_SERVER_IPV4_RECVD);
+        LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_SERVER_IPV4_RECVD);
         err_num++;
     }
     
     if( !IsAll(IPv6Addr, pTunnelInfo->server_address_ipv6) )
     {
-        Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_SERVER_IPV6_RECVD);
+        LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_SERVER_IPV6_RECVD);
         err_num++;
     }
     
@@ -255,13 +255,13 @@ sint32_t validate_tunnel_info( const tTunnel* pTunnelInfo )
     {
         if( !IsAll(IPAddrAny, pTunnelInfo->prefix) )
         {
-            Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_SERVER_PREFIX_RECVD);
+            LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_SERVER_PREFIX_RECVD);
             err_num++;
         }
         
         if( !IsAll(Numeric, pTunnelInfo->prefix_length) )
         {
-            Display(LOG_LEVEL_1, ELError, "validate_tunnel_info", GOGO_STR_BAD_PREFIX_LEN_RECVD);
+            LOG(LOG_LEVEL_1, ELError, GOGO_STR_BAD_PREFIX_LEN_RECVD);
             err_num++;
         }
     }
@@ -285,7 +285,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     if( validate_tunnel_info(t) != 0 )
     {
         // Errors occured during verification of tunnel parameters.
-        Display( LOG_LEVEL_1, ELError, "tspSetupInterface", STR_TSP_ERRS_TUN_PARAM_FROM_SERVER );
+        LOG( LOG_LEVEL_1, ELError, STR_TSP_ERRS_TUN_PARAM_FROM_SERVER );
         return make_status(CTX_TUNINTERFACESETUP, ERR_BAD_TUNNEL_PARAM);
     }
     
@@ -361,7 +361,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     sh(ifconfig,tunnel_interface,"mtu","1280");
     
     if ( t->originalgateway ) {
-        Display( LOG_LEVEL_MAX, ELInfo, "execScript", "Change current default gateway %s", t->originalgateway );
+        LOG( LOG_LEVEL_MAX, ELInfo, "Change current default gateway %s", t->originalgateway );
         sh(route,"change","-inet6","default",t->server_address_ipv6);
     }
     else {
@@ -387,28 +387,28 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
         sh("/usr/sbin/rtadvd",c->if_prefix);
     }
 
-    Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", STR_GEN_SCRIPT_EXEC_SUCCESS);
+    LOG(LOG_LEVEL_2, ELInfo, STR_GEN_SCRIPT_EXEC_SUCCESS);
     
     
     // Display a resume of the configured settings.
-    Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_HOST_TYPE, c->host_type);
-    Display(LOG_LEVEL_2, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_TUNNEL_TYPE, t->type);
-    Display(LOG_LEVEL_3, ELInfo, "tspSetupInterface", GOGO_STR_SETUP_PROXY, c->proxy_client == TRUE ? STR_LIT_ENABLED : STR_LIT_DISABLED);
+    LOG(LOG_LEVEL_2, ELInfo, GOGO_STR_SETUP_HOST_TYPE, c->host_type);
+    LOG(LOG_LEVEL_2, ELInfo, GOGO_STR_SETUP_TUNNEL_TYPE, t->type);
+    LOG(LOG_LEVEL_3, ELInfo, GOGO_STR_SETUP_PROXY, c->proxy_client == TRUE ? STR_LIT_ENABLED : STR_LIT_DISABLED);
     
     if( tunnelType == TUNTYPE_V6V4 || tunnelType == TUNTYPE_V6UDPV4)
     {
-        Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV6_IP_IS, t->client_address_ipv6);
+        LOG(LOG_LEVEL_1, ELInfo, GOGO_STR_YOUR_IPV6_IP_IS, t->client_address_ipv6);
         if( (t->prefix != NULL) && (t->prefix_length != NULL) )
-            Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV6_PREFIX_IS, t->prefix, t->prefix_length);
+            LOG(LOG_LEVEL_1, ELInfo, GOGO_STR_YOUR_IPV6_PREFIX_IS, t->prefix, t->prefix_length);
         if (t->client_dns_server_address_ipv6 != NULL)
-            Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV6_DNS_IS, t->client_dns_server_address_ipv6);
+            LOG(LOG_LEVEL_1, ELInfo, GOGO_STR_YOUR_IPV6_DNS_IS, t->client_dns_server_address_ipv6);
     }
 #ifdef V4V6_SUPPORT
     else
     {
-        Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV4_IP_IS, t->client_address_ipv4);
+        LOG(LOG_LEVEL_1, ELInfo, GOGO_STR_YOUR_IPV4_IP_IS, t->client_address_ipv4);
         if( (t->prefix != NULL) && (t->prefix_length != NULL) )
-            Display(LOG_LEVEL_1, ELInfo, "tspSetupInterface", GOGO_STR_YOUR_IPV4_PREFIX_IS, t->prefix, t->prefix_length);
+            LOG(LOG_LEVEL_1, ELInfo, GOGO_STR_YOUR_IPV4_PREFIX_IS, t->prefix, t->prefix_length);
     }
 #endif /* V4V6_SUPPORT */
 
@@ -504,7 +504,7 @@ gogoc_status tspTearDownTunnel( tConf* c, tTunnel* t )
         sh(ifconfig,tunnel_interface,"deletetunnel");
     }
     
-    Display(LOG_LEVEL_2, ELInfo, "tspTearDownTunnel", STR_GEN_SCRIPT_EXEC_SUCCESS );
+    LOG(LOG_LEVEL_2, ELInfo, STR_GEN_SCRIPT_EXEC_SUCCESS );
     
     // Return script execution return code.
     return STATUS_SUCCESS_INIT;

@@ -57,7 +57,7 @@
 
 
 //log view
-@property (unsafe_unretained) IBOutlet NSTextView *logTextView;
+@property (unsafe_unretained, atomic) IBOutlet NSTextView *logTextView;
 - (IBAction)clearWasClicked:(id)sender;
 - (IBAction)reloadWasClicked:(id)sender;
 

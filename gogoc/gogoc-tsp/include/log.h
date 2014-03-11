@@ -26,6 +26,13 @@
 #define DEFAULT_LOG_FILENAME    "gogoc.log"
 #define DEFAULT_LOG_ROTATION_SIZE 32
 
+#if defined(DEBUG) || defined(_DEBUG)
+# define DBG(X, ...)             Display( LOG_LEVEL_3, ELDebug, __func__, X, ##__VA_ARGS__)
+#else
+# define DBG(X, ...)
+#endif
+#define LOG(LVL,SEV,MSG,...)  Display(LVL, SEV, __func__, MSG, ##__VA_ARGS__)
+
 enum tSeverityLevel
 {
   ELError,

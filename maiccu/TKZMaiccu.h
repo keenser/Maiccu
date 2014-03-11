@@ -20,7 +20,7 @@
 
 @property (strong) genericAdapter *adapter;
 @property (strong) genericAdapter *runningAdapter;
-@property (strong) NSTextView *logTextView;
+@property NSTextView *logTextView;
 
 - (BOOL) aiccuConfigExists;
 
@@ -42,6 +42,7 @@
 
 - (void) setAdapterView:(NSString *)View;
 - (NSArray*)adapterList;
+//- (void)setLogTextView:(NSTextView*)textView;
 
 + (id)defaultMaiccu;
 @end

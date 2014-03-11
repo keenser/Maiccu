@@ -493,13 +493,13 @@ void Display(int VerboseLevel, enum tSeverityLevel SeverityLvl, const char *func
   char buffer[MAX_LOG_LINE_LENGTH];
   char *clean = buffer;
 
-#if !defined(_DEBUG) && !defined(DEBUG)
+//#if !defined(_DEBUG) && !defined(DEBUG)
   // This is a RELEASE build. Remove debug messages.
   if( SeverityLvl == ELDebug )
   {
     return;
   }
-#endif
+//#endif
 
     if( LogConfiguration == NULL )
     {

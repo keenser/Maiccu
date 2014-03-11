@@ -79,12 +79,13 @@ static TKZMaiccu *defaultMaiccu = nil;
         [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
     }
     
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[self maiccuLogPath]];
-    [fileHandle seekToEndOfFile];
-    
     NSString *timeStamp = [[NSDate date] descriptionWithLocale:[NSLocale systemLocale]];
     
     NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    @synchronized(_logTextView) {
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[self maiccuLogPath]];
+    [fileHandle seekToEndOfFile];
     
     for (NSString *message in messages) {
         if (![message isEqualToString:@""]) {
@@ -100,6 +101,7 @@ static TKZMaiccu *defaultMaiccu = nil;
         [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
     }
     [fileHandle closeFile];
+    }
 }
 
 - (void)postNotification:(NSString *) message{

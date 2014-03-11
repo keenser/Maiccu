@@ -222,9 +222,7 @@
 												<integer value="5"/>
 												<object class="NSURL">
 													<nil key="NS.base"/>
-													<object class="NSMutableString" key="NS.relative">
-														<characters key="NS.bytes">file://localhost/Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/Resources/DVTIbeamCursor.tiff</characters>
-													</object>
+													<string key="NS.relative">file://localhost/Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/Resources/DVTIbeamCursor.tiff</string>
 												</object>
 											</array>
 										</array>
@@ -952,7 +950,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="293591665"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMinSize">{405, 319}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>

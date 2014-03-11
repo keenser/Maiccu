@@ -448,7 +448,7 @@ pal_thread_ret_t PAL_THREAD_CALL _ka_start_thread( void *arg )
 //
 void _ka_send_callback( void )
 {
-  LOG_MESSAGE( LOG_LEVEL_3, ELInfo, STR_KA_SEND_INFO );
+  LOG_MESSAGE( LOG_LEVEL_3, ELDebug, STR_KA_SEND_INFO );
 }
 
 
@@ -463,5 +463,5 @@ void _ka_send_callback( void )
 //
 void _ka_recv_callback( double rtt )
 {
-  LOG_MESSAGE( LOG_LEVEL_3, ELInfo, STR_KA_RECV_INFO, rtt );
+  LOG_MESSAGE( LOG_LEVEL_3, ELDebug, STR_KA_RECV_INFO, rtt );
 }

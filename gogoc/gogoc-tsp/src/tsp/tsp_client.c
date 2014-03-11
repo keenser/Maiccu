@@ -453,6 +453,7 @@ gogoc_status tspSetupTunnel(tConf *conf, net_tools_t* nt, sint32_t version_index
     {
       Display(LOG_LEVEL_1, ELError, "tspSetupTunnel", STR_NET_FAIL_CONNECT_SERVER, srvname, conf->port_remote_v4);
       pal_free( srvname );
+      Display(LOG_LEVEL_1, ELError, "tspSetupTunnel", "return status 0x%X",status);
       return status;
     }
     pal_free( srvname );
@@ -1436,6 +1437,12 @@ sint32_t tspMain(sint32_t argc, char *argv[])
                 Display (LOG_LEVEL_2, ELInfo, "tspMain", GOGO_STR_RDR_READ_BROKER_LIST_EMPTY);
                 // Just cycle transports, we'll try the original server again.
                 cycle++;
+              }
+              // try different transport first.
+              else if (cycle == 0) {
+                  Display (LOG_LEVEL_2, ELInfo, "tspMain", "trying different transport");
+                  cycle++;
+                  continue;
               }
               // If the broker list is not empty.
               else

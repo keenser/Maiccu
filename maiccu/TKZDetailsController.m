@@ -51,12 +51,13 @@
     if (log) {
         [_logTextView setString:log];
     }
+    [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
     
     [_maiccu setLogTextView:_logTextView];
 
-//    if ([[_maiccu adapter]config:@"username"]) {
-//        [[_maiccu adapter] showSheet:[self window]];
-//    }
+    if ([[_maiccu adapter]config:@"username"]) {
+        [[_maiccu adapter] showSheet:[self window]];
+    }
 }
 
 -(void)controlTextDidEndEditing:(NSNotification *)notification
@@ -236,10 +237,10 @@
     viewScreenFrame.size.width = newSize.width;
     windowFrame = [window frameRectForContentRect:viewScreenFrame];
     
+    [window setFrame:windowFrame display:YES animate:YES];
     if (newView == _logView) {
         [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
     }
-    [window setFrame:windowFrame display:YES animate:YES];
 }
 
 - (IBAction)clearWasClicked:(id)sender {

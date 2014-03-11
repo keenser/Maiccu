@@ -187,16 +187,16 @@ gogoc_status TunMainLoop( int tunfd,
         /* ioctl(tunfd, FIONREAD, &count); */
         if ((count = read(tunfd, bufout, TUN_BUFSIZE)) < -1)
         {
-          Display(LOG_LEVEL_1, ELError, "TunMainLoop", STR_NET_FAIL_R_TUN_DEV);
-          status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
-          goto done;
+          Display(LOG_LEVEL_1, ELError, __func__, STR_NET_FAIL_R_TUN_DEV);
+          //status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
+          //goto done;
         }
 
         if (send(Socket, bufout, count, 0) != count)
         {
-          Display(LOG_LEVEL_1, ELError, "TunMainLoop", STR_NET_FAIL_W_SOCKET);
-          status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
-          goto done;
+          Display(LOG_LEVEL_1, ELError, __func__, STR_NET_FAIL_W_SOCKET);
+          //status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
+          //goto done;
         }
       }
 
@@ -206,9 +206,9 @@ gogoc_status TunMainLoop( int tunfd,
         count = recvfrom( Socket, bufin, TUN_BUFSIZE, 0, NULL, NULL );
         if (write(tunfd, bufin, count) != count)
         {
-          Display(LOG_LEVEL_1, ELError, "TunMainLoop", STR_NET_FAIL_W_TUN_DEV,strerror(errno),errno);
-          status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
-          goto done;
+          Display(LOG_LEVEL_1, ELError, __func__, STR_NET_FAIL_W_TUN_DEV,strerror(errno),errno);
+          //status = make_status(CTX_TUNNELLOOP, ERR_TUNNEL_IO);
+          //goto done;
         }
       }
     }
