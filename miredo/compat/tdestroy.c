@@ -2,9 +2,6 @@
 //  tdestroy.c
 //  maiccu
 //
-//  Created by powerbook on 10.03.14.
-//  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
-//
 
 #include <search.h>
 #include <stdlib.h>

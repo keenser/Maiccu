@@ -426,13 +426,6 @@ gogoc_status tspSetupTunnel(tConf *conf, net_tools_t* nt, sint32_t version_index
     Display( LOG_LEVEL_2, ELInfo, "tspSetupTunnel", STR_NET_CONNECT_RUDPV6, conf->server); break;
   }
 
-  // -----------------------------------------------------------
-  // Send(update) connectivity status to GUI.
-  // -----------------------------------------------------------
-  gStatusInfo.eStatus = GOGOC_CLISTAT__CONNECTING;
-  gStatusInfo.nStatus = GOGOCM_UIS__NOERROR;
-  send_status_info();
-
 
   // ----------------------------------------------------------------------
   // Perform connection to the server using a specific transport protocol.
@@ -1018,6 +1011,12 @@ sint32_t tspMain(sint32_t argc, char *argv[])
 
   loop_delay = c.retry_delay;
 
+    
+  // -----------------------------------------------------------
+  // Send(update) connectivity status to GUI.
+  // -----------------------------------------------------------
+  send_status_info();
+  
   do {
   net_tools_t nt[NET_TOOLS_T_SIZE];
   sint32_t version_index = CLIENT_VERSION_INDEX_CURRENT;
@@ -1049,12 +1048,9 @@ sint32_t tspMain(sint32_t argc, char *argv[])
 
     // While we loop in this while(), keep everything updated on our status.
     //
-    if( gStatusInfo.eStatus != GOGOC_CLISTAT__DISCONNECTEDIDLE &&
-        gStatusInfo.nStatus != GOGOCM_UIS__NOERROR )
-    {
-      // Status has been changed.
-      send_status_info();
-    }
+    gStatusInfo.eStatus = GOGOC_CLISTAT__CONNECTING;
+    gStatusInfo.nStatus = GOGOCM_UIS__NOERROR;
+    send_status_info();
 
     // Choose the transport or cycle thru the list
     switch( c.tunnel_mode )

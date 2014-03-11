@@ -51,6 +51,8 @@
     if (log) {
         [_logTextView setString:log];
     }
+    NSFont *font = [NSFont fontWithName:@"Menlo Regular" size:10.0];
+    [_logTextView setFont:font];
     [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
     
     [_maiccu setLogTextView:_logTextView];
