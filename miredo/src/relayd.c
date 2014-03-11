@@ -320,7 +320,7 @@ configure_tunnel (int fd, const struct in6_addr *addr, unsigned mtu)
 	memcpy (&s.addr, addr, sizeof (s.addr));
 	s.mtu = (uint16_t)mtu;
 
-	if ((send (fd, &s, sizeof (s), MSG_NOSIGNAL) != sizeof (s))
+	if ((send (fd, &s, sizeof (s), SO_NOSIGPIPE) != sizeof (s))
 	 || (recv (fd, &res, sizeof (res), MSG_WAITALL) != sizeof (res)))
 		return -1;
 

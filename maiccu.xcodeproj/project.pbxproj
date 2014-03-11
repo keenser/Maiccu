@@ -41,6 +41,34 @@
 		7E21B8B018BFC99D003F4F70 /* aiccu.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D94909517352725002283B0 /* aiccu.c */; };
 		7E21B8B118BFC9A6003F4F70 /* liblibaiccu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */; };
 		7E21B8B218BFC9A8003F4F70 /* liblibaiccu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */; };
+		7E385EE718CDD60200C9E853 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B7F18BA22A800CD7DBF /* main.c */; };
+		7E385EE818CDD60500C9E853 /* miredo.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B8118BA22A800CD7DBF /* miredo.c */; };
+		7E385EE918CDD61100C9E853 /* conf.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B7D18BA22A800CD7DBF /* conf.c */; };
+		7E385EEA18CDDBC100C9E853 /* binreloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B7A18BA22A800CD7DBF /* binreloc.c */; };
+		7E385EFA18CE323500C9E853 /* relayd.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B8518BA22A800CD7DBF /* relayd.c */; };
+		7E385EFB18CE32AA00C9E853 /* liblibmiredo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E385EE318CDD5DA00C9E853 /* liblibmiredo.a */; };
+		7E385F0418CE3BC200C9E853 /* diag.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B5318BA22A800CD7DBF /* diag.c */; };
+		7E385F0518CE3BC300C9E853 /* tun6.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B5618BA22A800CD7DBF /* tun6.c */; };
+		7E385F0618CE3C0700C9E853 /* liblibtun6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E385F0018CE3BB600C9E853 /* liblibtun6.a */; };
+		7E385F0F18CE3EAA00C9E853 /* relay.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3A18BA22A800CD7DBF /* relay.c */; };
+		7E385F1018CE3EC000C9E853 /* liblibteredo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E385F0B18CE3E3E00C9E853 /* liblibteredo.a */; };
+		7E385F1118CE3F3C00C9E853 /* teredo.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B4118BA22A800CD7DBF /* teredo.c */; };
+		7E385F1218CE3F5900C9E853 /* packets.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3618BA22A800CD7DBF /* packets.c */; };
+		7E385F1318CE3F7500C9E853 /* discovery.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B2A18BA22A800CD7DBF /* discovery.c */; };
+		7E385F1418CE3F9F00C9E853 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3B18BA22A800CD7DBF /* security.c */; };
+		7E385F1518CE3FC100C9E853 /* peerlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3818BA22A800CD7DBF /* peerlist.c */; };
+		7E385F1618CE3FE000C9E853 /* iothread.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B2D18BA22A800CD7DBF /* iothread.c */; };
+		7E385F1718CE415D00C9E853 /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B2C18BA22A800CD7DBF /* init.c */; };
+		7E385F1818CE420400C9E853 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3318BA22A800CD7DBF /* md5.c */; };
+		7E385F1918CE423800C9E853 /* clock.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B2718BA22A800CD7DBF /* clock.c */; };
+		7E385F1A18CE428800C9E853 /* maintain.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B3018BA22A800CD7DBF /* maintain.c */; };
+		7E385F1B18CE42D200C9E853 /* v4global.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B4F18BA22A800CD7DBF /* v4global.c */; };
+		7E385F2418CE437600C9E853 /* clock_nanosleep.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B0C18BA22A700CD7DBF /* clock_nanosleep.c */; };
+		7E385F2518CE439E00C9E853 /* liblibcompat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E385F2018CE436000C9E853 /* liblibcompat.a */; };
+		7E385F2618CE43C900C9E853 /* clock_gettime.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B0B18BA22A700CD7DBF /* clock_gettime.c */; };
+		7E385F2718CE43F400C9E853 /* closefrom.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B0D18BA22A700CD7DBF /* closefrom.c */; };
+		7E385F2818CE440D00C9E853 /* clearenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B0A18BA22A700CD7DBF /* clearenv.c */; };
+		7E385F2A18CE469800C9E853 /* tdestroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E385F2918CE469700C9E853 /* tdestroy.c */; };
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDA518BDDCC900536814 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDA418BDDCC900536814 /* main.cpp */; };
@@ -222,6 +250,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		7E385EEF18CE320500C9E853 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		7E4CBDA018BDDCBE00536814 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,7 +376,6 @@
 		7E2D3B1218BA22A700CD7DBF /* strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = strlcpy.c; sourceTree = "<group>"; };
 		7E2D3B1318BA22A700CD7DBF /* test-closefrom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-closefrom.c"; sourceTree = "<group>"; };
 		7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "test-strlcpy.c"; sourceTree = "<group>"; };
-		7E2D3B2318BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7E2D3B2518BA22A800CD7DBF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7E2D3B2618BA22A800CD7DBF /* checksum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checksum.h; sourceTree = "<group>"; };
 		7E2D3B2718BA22A800CD7DBF /* clock.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clock.c; sourceTree = "<group>"; };
@@ -406,6 +442,14 @@
 		7E2D3B8418BA22A800CD7DBF /* privproc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = privproc.h; sourceTree = "<group>"; };
 		7E2D3B8518BA22A800CD7DBF /* relayd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = relayd.c; sourceTree = "<group>"; };
 		7E2D3B8618BA22A800CD7DBF /* serverd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = serverd.c; sourceTree = "<group>"; };
+		7E385EE318CDD5DA00C9E853 /* liblibmiredo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibmiredo.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E385EEB18CDF96500C9E853 /* gettext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gettext.h; sourceTree = "<group>"; };
+		7E385EEC18CDFFCE00C9E853 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		7E385EF118CE320500C9E853 /* miredo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = miredo; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E385F0018CE3BB600C9E853 /* liblibtun6.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibtun6.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E385F0B18CE3E3E00C9E853 /* liblibteredo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibteredo.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E385F2018CE436000C9E853 /* liblibcompat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibcompat.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E385F2918CE469700C9E853 /* tdestroy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tdestroy.c; sourceTree = "<group>"; };
 		7E4CBCB018AE65B600536814 /* pal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pal.h; sourceTree = "<group>"; };
 		7E4CBCB118AE65B600536814 /* pal_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pal_version.h; sourceTree = "<group>"; };
 		7E4CBCB318AE65B600536814 /* pal_version.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pal_version.c; sourceTree = "<group>"; };
@@ -614,6 +658,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E385EE018CDD5DA00C9E853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EEE18CE320500C9E853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385F2518CE439E00C9E853 /* liblibcompat.a in Frameworks */,
+				7E385F1018CE3EC000C9E853 /* liblibteredo.a in Frameworks */,
+				7E385F0618CE3C0700C9E853 /* liblibtun6.a in Frameworks */,
+				7E385EFB18CE32AA00C9E853 /* liblibmiredo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EFD18CE3BB600C9E853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F0818CE3E3E00C9E853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F1D18CE436000C9E853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E4CBD9F18BDDCBE00536814 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -696,6 +779,11 @@
 				7E4CBDA218BDDCBE00536814 /* messager */,
 				7E1D9C8718BFB06800D32099 /* aiccu */,
 				7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */,
+				7E385EE318CDD5DA00C9E853 /* liblibmiredo.a */,
+				7E385EF118CE320500C9E853 /* miredo */,
+				7E385F0018CE3BB600C9E853 /* liblibtun6.a */,
+				7E385F0B18CE3E3E00C9E853 /* liblibteredo.a */,
+				7E385F2018CE436000C9E853 /* liblibcompat.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -864,6 +952,7 @@
 		7E2D3B0318BA22A700CD7DBF /* miredo */ = {
 			isa = PBXGroup;
 			children = (
+				7E385EEC18CDFFCE00C9E853 /* config.h */,
 				7E2D3B0818BA22A700CD7DBF /* compat */,
 				7E2D3B2218BA22A800CD7DBF /* include */,
 				7E2D3B2418BA22A800CD7DBF /* libteredo */,
@@ -888,6 +977,7 @@
 				7E2D3B1218BA22A700CD7DBF /* strlcpy.c */,
 				7E2D3B1318BA22A700CD7DBF /* test-closefrom.c */,
 				7E2D3B1418BA22A700CD7DBF /* test-strlcpy.c */,
+				7E385F2918CE469700C9E853 /* tdestroy.c */,
 			);
 			path = compat;
 			sourceTree = "<group>";
@@ -895,7 +985,7 @@
 		7E2D3B2218BA22A800CD7DBF /* include */ = {
 			isa = PBXGroup;
 			children = (
-				7E2D3B2318BA22A800CD7DBF /* .gitignore */,
+				7E385EEB18CDF96500C9E853 /* gettext.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1384,6 +1474,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E385EE118CDD5DA00C9E853 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EFE18CE3BB600C9E853 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F0918CE3E3E00C9E853 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F1E18CE436000C9E853 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E4DD02418B005F60029F38B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1489,6 +1607,91 @@
 			name = libaiccu;
 			productName = libaiccu;
 			productReference = 7E21B8A118BFC93E003F4F70 /* liblibaiccu.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7E385EE218CDD5DA00C9E853 /* libmiredo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E385EE418CDD5DA00C9E853 /* Build configuration list for PBXNativeTarget "libmiredo" */;
+			buildPhases = (
+				7E385EDF18CDD5DA00C9E853 /* Sources */,
+				7E385EE018CDD5DA00C9E853 /* Frameworks */,
+				7E385EE118CDD5DA00C9E853 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libmiredo;
+			productName = libmiredo;
+			productReference = 7E385EE318CDD5DA00C9E853 /* liblibmiredo.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7E385EF018CE320500C9E853 /* miredo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E385EF718CE320700C9E853 /* Build configuration list for PBXNativeTarget "miredo" */;
+			buildPhases = (
+				7E385EED18CE320500C9E853 /* Sources */,
+				7E385EEE18CE320500C9E853 /* Frameworks */,
+				7E385EEF18CE320500C9E853 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = miredo;
+			productName = miredo;
+			productReference = 7E385EF118CE320500C9E853 /* miredo */;
+			productType = "com.apple.product-type.tool";
+		};
+		7E385EFF18CE3BB600C9E853 /* libtun6 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E385F0118CE3BB600C9E853 /* Build configuration list for PBXNativeTarget "libtun6" */;
+			buildPhases = (
+				7E385EFC18CE3BB600C9E853 /* Sources */,
+				7E385EFD18CE3BB600C9E853 /* Frameworks */,
+				7E385EFE18CE3BB600C9E853 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libtun6;
+			productName = libtun6;
+			productReference = 7E385F0018CE3BB600C9E853 /* liblibtun6.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7E385F0A18CE3E3E00C9E853 /* libteredo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E385F0C18CE3E3E00C9E853 /* Build configuration list for PBXNativeTarget "libteredo" */;
+			buildPhases = (
+				7E385F0718CE3E3E00C9E853 /* Sources */,
+				7E385F0818CE3E3E00C9E853 /* Frameworks */,
+				7E385F0918CE3E3E00C9E853 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libteredo;
+			productName = libteredo;
+			productReference = 7E385F0B18CE3E3E00C9E853 /* liblibteredo.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7E385F1F18CE436000C9E853 /* libcompat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E385F2118CE436000C9E853 /* Build configuration list for PBXNativeTarget "libcompat" */;
+			buildPhases = (
+				7E385F1C18CE436000C9E853 /* Sources */,
+				7E385F1D18CE436000C9E853 /* Frameworks */,
+				7E385F1E18CE436000C9E853 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libcompat;
+			productName = libcompat;
+			productReference = 7E385F2018CE436000C9E853 /* liblibcompat.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		7E4CBDA118BDDCBE00536814 /* messager */ = {
@@ -1633,6 +1836,11 @@
 				7E4CBDA118BDDCBE00536814 /* messager */,
 				7E1D9C8618BFB06800D32099 /* aiccu */,
 				7E21B8A018BFC93E003F4F70 /* libaiccu */,
+				7E385EE218CDD5DA00C9E853 /* libmiredo */,
+				7E385EF018CE320500C9E853 /* miredo */,
+				7E385EFF18CE3BB600C9E853 /* libtun6 */,
+				7E385F0A18CE3E3E00C9E853 /* libteredo */,
+				7E385F1F18CE436000C9E853 /* libcompat */,
 			);
 		};
 /* End PBXProject section */
@@ -1740,6 +1948,65 @@
 				7E21B8AE18BFC991003F4F70 /* aiccu_test.c in Sources */,
 				7E21B8AF18BFC997003F4F70 /* aiccu_darwin.c in Sources */,
 				7E21B8B018BFC99D003F4F70 /* aiccu.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EDF18CDD5DA00C9E853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385EE718CDD60200C9E853 /* main.c in Sources */,
+				7E385EE818CDD60500C9E853 /* miredo.c in Sources */,
+				7E385EE918CDD61100C9E853 /* conf.c in Sources */,
+				7E385EEA18CDDBC100C9E853 /* binreloc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EED18CE320500C9E853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385EFA18CE323500C9E853 /* relayd.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385EFC18CE3BB600C9E853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385F0418CE3BC200C9E853 /* diag.c in Sources */,
+				7E385F0518CE3BC300C9E853 /* tun6.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F0718CE3E3E00C9E853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385F0F18CE3EAA00C9E853 /* relay.c in Sources */,
+				7E385F1118CE3F3C00C9E853 /* teredo.c in Sources */,
+				7E385F1218CE3F5900C9E853 /* packets.c in Sources */,
+				7E385F1318CE3F7500C9E853 /* discovery.c in Sources */,
+				7E385F1418CE3F9F00C9E853 /* security.c in Sources */,
+				7E385F1518CE3FC100C9E853 /* peerlist.c in Sources */,
+				7E385F1618CE3FE000C9E853 /* iothread.c in Sources */,
+				7E385F1718CE415D00C9E853 /* init.c in Sources */,
+				7E385F1818CE420400C9E853 /* md5.c in Sources */,
+				7E385F1918CE423800C9E853 /* clock.c in Sources */,
+				7E385F1A18CE428800C9E853 /* maintain.c in Sources */,
+				7E385F1B18CE42D200C9E853 /* v4global.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E385F1C18CE436000C9E853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E385F2418CE437600C9E853 /* clock_nanosleep.c in Sources */,
+				7E385F2618CE43C900C9E853 /* clock_gettime.c in Sources */,
+				7E385F2718CE43F400C9E853 /* closefrom.c in Sources */,
+				7E385F2818CE440D00C9E853 /* clearenv.c in Sources */,
+				7E385F2A18CE469800C9E853 /* tdestroy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2143,6 +2410,164 @@
 			};
 			name = Release;
 		};
+		7E385EE518CDD5DA00C9E853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E385EE618CDD5DA00C9E853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7E385EF818CE320700C9E853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E385EF918CE320700C9E853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7E385F0218CE3BB600C9E853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E385F0318CE3BB600C9E853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7E385F0D18CE3E3E00C9E853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E385F0E18CE3E3E00C9E853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7E385F2218CE436000C9E853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7E385F2318CE436000C9E853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				HEADER_SEARCH_PATHS = (
+					miredo/include,
+					miredo,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		7E4CBDA918BDDCC900536814 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2400,6 +2825,46 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7E385EE418CDD5DA00C9E853 /* Build configuration list for PBXNativeTarget "libmiredo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E385EE518CDD5DA00C9E853 /* Debug */,
+				7E385EE618CDD5DA00C9E853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7E385EF718CE320700C9E853 /* Build configuration list for PBXNativeTarget "miredo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E385EF818CE320700C9E853 /* Debug */,
+				7E385EF918CE320700C9E853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7E385F0118CE3BB600C9E853 /* Build configuration list for PBXNativeTarget "libtun6" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E385F0218CE3BB600C9E853 /* Debug */,
+				7E385F0318CE3BB600C9E853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7E385F0C18CE3E3E00C9E853 /* Build configuration list for PBXNativeTarget "libteredo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E385F0D18CE3E3E00C9E853 /* Debug */,
+				7E385F0E18CE3E3E00C9E853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7E385F2118CE436000C9E853 /* Build configuration list for PBXNativeTarget "libcompat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E385F2218CE436000C9E853 /* Debug */,
+				7E385F2318CE436000C9E853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
 			isa = XCConfigurationList;

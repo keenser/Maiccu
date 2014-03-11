@@ -25,7 +25,8 @@
 
 #define MIREDO_COMPAT_FIXUPS_H 1
 
-#define _( str )		dgettext (PACKAGE_NAME, str)
+//#define _( str )		dgettext (PACKAGE_NAME, str)
+#define _( str )		str
 #define N_( str )		gettext_noop (str)
 
 #ifdef __cplusplus
