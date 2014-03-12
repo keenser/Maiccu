@@ -112,22 +112,12 @@ static TKZMaiccu *defaultMaiccu = nil;
 
     [_postQueue addObject:message];
     
-    [_postTimer invalidate];
     _postNotificationCount++;
-    
-    if (_postNotificationCount >= 5) {
-        if(!(_postNotificationCount % 500)) {
-            [_postTimer invalidate];
-            [self postGrowlNotification];
-        }
-        else {
-            _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
-        }
-    }
-    else {
-        
+    if (_postNotificationCount <= 5 || [_postQueue count]>=5) {
         [self postGrowlNotification];
     }
+    [_postTimer invalidate];
+    _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
 }
 
 - (void)postGrowlNotification {
