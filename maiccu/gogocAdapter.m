@@ -3,7 +3,7 @@
 //  maiccu
 //
 //  Created by German Skalauhov on 30/01/2014.
-//  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
+//  Copyright (c) 2014 German Skalauhov. All rights reserved.
 //
 
 #import "gogocAdapter.h"
@@ -161,7 +161,7 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
 - (oneway void) statusUpdate:(gogocStatusInfo*)pStatusInfo {
     gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
     gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
-    NSString *wholeMessage = [NSString stringWithFormat:@"gogc status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
+    NSString *wholeMessage = [NSString stringWithFormat:@"gogoc-messager status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
 }
 

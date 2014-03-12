@@ -16,11 +16,15 @@
     TKZAiccuAdapter *_aiccu;
     gogocAdapter *_gogoc;
     NSMutableDictionary *_adapterList;
+
+    NSMutableArray *_postQueue;
+    NSTimer *_postTimer;
+    NSUInteger _postNotificationCount;
 }
 
 @property (strong) genericAdapter *adapter;
 @property (strong) genericAdapter *runningAdapter;
-@property NSTextView *logTextView;
+@property (unsafe_unretained) NSTextView *logTextView;
 
 - (BOOL) aiccuConfigExists;
 
@@ -42,7 +46,6 @@
 
 - (void) setAdapterView:(NSString *)View;
 - (NSArray*)adapterList;
-//- (void)setLogTextView:(NSTextView*)textView;
 
 + (id)defaultMaiccu;
 @end

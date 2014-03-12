@@ -34,6 +34,9 @@ static TKZMaiccu *defaultMaiccu = nil;
         };
         [self setRunningAdapter:_adapter];
 
+        _postQueue = [[NSMutableArray alloc] init];
+        _postTimer = nil;
+        _postNotificationCount = 0;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aiccuNotification:) name:TKZAiccuStatus object:nil];
         [NSThread detachNewThreadSelector:@selector(distributiveObjectManager) toTarget:self withObject:nil];        
     }
@@ -70,20 +73,20 @@ static TKZMaiccu *defaultMaiccu = nil;
 }
 
 - (void)writeLogMessage:(NSString *)logMessage {
-    NSDictionary *attributes;
-    if (_logTextView) {
-        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
-    }
-
-    if (![self maiccuLogExists] ) {
-        [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
-    }
-    
     NSString *timeStamp = [[NSDate date] descriptionWithLocale:[NSLocale systemLocale]];
     
     NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-    @synchronized(_logTextView) {
+//    @synchronized(self) {
+    NSDictionary *attributes;
+    if (_logTextView) {
+        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
+    }
+    
+    if (![self maiccuLogExists] ) {
+        [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
+    }
+    
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[self maiccuLogPath]];
     [fileHandle seekToEndOfFile];
     
@@ -101,20 +104,56 @@ static TKZMaiccu *defaultMaiccu = nil;
         [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
     }
     [fileHandle closeFile];
-    }
+//    }
 }
 
 - (void)postNotification:(NSString *) message{
     [self writeLogMessage:message];
 
-    NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
-    [GrowlApplicationBridge notifyWithTitle:appName
-                                description:message
-                           notificationName:@"status"
-                                   iconData:nil
-                                   priority:0
-                                   isSticky:NO
-                               clickContext:nil];
+    [_postQueue addObject:message];
+    
+    [_postTimer invalidate];
+    _postNotificationCount++;
+    
+    if (_postNotificationCount >= 5) {
+        if(!(_postNotificationCount % 500)) {
+            [_postTimer invalidate];
+            [self postGrowlNotification];
+        }
+        else {
+            _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
+        }
+    }
+    else {
+        
+        [self postGrowlNotification];
+    }
+}
+
+- (void)postGrowlNotification {
+    NSMutableString *wholeMessage = [[NSMutableString alloc] init];
+    for (NSString *message in _postQueue) {
+        [wholeMessage appendString:message];
+    }
+    if ([wholeMessage length]) {
+        NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
+        [GrowlApplicationBridge notifyWithTitle:appName
+                                    description:wholeMessage
+                               notificationName:@"status"
+                                       iconData:nil
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:nil];
+        
+    }
+    
+    [_postQueue removeAllObjects];
+    
+}
+
+- (void)resetStatusNotificationCount {
+    _postNotificationCount = 0;
+    [self postGrowlNotification];
 }
 
 - (void)aiccuNotification:(NSNotification *)aNotification {

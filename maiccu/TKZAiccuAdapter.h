@@ -15,6 +15,4 @@
     NSMutableDictionary *_tunnelList;
 }
 
-//@property (strong) NSDictionary *tunnelInfo;
-
 @end

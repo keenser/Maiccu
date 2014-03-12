@@ -46,17 +46,6 @@
 {
     [super windowDidLoad];
 
-    NSString *log = [NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil];
-
-    if (log) {
-        [_logTextView setString:log];
-    }
-    NSFont *font = [NSFont fontWithName:@"Menlo Regular" size:10.0];
-    [_logTextView setFont:font];
-    [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
-    
-    [_maiccu setLogTextView:_logTextView];
-
     if ([[_maiccu adapter]config:@"username"]) {
         [[_maiccu adapter] showSheet:[self window]];
     }
@@ -107,6 +96,7 @@
     [_usernameField setStringValue:[[_maiccu adapter]config:@"username"]];
     [_passwordField setStringValue:[[_maiccu adapter]config:@"password"]];
     
+    [_logTextView setFont:[NSFont fontWithName:@"Menlo Regular" size:10.0]];
     [[_logTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
 //    [[_logTextView textContainer] setWidthTracksTextView:NO];
     [_logTextView setHorizontallyResizable:YES];
@@ -118,6 +108,8 @@
     [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
     
     [self sheetNotification:nil];
+    [self reloadWasClicked:nil];
+    [_maiccu setLogTextView:_logTextView];
 }
 
 - (void)sheetNotification:(NSNotification *)aNotification {
@@ -242,6 +234,7 @@
     [window setFrame:windowFrame display:YES animate:YES];
     if (newView == _logView) {
         [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
+//        [self reloadWasClicked:sender];
     }
 }
 
