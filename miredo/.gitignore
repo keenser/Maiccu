@@ -10,7 +10,6 @@ ABOUT-NLS
 aclocal.m4
 admin
 ChangeLog
-config.*
 configure
 Doxyfile
 INSTALL

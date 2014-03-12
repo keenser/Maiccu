@@ -6,7 +6,7 @@ build
 *~
 *~.nib
 *~.xib 
-.DS_Store 
+*.DS_Store 
 xcuserdata/
 tuntap/src/*.o
 tuntap/src/*/*.o
