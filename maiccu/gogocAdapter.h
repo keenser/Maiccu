@@ -3,7 +3,7 @@
 //  maiccu
 //
 //  Created by German Skalauhov on 30/01/2014.
-//  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
+//  Copyright (c) 2014 German Skalauhov. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

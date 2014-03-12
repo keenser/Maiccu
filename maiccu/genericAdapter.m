@@ -3,7 +3,7 @@
 //  maiccu
 //
 //  Created by German Skalauhov on 30/01/2014.
-//  Copyright (c) 2014 Kristof Hannemann. All rights reserved.
+//  Copyright (c) 2014 German Skalauhov. All rights reserved.
 //
 
 #import "genericAdapter.h"
@@ -16,8 +16,6 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 - (id)init
 {
     if (self=[super init]) {
-        _task = nil;
-        _postTimer = nil;
         validCredentials = YES;
     }
     return self;
@@ -41,14 +39,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 - (BOOL)startFrom:(NSString *)path withArgs:(NSArray *)args
 {
     // Is the task running?
-    if (!_task){
-        if(_statusQueue == nil) {
-            _statusQueue = [[NSMutableArray alloc] init];
-        }
-        _statusNotificationCount = 0;
-        [_postTimer invalidate];
-        
-        //_status = [[NSMutableString alloc] init];
+    if (![_task isRunning]){
         _task = [[NSTask alloc] init];
         [_task setLaunchPath:path];
 		[_task setArguments:args];
@@ -84,7 +75,7 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
 
 - (void)stopFrom {
     // Is the task running?
-    if (_task) {
+    if ([_task isRunning]) {
         [_task interrupt];
     }
 }
@@ -93,72 +84,25 @@ NSString * const TKZAiccuStatus = @"AiccuStatus";
     return [_task isRunning];
 }
 
-//- (void)shiftFIFOArray:(NSMutableArray *)array withObject:(id)object{
-//    [array removeLastObject];
-//    [array insertObject:object atIndex:0];
-//}
-
 - (void)dataReady:(NSNotification *)n
 {
-    NSData *d;
-    d = [[n userInfo] valueForKey:NSFileHandleNotificationDataItem];
+    NSData *data;
+    data = [[n userInfo] valueForKey:NSFileHandleNotificationDataItem];
     
-	if ([d length]) {
+	if ([data length]) {
         
-        NSString *s = [[NSString alloc] initWithData:d
-                                            encoding:NSUTF8StringEncoding];
-        [_statusQueue addObject:s];
-        
-        [_postTimer invalidate];
-        _statusNotificationCount++;
-        
-        if (_statusNotificationCount >= 5) {
-            if(!(_statusNotificationCount % 500)) {
-                [_postTimer invalidate];
-                [self postAiccuStatusNotification];
-            }
-            else {
-                _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
-            }
-        }
-        else {
-            
-            [self postAiccuStatusNotification];
-        }
-        
-        
-    }
-    
-	// If the task is running, start reading again
-    if (_task)
-        [[_pipe fileHandleForReading] readInBackgroundAndNotify];
-}
-
-
-- (void)postAiccuStatusNotification {
-    
-    NSMutableString *wholeMessage = [[NSMutableString alloc] init];
-    for (NSString *message in _statusQueue) {
-        [wholeMessage appendString:message];
-    }
-    
-    if (![wholeMessage isEqualToString:@""]) {
+        NSString *wholeMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
     }
     
-    [_statusQueue removeAllObjects];
-    
-}
-
-- (void)resetStatusNotificationCount {
-    _statusNotificationCount = 0;
-    [self postAiccuStatusNotification];
+	// If the task is running, start reading again
+    if ([_task isRunning])
+        [[_pipe fileHandleForReading] readInBackgroundAndNotify];
 }
 
 - (void)taskTerminated:(NSNotification *)note
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuDidTerminate object:@([_task terminationStatus])];
-	_task = nil;
 }
 
 - (NSArray *)tunnelList
