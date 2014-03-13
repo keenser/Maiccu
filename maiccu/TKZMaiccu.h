@@ -10,6 +10,7 @@
 #import "genericAdapter.h"
 #import "TKZAiccuAdapter.h"
 #import "gogocAdapter.h"
+#import "TKZDetailsController.h"
 
 @interface TKZMaiccu : NSObject  {
     NSFileManager *_fileManager;
@@ -25,6 +26,7 @@
 @property (strong) genericAdapter *adapter;
 @property (strong) genericAdapter *runningAdapter;
 @property (unsafe_unretained) NSTextView *logTextView;
+@property TKZDetailsController *detailsController;
 
 - (BOOL) aiccuConfigExists;
 

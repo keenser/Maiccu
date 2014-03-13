@@ -78,10 +78,10 @@ static TKZMaiccu *defaultMaiccu = nil;
     NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
 //    @synchronized(self) {
-    NSDictionary *attributes;
-    if (_logTextView) {
-        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
-    }
+//    NSDictionary *attributes;
+//    if (_logTextView) {
+//        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
+//    }
     
     if (![self maiccuLogExists] ) {
         [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
@@ -94,15 +94,17 @@ static TKZMaiccu *defaultMaiccu = nil;
         if (![message isEqualToString:@""]) {
             NSString *formatedMessage = [NSString stringWithFormat:@"[%@] %@\n", timeStamp, message];
             [fileHandle writeData:[formatedMessage dataUsingEncoding:NSUTF8StringEncoding]];
-            if (_logTextView) {
-                NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:formatedMessage attributes:attributes];
-                [[_logTextView textStorage] appendAttributedString:attrString];
-            }
+//            if (_logTextView) {
+//                NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:formatedMessage attributes:attributes];
+//                [[_logTextView textStorage] appendAttributedString:attrString];
+//            }
+            [[self detailsController] updateLogView:formatedMessage full:NO scroll:NO];
         }
     }
-    if (_logTextView) {
-        [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
-    }
+//    if (_logTextView) {
+//        [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
+//    }
+    [[self detailsController] updateLogView:nil full:NO scroll:YES];
     [fileHandle closeFile];
 //    }
 }
@@ -113,9 +115,12 @@ static TKZMaiccu *defaultMaiccu = nil;
     [_postQueue addObject:message];
     
     _postNotificationCount++;
+    // Show first 5 notifications immegiatly and separately.
+    // show other notifications grouped by 5 collecting them in postQueue
     if (_postNotificationCount <= 5 || [_postQueue count]>=5) {
         [self postGrowlNotification];
     }
+    // clear notification counter after 4 seconds and show remaining notifications in postQueue
     [_postTimer invalidate];
     _postTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(resetStatusNotificationCount) userInfo:nil repeats:NO];
 }

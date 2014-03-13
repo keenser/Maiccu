@@ -28,6 +28,8 @@
     if (self) {
         _config = [[NSMutableDictionary alloc] init];
         _maiccu = [TKZMaiccu defaultMaiccu];
+        [_maiccu setDetailsController:self];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sheetNotification:) name:sheetControllerStatus object:nil];
     }
     return self;
@@ -38,7 +40,6 @@
     self = [super initWithWindow:window];
     if (self) {
     }
-    
     return self;
 }
 
@@ -108,8 +109,7 @@
     [_serverField setStringValue:[[_maiccu adapter]config:@"server"]];
     
     [self sheetNotification:nil];
-    [self reloadWasClicked:nil];
-    [_maiccu setLogTextView:_logTextView];
+    [self updateLogView:nil full:YES scroll:YES];
 }
 
 - (void)sheetNotification:(NSNotification *)aNotification {
@@ -233,8 +233,7 @@
     
     [window setFrame:windowFrame display:YES animate:YES];
     if (newView == _logView) {
-        [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
-//        [self reloadWasClicked:sender];
+        [self updateLogView:nil full:NO scroll:YES];
     }
 }
 
@@ -243,12 +242,29 @@
     
     [fileManager removeItemAtPath:[_maiccu maiccuLogPath] error:nil];
     [fileManager createFileAtPath:[_maiccu maiccuLogPath] contents:[NSData data] attributes:nil];
-    [self reloadWasClicked:sender];
+    [self updateLogView:nil full:YES scroll:YES];
 }
 
 - (IBAction)reloadWasClicked:(id)sender {
-    [_logTextView setString:[NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil]];
-    [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
+    [self updateLogView:nil full:YES scroll:YES];
+}
+
+- (void)updateLogView:(NSString*)message full:(BOOL)full scroll:(BOOL)scroll {
+    if (_logTextView == nil) return;
+
+    @synchronized(_logTextView) {
+        if (message) {
+            NSDictionary *attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
+            NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:message attributes:attributes];
+            [[_logTextView textStorage] appendAttributedString:attrString];
+        }
+        else if (full) {
+            [_logTextView setString:[NSString stringWithContentsOfFile:[_maiccu maiccuLogPath] encoding:NSUTF8StringEncoding error:nil]];
+        }
+        if (scroll) {
+            [_logTextView scrollRangeToVisible:NSMakeRange([[_logTextView string] length], 0)];
+        }
+    }
 }
 
 - (IBAction)infoWasClicked:(id)sender {
