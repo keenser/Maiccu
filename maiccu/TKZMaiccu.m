@@ -77,12 +77,6 @@ static TKZMaiccu *defaultMaiccu = nil;
     
     NSArray *messages = [logMessage componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-//    @synchronized(self) {
-//    NSDictionary *attributes;
-//    if (_logTextView) {
-//        attributes = [NSDictionary dictionaryWithObject:[_logTextView font] forKey:NSFontAttributeName];
-//    }
-    
     if (![self maiccuLogExists] ) {
         [_fileManager createFileAtPath:[self maiccuLogPath] contents:[NSData data] attributes:nil];
     }
@@ -94,19 +88,11 @@ static TKZMaiccu *defaultMaiccu = nil;
         if (![message isEqualToString:@""]) {
             NSString *formatedMessage = [NSString stringWithFormat:@"[%@] %@\n", timeStamp, message];
             [fileHandle writeData:[formatedMessage dataUsingEncoding:NSUTF8StringEncoding]];
-//            if (_logTextView) {
-//                NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:formatedMessage attributes:attributes];
-//                [[_logTextView textStorage] appendAttributedString:attrString];
-//            }
             [[self detailsController] updateLogView:formatedMessage full:NO scroll:NO];
         }
     }
-//    if (_logTextView) {
-//        [_logTextView scrollRangeToVisible: NSMakeRange([[_logTextView string] length], 0)];
-//    }
     [[self detailsController] updateLogView:nil full:NO scroll:YES];
     [fileHandle closeFile];
-//    }
 }
 
 - (void)postNotification:(NSString *) message{

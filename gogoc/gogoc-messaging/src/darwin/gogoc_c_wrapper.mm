@@ -21,8 +21,7 @@
 
 
 // The unique instance of the gogoCLIENT Messenger implementation object.
-gogocAdapter *pMessenger = nil;
-
+NSDistantObject *distantObject;
 
 
 // --------------------------------------------------------------------------
@@ -45,15 +44,15 @@ extern "C" error_t initialize_messaging( void )
 {
     @autoreleasepool {
         @try {
-            if (pMessenger == nil) {
-                pMessenger =(id)[NSConnection rootProxyForConnectionWithRegisteredName:@"com.twikz.Maiccu" host:nil];
+            if (distantObject == nil) {
+                distantObject = [NSConnection rootProxyForConnectionWithRegisteredName:@"com.twikz.Maiccu" host:nil];
             }
         }
         @catch (NSException *exception) {
             NSLog(@"%@",exception);
         }
+        return GOGOCM_UIS__NOERROR;
     }
-    return GOGOCM_UIS__NOERROR;
 }
 
 
@@ -73,13 +72,14 @@ extern "C" error_t initialize_messaging( void )
 // --------------------------------------------------------------------------
 extern "C" error_t uninitialize_messaging( void )
 {
-    if( pMessenger == nil )
-        return GOGOCM_UIS_CWRAPNOTINIT;
-    
     @autoreleasepool {
-        pMessenger = nil;
+        if( distantObject == nil )
+            return GOGOCM_UIS_CWRAPNOTINIT;
+    
+        [distantObject finalize];
+        distantObject = nil;
+        return GOGOCM_UIS__NOERROR;
     }
-    return GOGOCM_UIS__NOERROR;
 }
 
 
@@ -98,32 +98,33 @@ extern "C" error_t uninitialize_messaging( void )
 // --------------------------------------------------------------------------
 extern "C" error_t send_status_info( void )
 {
-    gogocStatusInfo* pStatusInfo = NULL;
-    error_t retCode = GOGOCM_UIS__NOERROR;
-    
-    
-    // Verify if messenger object has been initialized.
-    if( pMessenger == nil )
-        return GOGOCM_UIS_CWRAPNOTINIT;
-    
-    // Callback to the gogoCLIENT process, to gather required information.
-    retCode = RetrieveStatusInfo( &pStatusInfo );
-    if( retCode == GOGOCM_UIS__NOERROR )
-    {
-        @autoreleasepool {
+    @autoreleasepool {
+        gogocStatusInfo* pStatusInfo = NULL;
+        error_t retCode = GOGOCM_UIS__NOERROR;
+        
+        
+        // Verify if messenger object has been initialized.
+        if( distantObject == nil )
+            return GOGOCM_UIS_CWRAPNOTINIT;
+        
+        // Callback to the gogoCLIENT process, to gather required information.
+        retCode = RetrieveStatusInfo( &pStatusInfo );
+        if( retCode == GOGOCM_UIS__NOERROR )
+        {
             @try {
+                gogocAdapter *pMessenger = (id)[distantObject self];
                 [pMessenger statusUpdate:pStatusInfo];
             }
             @catch (NSException *exception) {
-                NSLog(@"%@",exception);
+                NSLog(@"send_status_info %@",exception);
             }
+            
+            // Frees the memory used by the StatusInfo object.
+            FreeStatusInfo( &pStatusInfo );
         }
         
-        // Frees the memory used by the StatusInfo object.
-        FreeStatusInfo( &pStatusInfo );
+        return retCode;
     }
-    
-    return retCode;
 }
 
 
@@ -142,32 +143,33 @@ extern "C" error_t send_status_info( void )
 // --------------------------------------------------------------------------
 extern "C" error_t send_tunnel_info( void )
 {
-    gogocTunnelInfo* pTunnelInfo = NULL;
-    error_t retCode = GOGOCM_UIS__NOERROR;
-    
-    
-    // Verify if messenger object has been initialized.
-    if( pMessenger == nil )
-        return GOGOCM_UIS_CWRAPNOTINIT;
-    
-    // Callback to the gogoCLIENT process, to gather required information.
-    retCode = RetrieveTunnelInfo( &pTunnelInfo );
-    if( retCode == GOGOCM_UIS__NOERROR )
-    {
-        @autoreleasepool {
+    @autoreleasepool {
+        gogocTunnelInfo* pTunnelInfo = NULL;
+        error_t retCode = GOGOCM_UIS__NOERROR;
+        
+        
+        // Verify if messenger object has been initialized.
+        if( distantObject == nil )
+            return GOGOCM_UIS_CWRAPNOTINIT;
+        
+        // Callback to the gogoCLIENT process, to gather required information.
+        retCode = RetrieveTunnelInfo( &pTunnelInfo );
+        if( retCode == GOGOCM_UIS__NOERROR )
+        {
             @try {
+                gogocAdapter *pMessenger = (id)[distantObject self];
                 [pMessenger tunnelUpdate:pTunnelInfo];
             }
             @catch (NSException *exception) {
-                NSLog(@"%@",exception);
+                NSLog(@"send_tunnel_info %@",exception);
             }
+            
+            // Frees the memory used by the TunnelInfo object.
+            FreeTunnelInfo( &pTunnelInfo );
         }
         
-        // Frees the memory used by the TunnelInfo object.
-        FreeTunnelInfo( &pTunnelInfo );
+        return retCode;
     }
-    
-    return retCode;
 }
 
 
@@ -186,32 +188,33 @@ extern "C" error_t send_tunnel_info( void )
 // --------------------------------------------------------------------------
 extern "C" error_t send_broker_list( void )
 {
-    gogocBrokerList* pBrokerList = NULL;
-    error_t retCode = GOGOCM_UIS__NOERROR;
-    
-    
-    // Verify if messenger object has been initialized.
-    if( pMessenger == nil )
-        return GOGOCM_UIS_CWRAPNOTINIT;
-    
-    // Callback to the gogoCLIENT process, to gather required information.
-    retCode = RetrieveBrokerList( &pBrokerList );
-    if( retCode == GOGOCM_UIS__NOERROR )
-    {
-        @autoreleasepool {
+    @autoreleasepool {
+        gogocBrokerList* pBrokerList = NULL;
+        error_t retCode = GOGOCM_UIS__NOERROR;
+        
+        
+        // Verify if messenger object has been initialized.
+        if( distantObject == nil )
+            return GOGOCM_UIS_CWRAPNOTINIT;
+        
+        // Callback to the gogoCLIENT process, to gather required information.
+        retCode = RetrieveBrokerList( &pBrokerList );
+        if( retCode == GOGOCM_UIS__NOERROR )
+        {
             @try {
+                gogocAdapter *pMessenger = (id)[distantObject self];
                 [pMessenger brokerUpdate:pBrokerList];
             }
             @catch (NSException *exception) {
-                NSLog(@"%@",exception);
+                NSLog(@"send_broker_list %@",exception);
             }
+            
+            // Frees the memory used by the BrokerList object.
+            FreeBrokerList( &pBrokerList );
         }
         
-        // Frees the memory used by the BrokerList object.
-        FreeBrokerList( &pBrokerList );
+        return retCode;
     }
-    
-    return retCode;
 }
 
 

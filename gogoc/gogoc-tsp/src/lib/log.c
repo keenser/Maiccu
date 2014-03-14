@@ -369,7 +369,6 @@ static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *Fu
 {
   time_t t;
   struct tm *tm;
-  char *s1, *s2;
   size_t i, j;
   char temp_buffer[MAX_LOG_LINE_LENGTH];
 
@@ -395,7 +394,8 @@ static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *Fu
   }
 
   i = pal_strlen(line_to_log);
-  s1 = s2 = malloc(i + 1);
+  char s2[i+1];
+  char *s1 = s2;
 
   if( s1 == NULL )
   {
@@ -433,9 +433,6 @@ static int LogToFile(int buffer, enum tSeverityLevel SeverityLvl, const char *Fu
     FunctionName == NULL ? "" : FunctionName,
 #endif
     s2 );
-
-  free(s2);
-
 
   if( buffer != 0 )
   {

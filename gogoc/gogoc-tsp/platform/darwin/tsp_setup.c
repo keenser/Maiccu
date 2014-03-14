@@ -44,7 +44,7 @@ routepr(void)
 {
 	size_t needed;
 	int mib[6];
-	char *buf, *next, *lim;
+	char *next, *lim;
 	struct rt_msghdr2 *rtm;
     char *gate = NULL;
     
@@ -58,18 +58,16 @@ routepr(void)
         return NULL;
 	}
     
-	if ( (buf = malloc(needed)) ) {
-        if (sysctl(mib, 6, buf, &needed, NULL, 0) >= 0) {
-            lim  = buf + needed;
-            for (next = buf; next < lim; next += rtm->rtm_msglen) {
-                rtm = (struct rt_msghdr2 *)next;
-                if ( (gate = np_rtentry(rtm)) ) {
-                    break;
-                }
+    char buf[needed];
+    if (sysctl(mib, 6, buf, &needed, NULL, 0) >= 0) {
+        lim  = buf + needed;
+        for (next = buf; next < lim; next += rtm->rtm_msglen) {
+            rtm = (struct rt_msghdr2 *)next;
+            if ( (gate = np_rtentry(rtm)) ) {
+                break;
             }
         }
-        free(buf);
-	}
+    }
     return gate;
 }
 
