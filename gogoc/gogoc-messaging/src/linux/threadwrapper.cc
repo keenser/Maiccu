@@ -91,7 +91,7 @@ bool ThreadWrapper::Run( void )
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
   // Launch thread procedure.
-  retCode = pthread_create( &m_tID, &attr, ThreadWrapper::ThreadProc, (void*)this );
+  retCode = pthread_create( &m_tID, &attr, &ThreadWrapper::ThreadProc, (void*)this );
 
   // We don't need the thread creation argument anymore.
   pthread_attr_destroy(&attr);
@@ -165,13 +165,14 @@ bool ThreadWrapper::ShouldStop( void ) const
 // Exceptions: (none)
 //
 // --------------------------------------------------------------------------
-void *ThreadWrapper::ThreadProc( void* lpvParam )
+DWORD WINAPI ThreadWrapper::ThreadProc( void* lpvParam )
 {
   assert( lpvParam != NULL );
 
   // Run the Work function of the object.
   ((ThreadWrapper*)lpvParam)->Work();
 
+  return (DWORD)1;
 }
 
 }

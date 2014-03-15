@@ -8,9 +8,9 @@
 // Description:
 //   Implementation of the C function wrappers.
 //
-// Author: Charles Nepveu
+// Author: German Skalauhov
 //
-// Creation Date: December 2006
+// Creation Date: Feb 2014
 // __________________________________________________________________________
 // **************************************************************************
 #import <Foundation/Foundation.h>

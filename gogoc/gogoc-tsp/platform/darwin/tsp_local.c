@@ -247,10 +247,10 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
                             ka_interval, t->client_address_ipv6,
                             t->keepalive_address );
 
-      Display( LOG_LEVEL_2, ELInfo, __func__, "end TunMainLoop. Starting tspClose.");
+      LOG( LOG_LEVEL_2, ELInfo, "end TunMainLoop. Starting tspClose.");
       // We got out of main V6UDPV4 loop.
       tspClose(socket, nt);
-      Display( LOG_LEVEL_2, ELInfo, __func__, "end tspClose.");
+      LOG( LOG_LEVEL_2, ELInfo, "end tspClose.");
     }
     else if( strcasecmp(t->type, STR_CONFIG_TUNNELMODE_V6V4) == 0 )
     {
@@ -271,6 +271,7 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
   // Cleanup: Close tunnel descriptor, if it was opened.
   if( tunfd != -1 )
   {
+    LOG( LOG_LEVEL_2, ELInfo, "Closing tunnel descriptor");
     // The tunnel file descriptor should be closed before attempting to tear
     // down the tunnel. Destruction of the tunnel interface may fail if
     // descriptor is not closed.
@@ -278,6 +279,7 @@ gogoc_status tspStartLocal( int socket, tConf *c, tTunnel *t, net_tools_t *nt )
   }
 
   // Cleanup: Handle tunnel teardown.
+  LOG( LOG_LEVEL_2, ELInfo, "Handle tunnel teardown");
   tspTearDownTunnel( c, t );
 
 

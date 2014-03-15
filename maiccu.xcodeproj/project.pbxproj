@@ -2223,6 +2223,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2251,6 +2255,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2346,8 +2354,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
@@ -2364,7 +2371,8 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
 					"AICCU_TYPE=\"\\\"darwin\\\"\"",
@@ -2381,8 +2389,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
@@ -2400,7 +2407,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
 					"AICCU_TYPE=\"\\\"darwin\\\"\"",
@@ -2417,7 +2425,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2433,7 +2444,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2448,7 +2462,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2463,7 +2480,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2479,7 +2499,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2495,7 +2518,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2511,7 +2537,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2527,7 +2556,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2543,7 +2575,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2559,7 +2594,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2606,8 +2644,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					V4V6_SUPPORT,
 					DEBUG,
+					V4V6_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2627,8 +2665,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					V4V6_SUPPORT,
 					DEBUG,
+					V4V6_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2649,7 +2687,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PLATFORM=\\\"darwin\\\"",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
@@ -2665,7 +2706,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PLATFORM=\\\"darwin\\\"",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
@@ -2680,7 +2724,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2697,7 +2740,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2715,7 +2757,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2733,7 +2774,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2833,6 +2873,7 @@
 				7E385EE618CDD5DA00C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385EF718CE320700C9E853 /* Build configuration list for PBXNativeTarget "miredo" */ = {
 			isa = XCConfigurationList;
@@ -2841,6 +2882,7 @@
 				7E385EF918CE320700C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F0118CE3BB600C9E853 /* Build configuration list for PBXNativeTarget "libtun6" */ = {
 			isa = XCConfigurationList;
@@ -2849,6 +2891,7 @@
 				7E385F0318CE3BB600C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F0C18CE3E3E00C9E853 /* Build configuration list for PBXNativeTarget "libteredo" */ = {
 			isa = XCConfigurationList;
@@ -2857,6 +2900,7 @@
 				7E385F0E18CE3E3E00C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F2118CE436000C9E853 /* Build configuration list for PBXNativeTarget "libcompat" */ = {
 			isa = XCConfigurationList;
@@ -2865,6 +2909,7 @@
 				7E385F2318CE436000C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
 			isa = XCConfigurationList;
