@@ -16,7 +16,7 @@
 /* _______________________________________________________________________ */
 /* *********************************************************************** */
 #include <gogocconfig/gogocuistrings.h>
-
+#include <sys/types.h>
 
 /* Struct containing string IDs with the related string.                   */
 typedef struct { error_t _id; const char* _str; } tgogocUIStrings;
@@ -199,8 +199,8 @@ static const tgogocUIStrings gogocUIStrings[] = {
 // --------------------------------------------------------------------------
 const char* get_ui_string( const error_t id )
 {
-  const unsigned int n = sizeof(gogocUIStrings) / sizeof(gogocUIStrings[0]);
-  unsigned int i;
+  size_t n = sizeof(gogocUIStrings) / sizeof(gogocUIStrings[0]);
+  size_t i;
 
   for(i=0; i<n; i++)
     if(gogocUIStrings[i]._id == id)

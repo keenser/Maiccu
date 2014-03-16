@@ -210,7 +210,7 @@ bool Validate_HostType( const string& sHostType )
   if( sHostType.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgHOSTTYPE_values)/sizeof(cfgHOSTTYPE_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgHOSTTYPE_values)/sizeof(cfgHOSTTYPE_values[0])); i++)
   {
     if( sHostType == cfgHOSTTYPE_values[i] )
       return true;
@@ -324,7 +324,7 @@ bool Validate_AuthMethod( const string& sAuthMethod )
   if( sAuthMethod.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgAUTHMETHOD_values)/sizeof(cfgAUTHMETHOD_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgAUTHMETHOD_values)/sizeof(cfgAUTHMETHOD_values[0])); i++)
   {
     if( sAuthMethod == cfgAUTHMETHOD_values[i] )
       return true;
@@ -341,7 +341,7 @@ bool Validate_AutoRetryConnect( const string& sAutoRetryConnect )
   if( sAutoRetryConnect.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgAUTORETRYCONNECT_values)/sizeof(cfgAUTORETRYCONNECT_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgAUTORETRYCONNECT_values)/sizeof(cfgAUTORETRYCONNECT_values[0])); i++)
   {
     if( sAutoRetryConnect == cfgAUTORETRYCONNECT_values[i] )
       return true;
@@ -535,7 +535,7 @@ bool Validate_DSLite( const string& sDSLite )
 
   {
     struct in_addr address;
-    unsigned long net;
+    in_addr_t net;
 
     net = inet_addr( sDSLite.c_str() );
     memcpy(&address, &net, sizeof(net));
@@ -575,7 +575,7 @@ bool Validate_ClientV6( const string& sClientV6 )
 bool Validate_Template( const string& sTemplate )
 {
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgTEMPLATE_values)/sizeof(cfgTEMPLATE_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgTEMPLATE_values)/sizeof(cfgTEMPLATE_values[0])); i++)
   {
     if( sTemplate == cfgTEMPLATE_values[i] )
       return true;
@@ -592,7 +592,7 @@ bool Validate_ProxyClient( const string& sProxyClient )
   if( sProxyClient.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgPROXYCLIENT_values)/sizeof(cfgPROXYCLIENT_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgPROXYCLIENT_values)/sizeof(cfgPROXYCLIENT_values[0])); i++)
   {
     if( sProxyClient == cfgPROXYCLIENT_values[i] )
       return true;
@@ -649,7 +649,7 @@ bool Validate_AlwaysUseLastSrv( const string& sAlwaysUseLastSrv )
   if( sAlwaysUseLastSrv.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgALWAYSUSELASTSVR_values)/sizeof(cfgALWAYSUSELASTSVR_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgALWAYSUSELASTSVR_values)/sizeof(cfgALWAYSUSELASTSVR_values[0])); i++)
   {
     if( sAlwaysUseLastSrv == cfgALWAYSUSELASTSVR_values[i] )
       return true;
@@ -664,7 +664,7 @@ bool Validate_LogDevice( const string& sLogDevice )
 {
   // Not facultative.
   // Check log device
-  for(unsigned int i=0; i<(sizeof(cfgLOGDEVICE_values)/sizeof(cfgLOGDEVICE_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgLOGDEVICE_values)/sizeof(cfgLOGDEVICE_values[0])); i++)
   {
     if( sLogDevice == cfgLOGDEVICE_values[i] )
       return true;
@@ -717,7 +717,7 @@ bool Validate_LogRotation( const string& sLogRotation )
   if( sLogRotation.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgLOGROTATION_values)/sizeof(cfgLOGROTATION_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgLOGROTATION_values)/sizeof(cfgLOGROTATION_values[0])); i++)
   {
     if( sLogRotation == cfgLOGROTATION_values[i] )
       return true;
@@ -734,7 +734,7 @@ bool Validate_LogRotationSz( const string& sLogRotationSz )
   if( sLogRotationSz.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgLOGROTATIONSZ_values)/sizeof(cfgLOGROTATIONSZ_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgLOGROTATIONSZ_values)/sizeof(cfgLOGROTATIONSZ_values[0])); i++)
   {
     if( sLogRotationSz == cfgLOGROTATIONSZ_values[i] )
       return true;
@@ -751,7 +751,7 @@ bool Validate_LogRotationDel( const string& sLogRotationDel )
   if( sLogRotationDel.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgLOGROTATIONDEL_values)/sizeof(cfgLOGROTATIONDEL_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgLOGROTATIONDEL_values)/sizeof(cfgLOGROTATIONDEL_values[0])); i++)
   {
     if( sLogRotationDel == cfgLOGROTATIONDEL_values[i] )
       return true;
@@ -768,7 +768,7 @@ bool Validate_SysLogFacility( const string& sSysLogFacility )
   if( sSysLogFacility.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgSYSLOGFACILITY_values)/sizeof(cfgSYSLOGFACILITY_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgSYSLOGFACILITY_values)/sizeof(cfgSYSLOGFACILITY_values[0])); i++)
   {
     if( sSysLogFacility == cfgSYSLOGFACILITY_values[i] )
       return true;
@@ -785,7 +785,7 @@ bool Validate_haccessProxyEnabled( const string& shaccessProxyEnabled )
   if( shaccessProxyEnabled.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgHACCESSPROXYENABLED_values)/sizeof(cfgHACCESSPROXYENABLED_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgHACCESSPROXYENABLED_values)/sizeof(cfgHACCESSPROXYENABLED_values[0])); i++)
   {
     if( shaccessProxyEnabled == cfgHACCESSPROXYENABLED_values[i] )
       return true;
@@ -802,7 +802,7 @@ bool Validate_haccessWebEnabled( const string& shaccessWebEnabled )
   if( shaccessWebEnabled.size() == 0 ) return true;
 
   // Check against domain values.
-  for(unsigned int i=0; i<(sizeof(cfgHACCESSWEBENABLED_values)/sizeof(cfgHACCESSWEBENABLED_values[0])); i++)
+  for(size_t i=0; i<(sizeof(cfgHACCESSWEBENABLED_values)/sizeof(cfgHACCESSWEBENABLED_values[0])); i++)
   {
     if( shaccessWebEnabled == cfgHACCESSWEBENABLED_values[i] )
       return true;

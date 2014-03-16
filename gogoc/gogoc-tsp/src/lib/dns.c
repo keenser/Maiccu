@@ -257,7 +257,7 @@ DNSUpdate(pal_socket_t Socket, char *Name, char *Domain, char *AAAA)
 		return ret;
 
 	/* Send request to server */
-	if (NetTCP6Write(Socket, Buffer, (sint32_t)Len) != (sint32_t)Len)
+	if (NetTCP6Write(Socket, Buffer, Len) != Len)
 		return DNS_RCODE_SERVFAIL;
 
 	/* Read response */
