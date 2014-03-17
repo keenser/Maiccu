@@ -70,14 +70,10 @@
 		7E385F2818CE440D00C9E853 /* clearenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E2D3B0A18BA22A700CD7DBF /* clearenv.c */; };
 		7E385F2A18CE469800C9E853 /* tdestroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E385F2918CE469700C9E853 /* tdestroy.c */; };
 		7E4CBD6318B259E400536814 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
-		7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDA518BDDCC900536814 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CBDA418BDDCC900536814 /* main.cpp */; };
 		7E4CBDA718BDDCC900536814 /* messager.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E4CBDA618BDDCC900536814 /* messager.1 */; };
-		7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBC18B0BC380040D76A /* libstdc++.dylib */; };
 		7E4CBDC318C0A08300536814 /* tsp_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8018BFACD400D32099 /* tsp_setup.c */; };
 		7E4CBDC518C0A0B500536814 /* aiccu in Resources */ = {isa = PBXBuildFile; fileRef = 7E1D9C8718BFB06800D32099 /* aiccu */; };
-		7E4CBDC718C0A62A00536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
-		7E4CBDCB18C0BD3700536814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
 		7E4CBDCC18C0D23F00536814 /* namevalueconfig.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95C18AFA08D0044F1AB /* namevalueconfig.cc */; };
 		7E4CBDCD18C0D24A00536814 /* namevalueparser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95D18AFA08D0044F1AB /* namevalueparser.cc */; };
 		7E4CBDCE18C0D25600536814 /* gogocvalidation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E22E95918AFA08D0044F1AB /* gogocvalidation.cc */; };
@@ -132,6 +128,9 @@
 		7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04518B0072D0029F38B /* libgogoc-pal.a */; };
 		7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4DD04E18B009DD0029F38B /* libgogoc-config.a */; };
 		7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E769BBA18B0BB990040D76A /* libcrypto.dylib */; };
+		7ED14E9A18D4B0C900C4EE61 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED14E9818D4B06C00C4EE61 /* libc++.dylib */; };
+		7ED14E9B18D4B0D900C4EE61 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED14E9818D4B06C00C4EE61 /* libc++.dylib */; };
+		7ED14E9C18D4B54500C4EE61 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D949030173514E2002283B0 /* Foundation.framework */; };
 		7EDEC10C189A38510087E8CF /* gogocAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10B189A38510087E8CF /* gogocAdapter.m */; settings = {COMPILER_FLAGS = "-DV4V6_SUPPORT"; }; };
 		7EDEC10F189A3C0C0087E8CF /* genericAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDEC10E189A3C0C0087E8CF /* genericAdapter.m */; };
 /* End PBXBuildFile section */
@@ -606,12 +605,12 @@
 		7E4DD04E18B009DD0029F38B /* libgogoc-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E4DD06018B00B770029F38B /* libgogoc-messaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgogoc-messaging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E769BBA18B0BB990040D76A /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libcrypto.dylib; sourceTree = DEVELOPER_DIR; };
-		7E769BBC18B0BC380040D76A /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.dylib"; sourceTree = DEVELOPER_DIR; };
 		7E78530718C4DD9100D48343 /* gogoc_c_wrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = gogoc_c_wrapper.mm; path = darwin/gogoc_c_wrapper.mm; sourceTree = "<group>"; };
 		7EA1890018B4CCAF00943303 /* darwin.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = darwin.sh; sourceTree = "<group>"; };
 		7EA1890818B4CCAF00943303 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		7EA1892018B4FC1600943303 /* gogoc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gogoc; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA1892C18B4FD6F00943303 /* unix-main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "unix-main.c"; sourceTree = "<group>"; };
+		7ED14E9818D4B06C00C4EE61 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		7EDEC10A189A38510087E8CF /* gogocAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gogocAdapter.h; sourceTree = "<group>"; };
 		7EDEC10B189A38510087E8CF /* gogocAdapter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gogocAdapter.m; sourceTree = "<group>"; };
 		7EDEC10D189A3C0C0087E8CF /* genericAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genericAdapter.h; sourceTree = "<group>"; };
@@ -623,7 +622,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E4CBD6418B25CD200536814 /* libstdc++.dylib in Frameworks */,
+				7ED14E9B18D4B0D900C4EE61 /* libc++.dylib in Frameworks */,
 				6D94902C173514E2002283B0 /* Cocoa.framework in Frameworks */,
 				6D9A463E174938DA008389B4 /* Growl.framework in Frameworks */,
 				7E6C788F18C62BE00072EFE1 /* libgogoc-messaging.a in Frameworks */,
@@ -647,7 +646,6 @@
 			files = (
 				7E21B89718BFBFE6003F4F70 /* libresolv.dylib in Frameworks */,
 				7E21B8B118BFC9A6003F4F70 /* liblibaiccu.a in Frameworks */,
-				7E4CBDC718C0A62A00536814 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,13 +736,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E4CBDCB18C0BD3700536814 /* Foundation.framework in Frameworks */,
-				7E4CBDB618BF22D900536814 /* libstdc++.dylib in Frameworks */,
+				7ED14E9A18D4B0C900C4EE61 /* libc++.dylib in Frameworks */,
 				7EA1893518B4FF8F00943303 /* libcrypto.dylib in Frameworks */,
 				7E78530B18C5071600D48343 /* libgogoc-messaging.a in Frameworks */,
 				7EA1893018B4FF1200943303 /* libgogoc-tsp.a in Frameworks */,
 				7EA1893118B4FF1C00943303 /* libgogoc-pal.a in Frameworks */,
 				7EA1893218B4FF1F00943303 /* libgogoc-config.a in Frameworks */,
+				7ED14E9C18D4B54500C4EE61 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,8 +789,8 @@
 		6D94902A173514E2002283B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7ED14E9818D4B06C00C4EE61 /* libc++.dylib */,
 				7E21B89618BFBFE6003F4F70 /* libresolv.dylib */,
-				7E769BBC18B0BC380040D76A /* libstdc++.dylib */,
 				7E769BBA18B0BB990040D76A /* libcrypto.dylib */,
 				6D9A463D174938DA008389B4 /* Growl.framework */,
 				6D94902B173514E2002283B0 /* Cocoa.framework */,
@@ -2210,8 +2208,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -2219,10 +2217,14 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2239,8 +2241,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -2249,8 +2251,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2343,11 +2349,7 @@
 		7E1D9C8D18BFB06900D32099 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
@@ -2361,10 +2363,8 @@
 		7E1D9C8E18BFB06900D32099 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
 					"AICCU_TYPE=\"\\\"darwin\\\"\"",
@@ -2377,12 +2377,8 @@
 		7E21B8A318BFC93E003F4F70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
@@ -2396,11 +2392,9 @@
 		7E21B8A418BFC93E003F4F70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					"_DARWIN=1",
 					"NEED_IFHEAD=1",
 					"AICCU_TYPE=\"\\\"darwin\\\"\"",
@@ -2413,11 +2407,11 @@
 		7E385EE518CDD5DA00C9E853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2429,11 +2423,11 @@
 		7E385EE618CDD5DA00C9E853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2445,10 +2439,10 @@
 		7E385EF818CE320700C9E853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2460,10 +2454,10 @@
 		7E385EF918CE320700C9E853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2475,11 +2469,11 @@
 		7E385F0218CE3BB600C9E853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2491,11 +2485,11 @@
 		7E385F0318CE3BB600C9E853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2507,11 +2501,11 @@
 		7E385F0D18CE3E3E00C9E853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2523,11 +2517,11 @@
 		7E385F0E18CE3E3E00C9E853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2539,11 +2533,11 @@
 		7E385F2218CE436000C9E853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2555,11 +2549,11 @@
 		7E385F2318CE436000C9E853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					miredo/include,
 					miredo,
@@ -2571,9 +2565,6 @@
 		7E4CBDA918BDDCC900536814 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
@@ -2587,9 +2578,6 @@
 		7E4CBDAA18BDDCC900536814 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/platform/unix-common/inc",
@@ -2606,8 +2594,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					V4V6_SUPPORT,
 					DEBUG,
+					V4V6_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2627,8 +2615,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					V4V6_SUPPORT,
 					DEBUG,
+					V4V6_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2645,11 +2633,11 @@
 		7E4DD04718B0072D0029F38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PLATFORM=\\\"darwin\\\"",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
@@ -2661,11 +2649,11 @@
 		7E4DD04818B0072D0029F38B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "PLATFORM=\\\"darwin\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PLATFORM=\\\"darwin\\\"",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/platform/common/inc",
 					"gogoc/gogoc-pal/defs",
@@ -2677,10 +2665,7 @@
 		7E4DD05018B009DE0029F38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2694,10 +2679,7 @@
 		7E4DD05118B009DE0029F38B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2711,11 +2693,7 @@
 		7E4DD06218B00B770029F38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2729,11 +2707,7 @@
 		7E4DD06318B00B770029F38B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"gogoc/gogoc-pal/defs",
 					"gogoc/gogoc-pal/platform/common/inc",
@@ -2833,6 +2807,7 @@
 				7E385EE618CDD5DA00C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385EF718CE320700C9E853 /* Build configuration list for PBXNativeTarget "miredo" */ = {
 			isa = XCConfigurationList;
@@ -2841,6 +2816,7 @@
 				7E385EF918CE320700C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F0118CE3BB600C9E853 /* Build configuration list for PBXNativeTarget "libtun6" */ = {
 			isa = XCConfigurationList;
@@ -2849,6 +2825,7 @@
 				7E385F0318CE3BB600C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F0C18CE3E3E00C9E853 /* Build configuration list for PBXNativeTarget "libteredo" */ = {
 			isa = XCConfigurationList;
@@ -2857,6 +2834,7 @@
 				7E385F0E18CE3E3E00C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E385F2118CE436000C9E853 /* Build configuration list for PBXNativeTarget "libcompat" */ = {
 			isa = XCConfigurationList;
@@ -2865,6 +2843,7 @@
 				7E385F2318CE436000C9E853 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E4CBDA818BDDCC900536814 /* Build configuration list for PBXNativeTarget "messager" */ = {
 			isa = XCConfigurationList;

@@ -142,7 +142,7 @@
 #define LT_OBJDIR ".libs/"
 
 /* Define to the default system username to be used. */
-#define MIREDO_DEFAULT_USERNAME "nobody"
+//#define MIREDO_DEFAULT_USERNAME "nobody"
 
 /* Define to 1 if the Teredo client support must be compiled. */
 #define MIREDO_TEREDO_CLIENT 1
@@ -185,7 +185,7 @@
 
 #define LOCALSTATEDIR "."
 #define LOCALEDIR "."
-#define SYSCONFDIR "."
+#define SYSCONFDIR "/opt/local/etc"
 #define PKGLIBEXECDIR "."
 
 /* Define to 1 if you have the ANSI C header files. */

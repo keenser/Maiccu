@@ -208,8 +208,8 @@ init_security (const char *username)
 	int val;
 
 	(void)umask (022);
-	if (chdir ("/"))
-		return -1;
+//	if (chdir ("/"))
+//		return -1;
 
 	/*
 	 * We close all file handles, except 0, 1 and 2.

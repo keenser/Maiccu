@@ -174,7 +174,9 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
     gTunnelInfo[@"type"] = gTunnelList[@(pTunnelInfo->eTunnelType)];
     gTunnelInfo[@"ipv6_delegatedprefix"] = cstons(pTunnelInfo->szDelegatedPrefix);
     gTunnelInfo[@"addr_dns"] = cstons(pTunnelInfo->szIPV6AddrDns);
-    gTunnelInfo[@"user_domain"] = cstons(pTunnelInfo->szUserDomain);
+    gTunnelInfo[@"pop_id"] = cstons(pTunnelInfo->szUserDomain);
+    gTunnelInfo[@"mtu"] = @1280U;
+    gTunnelInfo[@"ipv6_prefixlength"] = @128;
 }
 
 - (oneway void) brokerUpdate:(gogocBrokerList*)gBrokerList {

@@ -31,7 +31,6 @@ extern int indSigHUP; /* Declared in every unix platform tsp_local.c */
 */
 void signal_handler( int sigraised )
 {
-//  if( sigraised == SIGHUP )
   indSigHUP = 1;
   signal(sigraised, SIG_IGN);
 }
