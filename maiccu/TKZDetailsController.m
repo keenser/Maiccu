@@ -15,6 +15,7 @@
 @interface TKZDetailsController () {
     NSMutableDictionary *_config;
     TKZMaiccu *_maiccu;
+    NSSize accountViewSize;
 }
 -(id)hyperlinkFromString:(NSString*)inString withURL:(NSURL*)aURL;
 
@@ -46,6 +47,7 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+    accountViewSize = [_accountView frame].size;
 
     if ([[_maiccu adapter]config:@"username"]) {
         [[_maiccu adapter] showSheet:[self window]];
@@ -91,7 +93,7 @@
     [_signupLabel setSelectable:YES];
     [_signupLabel setAttributedStringValue:[self hyperlinkFromString:@"No account yet? Sign up on sixXS.net" withURL:[NSURL URLWithString:@"http://www.sixxs.net"]]];
     
-    [_brokerPopUp addItemsWithTitles:[_maiccu adapterList]];
+    [_brokerPopUp addItemsWithTitles:[_maiccu adapters]];
     [_brokerPopUp selectItemWithTitle:[[_maiccu adapter] name]];
     
     [_usernameField setStringValue:[[_maiccu adapter]config:@"username"]];
@@ -205,25 +207,26 @@
 - (IBAction)logButtonWasClicked:(id)sender {
     NSWindow *window = [self window];
     NSView *newView = nil;
-
+    NSSize newSize;
+    
     if ([sender state]) {
         newView = _logView;
+        newSize = [_logView frame].size;
         [window setStyleMask:[window styleMask] | NSResizableWindowMask];
     }
     else {
         newView = _accountView;
+        newSize = accountViewSize;
         [window setStyleMask:[window styleMask] & ~NSResizableWindowMask];
     }
 
     NSSize currentSize = [[window contentView] frame].size;
-    NSSize newSize = [newView frame].size;
 	
     float deltaHeight = newSize.height - currentSize.height;
     float deltaWidth = newSize.width - currentSize.width;
     
     NSRect windowFrame = [window frame];
     
-    [window setContentView:newView];
     NSRect viewScreenFrame;
     viewScreenFrame.origin.x = windowFrame.origin.x - deltaWidth/2;
     viewScreenFrame.origin.y = windowFrame.origin.y - deltaHeight;
@@ -231,9 +234,16 @@
     viewScreenFrame.size.width = newSize.width;
     windowFrame = [window frameRectForContentRect:viewScreenFrame];
     
-    [window setFrame:windowFrame display:YES animate:YES];
-    if (newView == _logView) {
+    if ([sender state]) {
+        // resize window first, then change view
+        [window setFrame:windowFrame display:YES animate:YES];
+        [window setContentView:newView];
         [self updateLogView:nil full:NO scroll:YES];
+    }
+    else {
+        // change view first, then resize
+        [window setContentView:newView];
+        [window setFrame:windowFrame display:YES animate:YES];
     }
 }
 

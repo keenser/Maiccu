@@ -49,7 +49,7 @@ extern "C" error_t initialize_messaging( void )
             }
         }
         @catch (NSException *exception) {
-            NSLog(@"%@",exception);
+            NSLog(@"initialize_messaging %@",exception);
         }
         return GOGOCM_UIS__NOERROR;
     }
@@ -75,8 +75,6 @@ extern "C" error_t uninitialize_messaging( void )
     @autoreleasepool {
         if( distantObject == nil )
             return GOGOCM_UIS_CWRAPNOTINIT;
-    
-        [distantObject finalize];
         distantObject = nil;
         return GOGOCM_UIS__NOERROR;
     }

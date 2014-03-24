@@ -186,7 +186,7 @@
 #define LOCALSTATEDIR "."
 #define LOCALEDIR "."
 #define SYSCONFDIR "/opt/local/etc"
-#define PKGLIBEXECDIR "."
+#define PKGLIBEXECDIR "/opt/local/lib/miredo"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

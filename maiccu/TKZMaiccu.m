@@ -22,9 +22,10 @@ static TKZMaiccu *defaultMaiccu = nil;
         _aiccu = [[TKZAiccuAdapter alloc] initWithHomeDir:[[self appSupportURL] path]];
         _gogoc = [[gogocAdapter alloc] initWithHomeDir:[[self appSupportURL] path]];
 
-        _adapterList = [[NSMutableDictionary alloc] init];
-        _adapterList[[_aiccu name]] = _aiccu;
-        _adapterList[[_gogoc name]] = _gogoc;
+        NSMutableDictionary *_adapters = [[NSMutableDictionary alloc] init];
+        _adapters[[_aiccu name]] = _aiccu;
+        _adapters[[_gogoc name]] = _gogoc;
+        [self setAdapterList:_adapters];
 
         NSString *adapter = [[NSUserDefaults standardUserDefaults] stringForKey:@"adapter"];
         
@@ -190,7 +191,7 @@ static TKZMaiccu *defaultMaiccu = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSArray*)adapterList {
+- (NSArray*)adapters {
     return [_adapterList allKeys];
 }
 

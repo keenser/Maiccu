@@ -155,34 +155,54 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
 }
 
 - (oneway void) print:(NSDictionary*)message {
-    NSLog(@"print %@",message);
+    @try {
+        NSLog(@"print %@",message);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"statusUpdate %@",exception);
+    }
 }
 
 - (oneway void) statusUpdate:(gogocStatusInfo*)pStatusInfo {
-    gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
-    gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
-    NSString *wholeMessage = [NSString stringWithFormat:@"gogoc-messager status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
+    @try {
+        gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
+        gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
+        NSString *wholeMessage = [NSString stringWithFormat:@"gogoc-messager status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"statusUpdate %@",exception);
+    }
 }
 
 - (oneway void) tunnelUpdate:(gogocTunnelInfo*)pTunnelInfo {
-    gTunnelInfo[@"id"] = cstons(pTunnelInfo->szBrokerName);
-    gTunnelInfo[@"ipv4_local"] = cstons(pTunnelInfo->szIPV4AddrLocalEndpoint);
-    gTunnelInfo[@"ipv6_local"] = cstons(pTunnelInfo->szIPV6AddrLocalEndpoint);
-    gTunnelInfo[@"ipv4_pop"] = cstons(pTunnelInfo->szIPV4AddrRemoteEndpoint);
-    gTunnelInfo[@"ipv6_pop"] = cstons(pTunnelInfo->szIPV6AddrRemoteEndpoint);
-    gTunnelInfo[@"type"] = gTunnelList[@(pTunnelInfo->eTunnelType)];
-    gTunnelInfo[@"ipv6_delegatedprefix"] = cstons(pTunnelInfo->szDelegatedPrefix);
-    gTunnelInfo[@"addr_dns"] = cstons(pTunnelInfo->szIPV6AddrDns);
-    gTunnelInfo[@"pop_id"] = cstons(pTunnelInfo->szUserDomain);
-    gTunnelInfo[@"mtu"] = @1280U;
-    gTunnelInfo[@"ipv6_prefixlength"] = @128;
+    @try {
+        gTunnelInfo[@"id"] = cstons(pTunnelInfo->szBrokerName);
+        gTunnelInfo[@"ipv4_local"] = cstons(pTunnelInfo->szIPV4AddrLocalEndpoint);
+        gTunnelInfo[@"ipv6_local"] = cstons(pTunnelInfo->szIPV6AddrLocalEndpoint);
+        gTunnelInfo[@"ipv4_pop"] = cstons(pTunnelInfo->szIPV4AddrRemoteEndpoint);
+        gTunnelInfo[@"ipv6_pop"] = cstons(pTunnelInfo->szIPV6AddrRemoteEndpoint);
+        gTunnelInfo[@"type"] = gTunnelList[@(pTunnelInfo->eTunnelType)];
+        gTunnelInfo[@"ipv6_delegatedprefix"] = cstons(pTunnelInfo->szDelegatedPrefix);
+        gTunnelInfo[@"addr_dns"] = cstons(pTunnelInfo->szIPV6AddrDns);
+        gTunnelInfo[@"pop_id"] = cstons(pTunnelInfo->szUserDomain);
+        gTunnelInfo[@"mtu"] = @1280U;
+        gTunnelInfo[@"ipv6_prefixlength"] = @128U;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"statusUpdate %@",exception);
+    }
 }
 
 - (oneway void) brokerUpdate:(gogocBrokerList*)gBrokerList {
-    while (gBrokerList) {
-        NSLog(@"%s %d",gBrokerList->szAddress,gBrokerList->nDistance);
-        gBrokerList = gBrokerList->next;
+    @try {
+        while (gBrokerList) {
+            NSLog(@"%s %d",gBrokerList->szAddress,gBrokerList->nDistance);
+            gBrokerList = gBrokerList->next;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"statusUpdate %@",exception);
     }
 }
 

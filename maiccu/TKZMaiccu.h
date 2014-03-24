@@ -16,7 +16,6 @@
     NSFileManager *_fileManager;
     TKZAiccuAdapter *_aiccu;
     gogocAdapter *_gogoc;
-    NSMutableDictionary *_adapterList;
 
     NSMutableArray *_postQueue;
     NSTimer *_postTimer;
@@ -27,6 +26,7 @@
 @property (strong) genericAdapter *runningAdapter;
 @property (unsafe_unretained) NSTextView *logTextView;
 @property TKZDetailsController *detailsController;
+@property (strong) NSDictionary *adapterList;
 
 - (BOOL) aiccuConfigExists;
 
@@ -47,7 +47,7 @@
 - (void)startAdapter;
 
 - (void) setAdapterView:(NSString *)View;
-- (NSArray*)adapterList;
+- (NSArray*)adapters;
 
 + (id)defaultMaiccu;
 @end

@@ -44,7 +44,11 @@
         ) {
         
         NSDictionary *error = [NSDictionary new];
-        NSString *shellCmd = [NSString stringWithFormat:@"chmod 6755 \'%@\'; chown root:wheel \'%@\'", [_maiccu aiccuPath], [_maiccu aiccuPath]];
+        NSMutableString *adapters = [[NSMutableString alloc] init];
+        for (genericAdapter *adapter in [[_maiccu adapterList] allValues]) {
+            [adapters appendString:[NSString stringWithFormat:@" \'%@\'",[[NSBundle mainBundle] pathForResource:[adapter binary] ofType:@""]]];
+        }
+        NSString *shellCmd = [NSString stringWithFormat:@"chmod 6755 %@; chown root:wheel %@", adapters, adapters];
         NSString *script =  [NSString  stringWithFormat:@"do shell script \"%@\" with administrator privileges", shellCmd];;
         NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
         if ([appleScript executeAndReturnError:&error]) {
