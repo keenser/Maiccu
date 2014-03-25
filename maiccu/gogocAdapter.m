@@ -192,6 +192,14 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
     @catch (NSException *exception) {
         NSLog(@"statusUpdate %@",exception);
     }
+    
+    NSString *ddnsTemplate = [self config:@"ddns"];
+    if ([ddnsTemplate length]) {
+        NSString *ddnsURL = [NSString stringWithFormat:ddnsTemplate,gTunnelInfo[@"ipv6_local"]];
+        NSError *error = nil;
+        NSString *ddnsRet = [NSString stringWithContentsOfURL:[NSURL URLWithString:ddnsURL] encoding:NSASCIIStringEncoding error:&error];
+        NSLog(@"%@ %@",ddnsRet,error);
+    }
 }
 
 - (oneway void) brokerUpdate:(gogocBrokerList*)gBrokerList {
