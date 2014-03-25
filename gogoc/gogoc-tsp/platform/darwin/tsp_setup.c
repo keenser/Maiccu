@@ -359,7 +359,7 @@ gogoc_status tspSetupInterface(tConf *c, tTunnel *t)
     sh(ifconfig,tunnel_interface,"mtu","1280");
     
     if ( t->originalgateway ) {
-        LOG( LOG_LEVEL_MAX, ELInfo, "Change current default gateway %s", t->originalgateway );
+        LOG( LOG_LEVEL_1, ELInfo, "Change current default gateway %s", t->originalgateway );
         sh(route,"change","-inet6","default",t->server_address_ipv6);
     }
     else {

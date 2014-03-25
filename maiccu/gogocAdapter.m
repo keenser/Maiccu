@@ -89,9 +89,9 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
         gpConfig->Set_Template("darwin");
         gpConfig->Set_IfTunV6V4( "gif0" );
         gpConfig->Set_IfTunV6UDPV4( [self device] );
-        gpConfig->Set_Log("file","3");
-        gpConfig->Set_Log("stderr","3");
-        gpConfig->Set_LogFileName("/tmp/gogoc.log");
+//        gpConfig->Set_Log("file","3");
+        gpConfig->Set_Log("stderr","1");
+//        gpConfig->Set_LogFileName("/tmp/gogoc.log");
 
         // Saves the configuration
         iRet = gpConfig->Save() ? 0 : -1;
@@ -167,7 +167,7 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
     @try {
         gTunnelInfo[@"eStatus"] = StatusList[@(pStatusInfo->eStatus)];
         gTunnelInfo[@"nStatus"] = cstons(get_mui_string(pStatusInfo->nStatus));
-        NSString *wholeMessage = [NSString stringWithFormat:@"gogoc-messager status: %@. %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
+        NSString *wholeMessage = [NSString stringWithFormat:@"gogoc-messager state: %@. status: %@",gTunnelInfo[@"eStatus"],gTunnelInfo[@"nStatus"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:wholeMessage];
     }
     @catch (NSException *exception) {
@@ -198,7 +198,11 @@ NSDictionary *gTunnelList = @{@"-":@STR_V6ANYV4,@(TUNTYPE_V6V4):@STR_V6V4,@(TUNT
         NSString *ddnsURL = [NSString stringWithFormat:ddnsTemplate,gTunnelInfo[@"ipv6_local"]];
         NSError *error = nil;
         NSString *ddnsRet = [NSString stringWithContentsOfURL:[NSURL URLWithString:ddnsURL] encoding:NSASCIIStringEncoding error:&error];
-        NSLog(@"%@ %@",ddnsRet,error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:[NSString stringWithFormat:@"ddns update reply: %@",ddnsRet]];
+        if (error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:TKZAiccuStatus object:[NSString stringWithFormat:@"ddns update error: %@. %@.",[error localizedDescription],[error localizedFailureReason]]];
+        }
+        
     }
 }
 
