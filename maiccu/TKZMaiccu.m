@@ -99,7 +99,9 @@ static TKZMaiccu *defaultMaiccu = nil;
 - (void)postNotification:(NSString *) message{
     [self writeLogMessage:message];
 
-    [_postQueue addObject:message];
+    @synchronized(_postQueue) {
+        [_postQueue addObject:message];
+    }
     
     _postNotificationCount++;
     // Show first 5 notifications immegiatly and separately.
@@ -114,8 +116,11 @@ static TKZMaiccu *defaultMaiccu = nil;
 
 - (void)postGrowlNotification {
     NSMutableString *wholeMessage = [[NSMutableString alloc] init];
-    for (NSString *message in _postQueue) {
-        [wholeMessage appendString:message];
+    @synchronized(_postQueue) {
+        for (NSString *message in _postQueue) {
+            [wholeMessage appendString:message];
+        }
+        [_postQueue removeAllObjects];
     }
     if ([wholeMessage length]) {
         NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
@@ -128,9 +133,6 @@ static TKZMaiccu *defaultMaiccu = nil;
                                    clickContext:nil];
         
     }
-    
-    [_postQueue removeAllObjects];
-    
 }
 
 - (void)resetStatusNotificationCount {
